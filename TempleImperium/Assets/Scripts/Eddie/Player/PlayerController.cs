@@ -71,7 +71,6 @@ public class PlayerController : MonoBehaviour
         secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();
 
         //Primary gun active
-        secondaryGun._stopHolding();
         primaryGun._startHolding();
     }
 
