@@ -33,7 +33,7 @@ public class GamePylon : MonoBehaviour
 
     void Start()
     {
-        oCore = gameObject.GetComponent("Core").gameObject;     //establish reference to Core child object
+        oCore = transform.GetChild(0).gameObject;     //establish reference to Core child object
         m_vCorePosRaised = oCore.transform.position;            //retrieve start position
         m_fCoreHeight = oCore.transform.lossyScale.y;           //retrieve core (bbox) height
 

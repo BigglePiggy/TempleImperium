@@ -7,6 +7,7 @@ TagManager:
   - Slope
   - Enemy
   - Spawnpoints
+  - Nodes
   layers:
   - Default
   - TransparentFX

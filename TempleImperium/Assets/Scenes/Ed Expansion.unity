@@ -316,7 +316,8 @@ MonoBehaviour:
   m_oWaveDataContainerList:
   - {fileID: 1554767157}
   - {fileID: 595245335}
-  m_oPylonList: []
+  m_oPylonList:
+  - {fileID: 258499290}
   oEnemyDispatch: {fileID: 369008127}
 --- !u!1 &190177280
 GameObject:
@@ -567,7 +568,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 258499290}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
@@ -882,7 +883,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.10943391, y: 0.8688861, z: 0.42883116, w: -0.22173204}
+  m_LocalRotation: {x: -0.02245642, y: 0.38257036, z: 0.009301754, w: 0.9236066}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1084,7 +1085,7 @@ GameObject:
   m_Component:
   - component: {fileID: 538439431}
   m_Layer: 0
-  m_Name: Spawnpoints
+  m_Name: Enemy Spawnpoints
   m_TagString: Spawnpoints
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12975,7 +12976,7 @@ GameObject:
   - component: {fileID: 2075502703}
   m_Layer: 0
   m_Name: Nodes
-  m_TagString: Untagged
+  m_TagString: Nodes
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

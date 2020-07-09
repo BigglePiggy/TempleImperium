@@ -48,7 +48,7 @@ public class EnemyController : MonoBehaviour
     {
         //Component assignment
         enemyRb = GetComponent<Rigidbody>();
-        pathfinder = GameObject.Find("Nodes").GetComponent<Pathfinder>();
+        pathfinder = GameObject.FindGameObjectWithTag("Nodes").GetComponent<Pathfinder>();
         enemyHead = transform.Find("Enemy Head");
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
