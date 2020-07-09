@@ -46,26 +46,26 @@ public class GameEnemyDispatch : MonoBehaviour
         if (obscuredSpawnpoints == null || obscuredSpawnpoints.Count == 0)
         { Debug.Log("No spots"); }
 
+        //Shuffles list of valid points
+        obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Random.value).ToList();
+
         //Instantiates enemies at unquie spawnpoints
         for (int i = 0; i < input_numLight; i++)
         {
-            int index = Random.Range(0, obscuredSpawnpoints.Count - 1);
-            Instantiate(lightEnemy, obscuredSpawnpoints[index], Quaternion.identity);
-            obscuredSpawnpoints.RemoveAt(index);
+            Instantiate(lightEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            obscuredSpawnpoints.RemoveAt(0);
         }
 
         for (int i = 0; i < input_numMedium; i++)
         {
-            int index = Random.Range(0, obscuredSpawnpoints.Count - 1);
-            Instantiate(lightEnemy, obscuredSpawnpoints[index], Quaternion.identity);
-            obscuredSpawnpoints.RemoveAt(index);
+            Instantiate(mediumEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            obscuredSpawnpoints.RemoveAt(0);
         }
 
         for (int i = 0; i < input_numHeavy; i++)
         {
-            int index = Random.Range(0, obscuredSpawnpoints.Count - 1);
-            Instantiate(lightEnemy, obscuredSpawnpoints[index], Quaternion.identity);
-            obscuredSpawnpoints.RemoveAt(index);
+            Instantiate(heavyEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            obscuredSpawnpoints.RemoveAt(0);
         }
     }
 }

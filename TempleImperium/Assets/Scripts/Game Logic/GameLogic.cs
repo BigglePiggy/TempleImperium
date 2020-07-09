@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 
 //Written by Ase
@@ -34,7 +35,7 @@ public class GameLogic : MonoBehaviour
     [Tooltip("list of objects to retrieve WaveData from, in order")]
     public List<GameObject> m_oWaveDataContainerList = new List<GameObject>();      //list of objects containing a WaveData script
     [Tooltip("list of pylon objects")]
-    public List<GameObject> m_oPylonList = new List<GameObject>();  //list of all pylon gameobjects
+    public List<GamePylon> m_oPylonList = new List<GamePylon>();  //list of all pylon gameobjects
 
     [Header("script references")]
     [Tooltip("reference to a GameObject that has a GameEnemyDispatch script attached")]
@@ -166,9 +167,7 @@ public class GameLogic : MonoBehaviour
             m_eGameplayPhase = GameplayPhase.PostGame;  //set to postgame - we win!
         }
 
-
         //enact gameplay phase
-
         switch (m_eGameplayPhase)
         {
             case GameplayPhase.Init:        //if init
@@ -186,6 +185,9 @@ public class GameLogic : MonoBehaviour
 
                 //set timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fStartRestDuration);
+
+                //lower pylons
+                lowerPylons();
                 break;
 
             case GameplayPhase.Subwave:
@@ -214,6 +216,7 @@ public class GameLogic : MonoBehaviour
                 if (m_iCurrentWaveSub == 0)
                 {
                     m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration);
+                    raisePylons(2);
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
@@ -234,7 +237,9 @@ public class GameLogic : MonoBehaviour
 
                 //set PHASE timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
-                
+
+                //lower pylons
+                lowerPylons();
                 break;
 
             case GameplayPhase.PostGame:
@@ -300,4 +305,27 @@ public class GameLogic : MonoBehaviour
     }
     #endregion
     #endregion
+
+    #region pylon movement and logic
+    //Lower all pylons
+    private void lowerPylons() 
+    {
+        for (int i = 0; i < m_oPylonList.Count; i++)
+        {
+            m_oPylonList[i].GoDown();
+        }
+    }
+
+    //Raise a number of randomly selected pylons
+    private void raisePylons(int num)
+    {
+        m_oPylonList = m_oPylonList.OrderBy(x => Random.value).ToList();
+
+        for (int i = 0; i < num; i++)
+        {
+            m_oPylonList[i].GoUp();
+        }
+    }
+    #endregion
+
 }
