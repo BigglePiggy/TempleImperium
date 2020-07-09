@@ -28,9 +28,9 @@ public class GameLogic : MonoBehaviour
 
     [Header("level configuration")]
     [Tooltip("number of seconds to wait at the start before beginning gameplay")]
-    public float m_fStartRestDuration = 1;    
+    public float m_fStartRestDuration = 10;    
     [Tooltip("number of seconds between all enemies dying and the next wave starting")]
-    public float m_fInterwaveRestDuration = 1;
+    public float m_fInterwaveRestDuration = 10;
     [Tooltip("list of objects to retrieve WaveData from, in order")]
     public List<GameObject> m_oWaveDataContainerList = new List<GameObject>();      //list of objects containing a WaveData script
     [Tooltip("list of pylon objects")]
@@ -127,7 +127,6 @@ public class GameLogic : MonoBehaviour
                 case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
                     //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
                     break;
-
 
                 default:
                     //layer 8 error catcher
@@ -240,7 +239,7 @@ public class GameLogic : MonoBehaviour
     public void DispatchSubwave(int input_numLight, int input_numMedium, int input_numHeavy, StarstoneElement input_element)
     {
         //add to counter
-        m_iEnemiesAlive += input_numLight + input_numMedium + input_numHeavy;
+        m_iEnemiesAlive = input_numLight + input_numMedium + input_numHeavy;
 
         //Dispatch wave
         oEnemyDispatch.GetComponent<GameEnemyDispatch>().DispatchSubwave(input_numLight, input_numMedium, input_numHeavy, input_element);

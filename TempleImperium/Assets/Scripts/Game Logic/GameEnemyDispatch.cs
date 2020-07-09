@@ -10,6 +10,7 @@ using System.Linq;
 public class GameEnemyDispatch : MonoBehaviour
 {
     //this script manages instantiating enemies.
+    public GameObject enemy;
 
     private Transform player;
     private List<Transform> allSpawnpoints;
@@ -48,32 +49,54 @@ public class GameEnemyDispatch : MonoBehaviour
 
         List<Vector3> obscuredSpawnpoints = new List<Vector3>();
 
+        int maxRayLength = 100;
         for (int i = 0; i < allSpawnpoints.Count; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(player.position, player.position - allSpawnpoints[i].position, out hit, Vector3.Distance(player.position, allSpawnpoints[i].position)))
+            if (Physics.Raycast(player.position, allSpawnpoints[i].position - player.position, out hit, maxRayLength)) 
             { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
         }
 
-        if (obscuredSpawnpoints != null)
+        //Errors
+        if(obscuredSpawnpoints.Count - input_numLight -input_numMedium-input_numHeavy <= 0) 
+        { Debug.Log("Not enough spots, only " + obscuredSpawnpoints.Count); }
+
+        if (obscuredSpawnpoints == null || obscuredSpawnpoints.Count == 0)
+        { Debug.Log("No spots"); }
+
+        //Assign positions
+        for (int l = 0; l < input_numLight; l++)
         {
-            for (int l = 0; l < input_numLight; l++)
-            {
-                lightSpawnpoints[l] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
-                obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
-            }
+            lightSpawnpoints[l] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
+            obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
+        }
 
-            for (int m = 0; m < input_numMedium; m++)
-            {
-                mediumSpawnpoints[m] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
-                obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
-            }
+        for (int m = 0; m < input_numMedium; m++)
+        {
+            mediumSpawnpoints[m] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
+            obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
+        }
 
-            for (int h = 0; h < input_numHeavy; h++)
-            {
-                heavySpawnpoints[h] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
-                obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
-            }  
+        for (int h = 0; h < input_numHeavy; h++)
+        {
+            heavySpawnpoints[h] = obscuredSpawnpoints[Random.Range(0, obscuredSpawnpoints.Count - 1)];
+            obscuredSpawnpoints.RemoveAt(Random.Range(0, obscuredSpawnpoints.Count - 1));
+        }
+
+        //Instantiate at positions
+        for (int l = 0; l < input_numLight; l++)
+        {
+            Instantiate(enemy, lightSpawnpoints[l], Quaternion.identity);
+        }
+
+        for (int m = 0; m < input_numMedium; m++)
+        {
+            Instantiate(enemy, mediumSpawnpoints[m], Quaternion.identity);
+        }
+
+        for (int h = 0; h < input_numHeavy; h++)
+        {
+            Instantiate(enemy, heavySpawnpoints[h], Quaternion.identity);
         }
     }
 }

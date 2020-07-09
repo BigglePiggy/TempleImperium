@@ -290,7 +290,10 @@ public class EnemyController : MonoBehaviour
     private void _takeDamage(float change)
     {
         if (currentHealth - change < 0)
-        { Destroy(this.gameObject); }
+        { 
+            Destroy(this.gameObject);
+            GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath();
+        }
         else
         { currentHealth -= change; }
     }
