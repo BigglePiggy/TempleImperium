@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//written by Eddie
+//written by Eddie and Ase
 
 public class GamePylon : MonoBehaviour
 {
@@ -20,6 +20,8 @@ public class GamePylon : MonoBehaviour
     private float startTime;
     private float journeyLength;
 
+    GameObject oGameLogic;  //gameLogic instance reference
+
     //Initalization
     void Start()
     {
@@ -30,11 +32,18 @@ public class GamePylon : MonoBehaviour
 
         else
         { core.localPosition = raisedPosition; }
+
+        //establish reference to gamelogic script
+        oGameLogic = GameObject.Find("Game Logic");
     }
 
     //Called per frame
     void Update()
     {
+        if (oGameLogic == null) //if no reference to gamelogic script
+        {
+        }
+
         if ((up && core.localPosition != raisedPosition) || (down && core.localPosition != loweredPosition)) 
         {
             float distCovered = (Time.time - startTime) * speed;
@@ -67,9 +76,15 @@ public class GamePylon : MonoBehaviour
     }
 
     //Collision detection
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider ForeignCollider)
     {
-        if(other.tag == "Player") 
-        { GoDown(); }
+        if (up)
+        {
+            //if foreign collider is the player, this pylon goes down
+            if (ForeignCollider.tag == "Player") { GoDown(); }
+
+            //tell gamelogic to run pylon down func
+            oGameLogic.GetComponent<GameLogic>().WaveEventPylonLoweredByPlayer();
+        }
     }
 }

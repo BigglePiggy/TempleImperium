@@ -25,7 +25,6 @@ public class GameLogic : MonoBehaviour
     */
 
         //TODO!!!
-        //PYLONS
         //GENERATOR
         //PASS ON WAVE STARSTONE ELEMENT TO ENEMIES AND PLAYER
 
@@ -42,7 +41,7 @@ public class GameLogic : MonoBehaviour
     [Header("script references")]
     [Tooltip("reference to a GameObject that has a GameEnemyDispatch script attached")]
     public GameObject oEnemyDispatch;   //entity that has GameEnemyDispatch script
-    public Text timerText;
+    public Text m_timerText;
 
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
@@ -92,11 +91,10 @@ public class GameLogic : MonoBehaviour
         EnactPhase();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        //do wave logic
     }
+
     void FixedUpdate()
     {
         //check to decrement wave ticker
@@ -110,8 +108,8 @@ public class GameLogic : MonoBehaviour
         {
             //game over!
             //TODO! kill player here
-            //waiting to merge builds with Ed's player & AI stuff
-            Debug.LogError("Game over! GameLogic.FixedUpdate has no gameover programmed yet. Bug Ase about it!");
+            //waiting for ed to program player death
+            Debug.LogError("Game over! GameLogic.FixedUpdate has no gameover yet. Waiting for player death to be implemented!");
         }
 
         //check phase ticker
@@ -133,7 +131,7 @@ public class GameLogic : MonoBehaviour
                     EnactPhase();                               //enact
                     break;
 
-                case GameplayPhase.InbetweenWave:   // InbetweenWave --> next waves first subwave 
+                case GameplayPhase.InbetweenWave:   // InbetweenWave --> next wave's first subwave 
                 case GameplayPhase.InbetweenSubwave:    // InbetweenSubwave --> next subwave
                     m_eGameplayPhase = GameplayPhase.Subwave;
                     EnactPhase();                              
@@ -150,7 +148,13 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        timerText.text = m_iTickerCurrentPhase.ToString() + ":" + m_iTickerCurrentWave.ToString();
+        //print timers to HUD
+        m_timerText.text = (
+            m_eGameplayPhase +
+            "\nphase\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentPhase).ToString() + "s\t("+ m_iTickerCurrentPhase.ToString() +
+            "t)\nwave\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentWave).ToString() + "s\t(" + m_iTickerCurrentWave.ToString() + "t)"
+            );
+        //TODO! implement a proper hud, then hook it in here
     }
 
     #region wave expected event handling
@@ -195,7 +199,7 @@ public class GameLogic : MonoBehaviour
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fStartRestDuration);
 
                 //lower pylons
-                lowerPylons();
+                LowerPylons();
                 break;
 
             case GameplayPhase.Subwave:
@@ -220,11 +224,12 @@ public class GameLogic : MonoBehaviour
                 //(enemy death handles going to InbetweenSubwave - the usual system is skipped here.)
                 m_iTickerCurrentPhase = 99999;
 
-                //if this is the first subwave, set the WAVE timer
+                //if this is the first subwave, set the WAVE timer and raise pylons
                 if (m_iCurrentWaveSub == 0)
                 {
-                    m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration);
-                    raisePylons(2);
+                    m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration); //set time
+
+                    RaisePylons(m_WaveDataArray[m_iCurrentWave].m_iPylonCount); //raise pylons
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
@@ -247,13 +252,13 @@ public class GameLogic : MonoBehaviour
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
 
                 //lower pylons
-                lowerPylons();
+                LowerPylons();
                 break;
 
             case GameplayPhase.PostGame:
                 Debug.Log("enactphase() switch firing PostGame");
                 //win!
-                Debug.LogWarning("gamelogic enactphase() doesn't have a win condition programmed yet! bug Ase about it");
+                Debug.LogWarning("gamelogic enactphase() doesn't have a win condition programmed yet!");
                 break;
 
         }
@@ -269,7 +274,7 @@ public class GameLogic : MonoBehaviour
     }
     #endregion
 
-    #region wave arbitrary event handling
+#region wave arbitrary event handling
     //called when an enemy dies
     public void WaveEventEnemyDeath()
     {
@@ -283,7 +288,15 @@ public class GameLogic : MonoBehaviour
         }
 
     }
-    #region timer related things
+    //called when a pylon is lowered by the player
+    public void WaveEventPylonLoweredByPlayer()
+    {
+        //add current wave config's pylon bonus time to timer
+        WaveEventExtendTimerSeconds(m_WaveDataArray[m_iCurrentWave].m_fPylonBonusTime);
+    }
+    #endregion
+
+    #region generic timer inputs
     //add time to the counter (in ticks)
     public void WaveEventExtendTimerTicks (int input_ticks)
     {
@@ -296,10 +309,10 @@ public class GameLogic : MonoBehaviour
         }
 #endif
 
-        m_iTickerCurrentPhase += input_ticks;        //add to ticker
+        m_iTickerCurrentWave += input_ticks;        //add to wave ticker
     }
     //add time to the counter (in seconds)
-    public void WaveEventExtendTimerSeconds(int input_seconds, int input_tickrate = 60)
+    public void WaveEventExtendTimerSeconds(float input_seconds, int input_tickrate = 60)
     {
 #if UNITY_EDITOR
         //error checking
@@ -309,27 +322,31 @@ public class GameLogic : MonoBehaviour
             input_seconds = 1;
         }
 #endif
-        m_iTickerCurrentPhase += cGenericFunctions.ConvertSecondsToTicks(input_seconds, input_tickrate); //convert, add to ticker
+        m_iTickerCurrentWave += cGenericFunctions.ConvertSecondsToTicks(input_seconds, input_tickrate); //convert, add to ticker
     }
-    #endregion
     #endregion
 
     #region pylon movement and logic
     //Lower all pylons
-    private void lowerPylons() 
+    private void LowerPylons() 
     {
-        for (int i = 0; i < m_oPylonList.Count; i++)
+        for (int i = 0; i < m_oPylonList.Count; i++)    //iterate through pylons, lower all
         {
             m_oPylonList[i].GoDown();
         }
     }
 
     //Raise a number of randomly selected pylons
-    private void raisePylons(int num)
+    private void RaisePylons(int input_PylonCount)
     {
-        m_oPylonList = m_oPylonList.OrderBy(x => Random.value).ToList();
+        if(input_PylonCount > m_oPylonList.Count)   //check if given more pylons than exist in m_oPylonList
+        {
+            Debug.LogError("GameLogic.RaisePylons given greater pylon raise count than there are pylon objects! Check your GameLogic pylon list and WaveData! Wave ID '" + m_iCurrentWave + "'");
+        }
 
-        for (int i = 0; i < num; i++)
+        m_oPylonList = m_oPylonList.OrderBy(x => Random.value).ToList();    //shuffle list
+
+        for (int i = 0; i < input_PylonCount; i++)  //for specified amount of pylons, iterate through shuffled list and raise them
         {
             m_oPylonList[i].GoUp();
         }

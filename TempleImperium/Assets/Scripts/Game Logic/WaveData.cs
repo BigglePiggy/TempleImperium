@@ -27,6 +27,11 @@ public class WaveData : MonoBehaviour
     [Tooltip("subwave tolerance - start next subwave countdown when this number of enemies are left alive")]
     public int m_iSubWaveKillLenience = 1;  //number of enemies tolerance
     public GameLogic.StarstoneElement m_eStarstoneElement;
+    [Tooltip("number of pylons to raise this wave")]
+    public int m_iPylonCount = 4;   //number of pylons raised in wave
+    [Tooltip("number of seconds to add to wave timer per pylon")]
+    public float m_fPylonBonusTime = 0;  //+sec per pylon
+
     [Space]
     [Tooltip("enemies per subwave - formatted \"X,Y,Z\" for light, medium, and heavy." +
     "\na configurable number of enemies in this subwave must be killed before the next subwave can spawn." +
@@ -78,7 +83,9 @@ public class WaveData : MonoBehaviour
             m_iSubWaveRestDuration,
             m_iSubWaveKillLenience,
             m_eStarstoneElement,
-            m_iSubWavesArray
+            m_iSubWavesArray,
+            m_iPylonCount,
+            m_fPylonBonusTime
             );
     }
 
