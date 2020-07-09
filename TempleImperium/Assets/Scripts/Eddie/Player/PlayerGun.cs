@@ -204,6 +204,8 @@ public class PlayerGun : MonoBehaviour
     //Start holding
     public void _startHolding()
     {
+        isHeld = true;
+
         //Makes mesh visable
         meshRenderer.enabled = true;
 
@@ -214,7 +216,6 @@ public class PlayerGun : MonoBehaviour
 
         //Updates recoil values and enables gun
         playerController._newRecoilValues(recoil, recoilDampening, recoilControl);
-        isHeld = true;
     }
 
     //stop holding
