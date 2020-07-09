@@ -133,14 +133,14 @@ public class GameLogic : MonoBehaviour
                     EnactPhase();                               //enact
                     break;
 
-                case GameplayPhase.InbetweenWave:   // InbetweenWave --> next waves first subwave 
-                case GameplayPhase.InbetweenSubwave:    // InbetweenSubwave --> next subwave
+                case GameplayPhase.InbetweenWave:   // InbetweenWave --> next waves first subwave   //Eddie
+                case GameplayPhase.InbetweenSubwave:    // InbetweenSubwave --> next subwave        //Eddie
                     m_eGameplayPhase = GameplayPhase.Subwave;
                     EnactPhase();                              
                     break;
 
-                case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
-                    //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
+                case GameplayPhase.Subwave: //subwave (doesn't go anywhere)         
+                    //going to InbetweenSubwave is handled in WaveEventEnemyDeath()                 
                     break;
 
                 default:
@@ -195,7 +195,7 @@ public class GameLogic : MonoBehaviour
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fStartRestDuration);
 
                 //lower pylons
-                lowerPylons();
+                lowerPylons();  //Eddie
                 break;
 
             case GameplayPhase.Subwave:
@@ -224,7 +224,7 @@ public class GameLogic : MonoBehaviour
                 if (m_iCurrentWaveSub == 0)
                 {
                     m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration);
-                    raisePylons(2);
+                    raisePylons(2); //Eddoe
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
@@ -247,7 +247,7 @@ public class GameLogic : MonoBehaviour
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
 
                 //lower pylons
-                lowerPylons();
+                lowerPylons(); //Eddie
                 break;
 
             case GameplayPhase.PostGame:
@@ -265,7 +265,7 @@ public class GameLogic : MonoBehaviour
         m_iEnemiesAlive += input_numLight + input_numMedium + input_numHeavy;
 
         //Dispatch wave
-        oEnemyDispatch.GetComponent<GameEnemyDispatch>().DispatchSubwave(input_numLight, input_numMedium, input_numHeavy, input_element);
+        oEnemyDispatch.GetComponent<GameEnemyDispatch>().DispatchSubwave(input_numLight, input_numMedium, input_numHeavy, input_element); //Eddie
     }
     #endregion
 
@@ -315,6 +315,7 @@ public class GameLogic : MonoBehaviour
     #endregion
 
     #region pylon movement and logic
+    //Eddie
     //Lower all pylons
     private void lowerPylons() 
     {

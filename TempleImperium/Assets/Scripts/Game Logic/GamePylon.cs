@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//written by Eddie
+//Written by Eddie
 
 public class GamePylon : MonoBehaviour
 {
