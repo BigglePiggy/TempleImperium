@@ -10,6 +10,7 @@ public class GameEnemyDispatch : MonoBehaviour
 {
     //this script manages instantiating enemies.
 
+    //private List<Vector3> m_spawnpoints  
 
     void Start()
     {

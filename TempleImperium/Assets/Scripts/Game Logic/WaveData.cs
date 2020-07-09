@@ -4,6 +4,7 @@ using UnityEngine;
 
 
 //written by Ase
+//Bugs fixed by Eddie
 
 
 public class WaveData : MonoBehaviour
@@ -36,13 +37,12 @@ public class WaveData : MonoBehaviour
 
     WaveDataObject m_PackagedWaveData;  //final data lump to be passed out in GetWaveData
 
-
-    // Start is called before the first frame update
-    void Start()
+    //complies wave data into a WaveDataObject
+    private void MakeWaveData()
     {
         //redeclare subwaves with proper size
         //x = num subwaves, y = three slots for each enemy count
-        m_iSubWavesArray = new int[m_sSubWavesList.Count - 1, 2];
+        m_iSubWavesArray = new int[m_sSubWavesList.Count, 3];
 
 #if UNITY_EDITOR
         //reasonable amount of subwaves warning
@@ -50,7 +50,7 @@ public class WaveData : MonoBehaviour
 #endif
 
         //enemy list deserialisation from string input --> list of 1d arrays, integrity check
-        for (int i = 0; i < m_sSubWavesList.Count-1; i++) //for every subwave entry
+        for (int i = 0; i < m_sSubWavesList.Count; i++) //for every subwave entry
         {
             //split into numerical strings
             string[] m_sSubWaveSplitEnemyCounts = m_sSubWavesList[i].Split(',');
@@ -65,33 +65,29 @@ public class WaveData : MonoBehaviour
             }
 #endif
             //write from strings to array
-            for (int j = 0; j < 2; j++)    
+            for (int j = 0; j < 3; j++)    
             {
                 //Debug.Log("i " + i + "\tj " + j);
                 m_iSubWavesArray[i, j] = int.Parse(m_sSubWaveSplitEnemyCounts[j]);  //parse string to int
             }
-
-            //write all into one object
-            m_PackagedWaveData = new WaveDataObject(
-                m_iWaveDuration,
-                m_iSubWaveRestDuration,
-                m_iSubWaveKillLenience,
-                m_eStarstoneElement,
-                m_iSubWavesArray
-                );
-
         }
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        //write all into one object
+        m_PackagedWaveData = new WaveDataObject(
+            m_iWaveDuration,
+            m_iSubWaveRestDuration,
+            m_iSubWaveKillLenience,
+            m_eStarstoneElement,
+            m_iSubWavesArray
+            );
     }
 
     //returns all wave data - called from GameLogic
     public WaveDataObject GetWaveData()
     {
+        if(m_PackagedWaveData == null) 
+        { MakeWaveData(); }
+
         return m_PackagedWaveData;
     }
 }

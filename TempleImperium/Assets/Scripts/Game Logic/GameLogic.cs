@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//written by Ase
+//Written by Ase
+//Bugs fixed by Eddie
 
 
 public class GameLogic : MonoBehaviour
@@ -27,7 +28,7 @@ public class GameLogic : MonoBehaviour
 
     [Header("level configuration")]
     [Tooltip("number of seconds to wait at the start before beginning gameplay")]
-    public float m_fStartRestDuration = 10;    
+    public float m_fStartRestDuration = 1;    
     [Tooltip("number of seconds between all enemies dying and the next wave starting")]
     public float m_fInterwaveRestDuration = 10;
     [Tooltip("list of objects to retrieve WaveData from, in order")]
@@ -71,10 +72,10 @@ public class GameLogic : MonoBehaviour
         //wavedata integrity checks should be in WaveData.Start(), not here!
 
         //redeclare array with proper size
-        m_WaveDataArray = new WaveDataObject[m_oWaveDataContainerList.Count - 1];
+        m_WaveDataArray = new WaveDataObject[m_oWaveDataContainerList.Count];
 
         //retrieve all wavedata
-        for (int i = 0; i < m_oWaveDataContainerList.Count - 1; i++) //for every wavedata container...
+        for (int i = 0; i < m_oWaveDataContainerList.Count; i++) //for every wavedata container...
         {
             //retrieve wave datas, save to array
             m_WaveDataArray[i] = m_oWaveDataContainerList[i].GetComponent<WaveData>().GetWaveData();
@@ -144,7 +145,7 @@ public class GameLogic : MonoBehaviour
     {
         //check if subwave is in bounds (if not, subwave=0 and ++wave)
         //if current subwave >= current wave's subwaveArray length
-        if(m_iCurrentWaveSub >= m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.Length)
+        if(m_iCurrentWaveSub >= m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0))
         {
             m_iCurrentWave++;           //move to next wave
             m_iCurrentWaveSub = 0;      //reset subwave counter
@@ -185,9 +186,9 @@ public class GameLogic : MonoBehaviour
 
                 //subwaves are combat sections.
 
-                int[] m_ThisSubWaveData = new int[2];   //temp subwave data container
+                int[] m_ThisSubWaveData = new int[3];   //temp subwave data container
 
-                for(int i = 0; i < 2; i++) //for each enemy type (hardcoded! change i<n if adding new dudes)
+                for(int i = 0; i < 3; i++) //for each enemy type (hardcoded! change i<n if adding new dudes)
                 {
                     //retrieve enemy data for this subwave
                     //temp = wave data array[current wave].subwaves data.[current subwave]
@@ -205,7 +206,7 @@ public class GameLogic : MonoBehaviour
                 //if this is the first subwave, set the WAVE timer
                 if (m_iCurrentWaveSub == 0)
                 {
-                    m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iTickerCurrentWave].m_iWaveDuration);
+                    m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration);
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
