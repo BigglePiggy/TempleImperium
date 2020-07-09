@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.Linq;
+
 
 
 //Written by Ase
@@ -40,6 +42,8 @@ public class GameLogic : MonoBehaviour
     [Header("script references")]
     [Tooltip("reference to a GameObject that has a GameEnemyDispatch script attached")]
     public GameObject oEnemyDispatch;   //entity that has GameEnemyDispatch script
+    public Text timerText;
+
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
 
@@ -58,6 +62,8 @@ public class GameLogic : MonoBehaviour
     /// controls m_iTickerCurrentWave decrement
     /// </summary>
     bool m_bWaveTimerActive = false;    //should WAVE ticker decrement?
+
+
 
     enum GameplayPhase { Init, PreGame, Subwave, InbetweenSubwave, InbetweenWave, PostGame } //gameplay phase
     GameplayPhase m_eGameplayPhase = GameplayPhase.Init;
@@ -142,7 +148,9 @@ public class GameLogic : MonoBehaviour
                     Debug.LogError("GameLogic FixedUpdate timer=0 switch reading unaccounted for GameplayPhase \"" + m_eGameplayPhase + "\"!!");
                     break;
             }
-        } 
+        }
+
+        timerText.text = m_iTickerCurrentPhase.ToString() + ":" + m_iTickerCurrentWave.ToString();
     }
 
     #region wave expected event handling
