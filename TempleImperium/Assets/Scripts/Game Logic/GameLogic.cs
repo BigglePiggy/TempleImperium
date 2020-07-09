@@ -30,7 +30,7 @@ public class GameLogic : MonoBehaviour
     [Tooltip("number of seconds to wait at the start before beginning gameplay")]
     public float m_fStartRestDuration = 1;    
     [Tooltip("number of seconds between all enemies dying and the next wave starting")]
-    public float m_fInterwaveRestDuration = 10;
+    public float m_fInterwaveRestDuration = 1;
     [Tooltip("list of objects to retrieve WaveData from, in order")]
     public List<GameObject> m_oWaveDataContainerList = new List<GameObject>();      //list of objects containing a WaveData script
     [Tooltip("list of pylon objects")]
@@ -242,9 +242,8 @@ public class GameLogic : MonoBehaviour
         //add to counter
         m_iEnemiesAlive += input_numLight + input_numMedium + input_numHeavy;
 
-        //TODO !!!
-        Debug.LogWarning("GameLogic.DispatchSubwave() needs to be implemented (waiting to merge with Ed's AI branch)");
-        //[spawner script].SpawnBatch(light,med,heavy,ELEMENT);
+        //Dispatch wave
+        oEnemyDispatch.GetComponent<GameEnemyDispatch>().DispatchSubwave(input_numLight, input_numMedium, input_numHeavy, input_element);
     }
     #endregion
 
