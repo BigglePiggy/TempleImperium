@@ -115,15 +115,23 @@ public class GameLogic : MonoBehaviour
         else    //if end of phase ticker...
         {
             switch (m_eGameplayPhase)
-                {
+            {
                 case GameplayPhase.Init:    //init step --> pregame wait
                     m_eGameplayPhase = GameplayPhase.PreGame;   //set next phase
                     EnactPhase();                               //enact
                     break;
+
                 case GameplayPhase.PreGame: //pregame wait --> subwave (combat phase)
                     m_eGameplayPhase = GameplayPhase.Subwave;   //set next phase
                     EnactPhase();                               //enact
                     break;
+
+                case GameplayPhase.InbetweenWave:   // InbetweenWave --> next waves first subwave 
+                case GameplayPhase.InbetweenSubwave:    // InbetweenSubwave --> next subwave
+                    m_eGameplayPhase = GameplayPhase.Subwave;
+                    EnactPhase();                              
+                    break;
+
                 case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
                     //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
                     break;
@@ -168,9 +176,9 @@ public class GameLogic : MonoBehaviour
                 Debug.Log("enactphase() switch firing Init");
 
                 //put initialisation things here!
-
-                m_iTickerCurrentPhase = 0;           //immediately refire this function for PreGame phase
+                m_iTickerCurrentPhase = 0;//immediately refire this function for PreGame phase
                 break;
+
             case GameplayPhase.PreGame:     //if pregame
                 Debug.Log("enactphase() switch firing PreGame");
 
@@ -178,8 +186,8 @@ public class GameLogic : MonoBehaviour
 
                 //set timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fStartRestDuration);
-
                 break;
+
             case GameplayPhase.Subwave:
                 Debug.Log("enactphase() switch firing Subwave");
 
@@ -209,14 +217,15 @@ public class GameLogic : MonoBehaviour
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
-
                 break;
+
             case GameplayPhase.InbetweenSubwave:
                 Debug.Log("enactphase() switch firing InbetweenSubwave");
                 //this one's called when the player's just beaten a SUBwave - game's waiting to spawn next batch, wave counter's still going
 
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iSubWaveRestDuration);
                 break;
+
             case GameplayPhase.InbetweenWave:
                 Debug.Log("enactphase() switch firing InbetweenWave");
                 //wave beaten, player's resting before the next wave starts.
@@ -225,8 +234,9 @@ public class GameLogic : MonoBehaviour
 
                 //set PHASE timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
-
+                
                 break;
+
             case GameplayPhase.PostGame:
                 Debug.Log("enactphase() switch firing PostGame");
                 //win!
@@ -239,7 +249,7 @@ public class GameLogic : MonoBehaviour
     public void DispatchSubwave(int input_numLight, int input_numMedium, int input_numHeavy, StarstoneElement input_element)
     {
         //add to counter
-        m_iEnemiesAlive = input_numLight + input_numMedium + input_numHeavy;
+        m_iEnemiesAlive += input_numLight + input_numMedium + input_numHeavy;
 
         //Dispatch wave
         oEnemyDispatch.GetComponent<GameEnemyDispatch>().DispatchSubwave(input_numLight, input_numMedium, input_numHeavy, input_element);

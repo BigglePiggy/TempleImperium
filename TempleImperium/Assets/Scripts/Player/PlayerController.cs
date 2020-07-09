@@ -80,9 +80,6 @@ public class PlayerController : MonoBehaviour
         _keyboardInput();
         _mouseInput();
         _weaponSwitching();
-
-        if (Input.GetKeyDown(KeyCode.O))
-        { GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(); }
     }
 
     //Fixed update
