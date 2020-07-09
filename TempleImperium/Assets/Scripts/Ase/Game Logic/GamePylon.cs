@@ -62,11 +62,29 @@ public class GamePylon : MonoBehaviour
             m_fMoveDelta /= m_iCoreMoveEaseDivider;
 
 
-            //TODO
-            Debug.LogWarning("GamePylon movement not done yet; 50%ish. will finish it up tomorrow. -Ase");
-            m_bIsActuating = false;
-            //if moving down, *-1 when affecting live transform
-            //use *+1 for lowerPos threshold check, *-1 for raisedPos threshold check
+            if (!m_bIsRaised)   //if moving toward lowered position, *-1 delta so we actually move the pylon down
+            {
+                m_fMoveDelta *= -1;
+            }
+
+            //write to position
+            Vector3 m_vOutPos = oCore.transform.position;   //get pos
+            m_vOutPos.y = m_fMoveDelta;                     //write y
+            oCore.transform.position = m_vOutPos;           //overwrite pos
+
+            //threshold check (prevent wasting cycles easing to some stupid tiny float value forever)
+            //lowering
+            if(m_vOutPos.y < (m_vCorePosLowered.y + m_fMoveSnapThreshold))  //if below (low bound + threshold)
+            {
+                oCore.transform.position = m_vCorePosLowered;   //overwrite pos
+                m_bIsActuating = false;                         //stop moving
+            }
+            //raising
+            if(m_vOutPos.y > (m_vCorePosRaised.y - m_fMoveSnapThreshold))   //if above (high bound - threshold)
+            {
+                oCore.transform.position = m_vCorePosRaised;    //overwrite pos
+                m_bIsActuating = false;                         //stop moving
+            }
         }
     }
 
