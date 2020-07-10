@@ -24,11 +24,15 @@ public class HUDController : MonoBehaviour
         public Text oTextObject;
     */
 
-    #region debug readout
     private string m_sDebugReadout;
     public string DebugReadout { set { m_sDebugReadout = value; } }
     public Text oDebugReadout;
-    #endregion //debug readout end
+
+    private string m_sWaveCounter;
+    public string WaveCounter { set { m_sWaveCounter = value; } }
+    public Text oWaveCounter;
+
+
 
     #endregion //declarations end
 
@@ -38,6 +42,7 @@ public class HUDController : MonoBehaviour
 
     void Update()
     {
-        oDebugReadout.text = m_sDebugReadout;       //write debug readout
+        oDebugReadout.text = m_sDebugReadout;                   //write debug readout
+        oWaveCounter.text = "Wave: " + m_sWaveCounter;          //write wave counter
     }
 }

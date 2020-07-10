@@ -149,14 +149,16 @@ public class GameLogic : MonoBehaviour
                     break;
             }
         }
-
+        #region send to HUD
         //send debug output to HUDController
         oHudController.GetComponent<HUDController>().DebugReadout = (
             m_eGameplayPhase +
             "\nphase\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentPhase).ToString() + "s\t("+ m_iTickerCurrentPhase.ToString() +
             "t)\nwave\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentWave).ToString() + "s\t(" + m_iTickerCurrentWave.ToString() + "t)"
             );
-        //TODO! implement a proper hud, then hook it in here
+        //send wave count to HUD controller
+        oHudController.GetComponent<HUDController>().WaveCounter = m_iCurrentWave.ToString();
+        #endregion send to HUD
     }
 
     #region wave expected event handling
