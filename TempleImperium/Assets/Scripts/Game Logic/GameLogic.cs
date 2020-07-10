@@ -41,7 +41,8 @@ public class GameLogic : MonoBehaviour
     [Header("script references")]
     [Tooltip("reference to a GameObject that has a GameEnemyDispatch script attached")]
     public GameObject oEnemyDispatch;   //entity that has GameEnemyDispatch script
-    public Text m_timerText;
+    [Tooltip("reference to a GameObject that has a HUDController script attached")]
+    public GameObject oHudController;   //entity that has HUDController script
 
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
@@ -71,6 +72,7 @@ public class GameLogic : MonoBehaviour
 
 
     GenericFunctions cGenericFunctions = new GenericFunctions(); //instantiate a GenericFunctions for use here - having issues making it a static class
+
 
     // Start is called before the first frame update
     void Start()
@@ -148,8 +150,8 @@ public class GameLogic : MonoBehaviour
             }
         }
 
-        //print timers to HUD
-        m_timerText.text = (
+        //send debug output to HUDController
+        oHudController.GetComponent<HUDController>().DebugReadout = (
             m_eGameplayPhase +
             "\nphase\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentPhase).ToString() + "s\t("+ m_iTickerCurrentPhase.ToString() +
             "t)\nwave\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentWave).ToString() + "s\t(" + m_iTickerCurrentWave.ToString() + "t)"
