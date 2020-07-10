@@ -44,11 +44,11 @@ public class GamePylon : MonoBehaviour
             float distCovered = (Time.time - startTime) * speed;
             float fractionOfJourney = distCovered / journeyLength;
 
-            if (core.localPosition == raisedPosition)
-            { up = false; }
+            //if (core.localPosition == raisedPosition)
+            //{ up = false; }
 
-            if (core.localPosition == loweredPosition)
-            { down = false; }
+            //if (core.localPosition == loweredPosition)
+            //{ down = false; }
 
             if (up)
             { core.localPosition = Vector3.Lerp(core.localPosition, raisedPosition, fractionOfJourney);  }
