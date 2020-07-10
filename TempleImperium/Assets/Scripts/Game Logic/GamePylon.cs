@@ -12,7 +12,7 @@ public class GamePylon : MonoBehaviour
     public bool startLowered;
     public Vector3 raisedPosition;
     public Vector3 loweredPosition;
-    
+
     //Private
     private Transform core;
     private bool up, down;
@@ -20,7 +20,7 @@ public class GamePylon : MonoBehaviour
     private float startTime;
     private float journeyLength;
 
-    GameObject oGameLogic;  //gameLogic instance reference
+    GameObject oGameLogic;
 
     //Initalization
     void Start()
@@ -33,24 +33,25 @@ public class GamePylon : MonoBehaviour
         else
         { core.localPosition = raisedPosition; }
 
-        //establish reference to gamelogic script
         oGameLogic = GameObject.Find("Game Logic");
     }
 
     //Called per frame
     void Update()
     {
-        if (oGameLogic == null) //if no reference to gamelogic script
-        {
-        }
-
-        if ((up && core.localPosition != raisedPosition) || (down && core.localPosition != loweredPosition)) 
+        if (up || down)
         {
             float distCovered = (Time.time - startTime) * speed;
             float fractionOfJourney = distCovered / journeyLength;
 
+            if (core.localPosition == raisedPosition)
+            { up = false; }
+
+            if (core.localPosition == loweredPosition)
+            { down = false; }
+
             if (up)
-            { core.localPosition = Vector3.Lerp(core.localPosition, raisedPosition, fractionOfJourney); }
+            { core.localPosition = Vector3.Lerp(core.localPosition, raisedPosition, fractionOfJourney);  }
 
             if (down)
             { core.localPosition = Vector3.Lerp(core.localPosition, loweredPosition, fractionOfJourney); }
@@ -58,7 +59,7 @@ public class GamePylon : MonoBehaviour
     }
 
     //Raise the pylon
-    public void GoUp() 
+    public void GoUp()
     {
         startTime = Time.time;
         journeyLength = Vector3.Distance(core.localPosition, raisedPosition);

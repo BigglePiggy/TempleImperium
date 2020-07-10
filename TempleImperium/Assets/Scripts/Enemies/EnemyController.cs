@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour
     private bool moving;
     private bool playerInSight;
     private float currentHealth;
+    private int pathUpdateTicker = 100;
 
     //Components
     private Pathfinder pathfinder;
@@ -62,13 +63,19 @@ public class EnemyController : MonoBehaviour
         playerInSight = false;
     }
 
+
     //Called per frame
     void Update()
     {
         _playerInSight();
         _turning();
-        _pathUpdate();
-        _pathRead();
+
+        if (pathUpdateTicker == 100)
+        {
+            _pathUpdate();
+            _pathRead();
+            pathUpdateTicker = 0;
+        }
     }
 
     //Handles phyics seperate from frame-rate
@@ -80,6 +87,11 @@ public class EnemyController : MonoBehaviour
         _linearDrag();
         _velocityLimits();
         _exceptions();
+
+        if(pathUpdateTicker < 100) 
+        {
+            pathUpdateTicker++;
+        }
     }
 
     ////Bespoke functions
