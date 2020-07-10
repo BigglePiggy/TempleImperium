@@ -333,8 +333,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 5
-  viewDistance: 10
-  stopDistance: 3
+  viewDistance: 3.5
+  stopDistance: 2
   gravity: 15
   acceleration: {x: 0, y: 0, z: 25}
   verticalLimit: 5
