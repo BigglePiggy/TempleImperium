@@ -13,7 +13,8 @@ using System.Linq;
 public class GameLogic : MonoBehaviour
 {
     [HideInInspector]
-    public enum StarstoneElement { Fire, Water, Electricity, Darkness };    //used across lots of classes!! BE CAREFUL WITH ME
+    public enum StarstoneElement { Fire, Water, Electricity, Darkness };    //public - used across lots of classes!! BE CAREFUL WITH ME
+
 
     //gameplay controller script - there should be only one instance of me!
     //what this script does:
@@ -24,9 +25,9 @@ public class GameLogic : MonoBehaviour
         - has important public structs (eg StarstoneElement enum)
     */
 
-        //TODO!!!
-        //GENERATOR
-        //PASS ON WAVE STARSTONE ELEMENT TO ENEMIES AND PLAYER
+    //TODO!!!
+    //GENERATOR
+    //PASS ON WAVE STARSTONE ELEMENT TO ENEMIES AND PLAYER
 
     [Header("level configuration")]
     [Tooltip("number of seconds to wait at the start before beginning gameplay")]
@@ -43,6 +44,7 @@ public class GameLogic : MonoBehaviour
     public GameObject oEnemyDispatch;   //entity that has GameEnemyDispatch script
     [Tooltip("reference to a GameObject that has a HUDController script attached")]
     public GameObject oHudController;   //entity that has HUDController script
+    HUDController oHudControllerScript; //HUDController direct script (this is called a lot, direct reference might be a bit quicker)
 
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
@@ -62,7 +64,6 @@ public class GameLogic : MonoBehaviour
     /// controls m_iTickerCurrentWave decrement
     /// </summary>
     bool m_bWaveTimerActive = false;    //should WAVE ticker decrement?
-
 
 
     enum GameplayPhase { Init, PreGame, Subwave, InbetweenSubwave, InbetweenWave, PostGame } //gameplay phase
@@ -149,15 +150,23 @@ public class GameLogic : MonoBehaviour
                     break;
             }
         }
+
         #region send to HUD
-        //send debug output to HUDController
-        oHudController.GetComponent<HUDController>().DebugReadout = (
-            m_eGameplayPhase +
-            "\nphase\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentPhase).ToString() + "s\t("+ m_iTickerCurrentPhase.ToString() +
-            "t)\nwave\t" + cGenericFunctions.ConvertTickstoSeconds(m_iTickerCurrentWave).ToString() + "s\t(" + m_iTickerCurrentWave.ToString() + "t)"
-            );
-        //send wave count to HUD controller
-        oHudController.GetComponent<HUDController>().WaveCounter = m_iCurrentWave.ToString();
+        //establish reference directly to script
+        if(oHudControllerScript == null) { oHudControllerScript = oHudController.GetComponent<HUDController>(); }
+
+        //sending things
+        //wave counter
+        oHudControllerScript.WaveCounter = m_iCurrentWave;
+        //wave ticker
+        oHudControllerScript.WaveTimerTicks = m_iTickerCurrentWave;
+        //phase ticker
+        oHudControllerScript.PhaseTimerTicks = m_iTickerCurrentPhase;
+        //starstone element
+        oHudControllerScript.WaveStarstoneElement = m_WaveDataArray[m_iCurrentWave].m_eStarstoneElement;
+        //gameplay phase
+        oHudControllerScript.GameplayPhase = m_eGameplayPhase.ToString();
+
         #endregion send to HUD
     }
 
