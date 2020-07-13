@@ -66,7 +66,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         _playerInSight();
-        _turning();
+        //_turning();
         _pathUpdate();
         _pathRead();
     }
@@ -186,7 +186,7 @@ public class EnemyController : MonoBehaviour
 
         //Movement applciation
         if (moving)
-        { enemyRb.AddRelativeForce(Vector3.forward * acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
+        { enemyRb.AddForce((nextNode - transform.position).normalized * acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
     }
 
     //Velocity limiter

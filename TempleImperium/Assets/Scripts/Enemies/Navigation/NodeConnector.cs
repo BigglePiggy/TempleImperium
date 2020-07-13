@@ -14,9 +14,6 @@ using UnityEngine;
 public class NodeConnector : MonoBehaviour
 {
     ////Declarations
-    //Public
-    public float minimumLinkDistance;
-
     //Private
     private List<Transform> nodes;
 
@@ -40,7 +37,7 @@ public class NodeConnector : MonoBehaviour
         {
             for (int e = 1; e < nodes.Count; e++)
             {
-                if (Vector3.Distance(nodes[i].position, nodes[e].position) < minimumLinkDistance)
+                if (Vector3.Distance(nodes[i].position, nodes[e].position) < nodes[i].GetComponent<Node>().maxConnectionDistance || Vector3.Distance(nodes[i].position, nodes[e].position) < nodes[e].GetComponent<Node>().maxConnectionDistance)
                 {
                     if (Physics.Linecast(nodes[i].position, nodes[e].position) == false)
                     {
