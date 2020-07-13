@@ -142,6 +142,11 @@ public class GameLogic : MonoBehaviour
 
                 case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
                     //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
+
+                    //gameover if any pylons are up
+                    //TODO generator
+                    tell ase to program this //took weekend off im SO tired yall hggggggggggggggggg
+
                     break;
 
                 default:
@@ -315,9 +320,9 @@ public class GameLogic : MonoBehaviour
     {
 #if UNITY_EDITOR
         //error checking
-        if(input_ticks <= 0)
+        if(input_ticks < 0)
         {
-            Debug.LogError("GameLogic.WaveEventExtendTimerTicks() given input_ticks <=0!! what happened?");
+            Debug.LogError("GameLogic.WaveEventExtendTimerTicks() given input_ticks <0!! what happened?");
             input_ticks = 1;
         }
 #endif
@@ -329,9 +334,9 @@ public class GameLogic : MonoBehaviour
     {
 #if UNITY_EDITOR
         //error checking
-        if (input_seconds <= 0)
+        if (input_seconds < 0)
         {
-            Debug.LogError("GameLogic.WaveEventExtendTimerSeconds() given input_seconds <=0!! what happened?");
+            Debug.LogError("GameLogic.WaveEventExtendTimerSeconds() given input_seconds <0!! what happened?");
             input_seconds = 1;
         }
 #endif
