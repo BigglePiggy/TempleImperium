@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 //written by Eddie and Ase
 
@@ -30,6 +28,19 @@ public class GamePylon : MonoBehaviour
     {
         anim.SetBool("Raise", false);
         anim.SetBool("Lower", true);
+    }
+
+    //Pylon state
+    public bool _isPylonRaised() 
+    {
+        if (anim.GetBool("Raise")) 
+        {
+            return true;
+        }
+        else 
+        { 
+            return false; 
+        }
     }
 
     //Collision detection
