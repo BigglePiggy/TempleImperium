@@ -145,10 +145,20 @@ public class GameLogic : MonoBehaviour
 
                 case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
                     //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
-
+                    
                     //gameover if any pylons are up
-                    //TODO generator
-                    //tell ase to program this //took weekend off im SO tired yall hggggggggggggggggg
+                    //iterate through every pylon
+                    for (int i = 0; i < m_oPylonList.Count; i++) 
+                    {
+                        //if a pylon is raised
+                        if(m_oPylonList[i].)    //TO ED: how to read pylon state?
+                        {
+                            //gameover player
+                            Debug.LogError("pylons up at wave end!! program a gameover!");
+                            //break from loop early
+                            break;
+                        }
+                    }
 
                     break;
 
