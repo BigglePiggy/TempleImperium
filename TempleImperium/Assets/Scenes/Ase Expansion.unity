@@ -133,6 +133,7 @@ GameObject:
   - component: {fileID: 37022103}
   - component: {fileID: 37022106}
   - component: {fileID: 37022105}
+  - component: {fileID: 37022107}
   - component: {fileID: 37022104}
   m_Layer: 0
   m_Name: Pylon 4
@@ -169,10 +170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  startLowered: 1
-  raisedPosition: {x: 0, y: 0.94, z: 0}
-  loweredPosition: {x: 0, y: -0.65, z: 0}
 --- !u!136 &37022105
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -200,6 +197,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.25, z: 1.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &37022107
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 37022102}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc564ace318c9814eb0d58feed2bdac9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &46941584
 GameObject:
   m_ObjectHideFlags: 0
@@ -816,6 +832,7 @@ GameObject:
   - component: {fileID: 258499291}
   - component: {fileID: 258499294}
   - component: {fileID: 258499293}
+  - component: {fileID: 258499295}
   - component: {fileID: 258499292}
   m_Layer: 0
   m_Name: Pylon 1
@@ -852,10 +869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  startLowered: 1
-  raisedPosition: {x: 0, y: 0.94, z: 0}
-  loweredPosition: {x: 0, y: -0.65, z: 0}
 --- !u!136 &258499293
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -883,6 +896,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.25, z: 1.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &258499295
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 258499290}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc564ace318c9814eb0d58feed2bdac9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &283812722
 GameObject:
   m_ObjectHideFlags: 0
@@ -1335,7 +1367,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.18347467, y: 0.7504688, z: 0.23315053, w: 0.59057134}
+  m_LocalRotation: {x: 0.16783378, y: -0.3360502, z: 0.060989376, w: 0.92476076}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -1532,6 +1564,7 @@ GameObject:
   - component: {fileID: 494365886}
   - component: {fileID: 494365889}
   - component: {fileID: 494365888}
+  - component: {fileID: 494365890}
   - component: {fileID: 494365887}
   m_Layer: 0
   m_Name: Pylon 2
@@ -1568,10 +1601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  startLowered: 1
-  raisedPosition: {x: 0, y: 0.94, z: 0}
-  loweredPosition: {x: 0, y: -0.65, z: 0}
 --- !u!136 &494365888
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1599,6 +1628,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.25, z: 1.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &494365890
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 494365885}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc564ace318c9814eb0d58feed2bdac9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &500956121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1706,7 +1754,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.1836358, y: 0.75112695, z: 0.23405336, w: 0.5893262}
+  m_LocalRotation: {x: 0.12198281, y: -0.3811802, z: 0.050816428, w: 0.91500795}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2516,6 +2564,7 @@ GameObject:
   - component: {fileID: 664798217}
   - component: {fileID: 664798220}
   - component: {fileID: 664798219}
+  - component: {fileID: 664798221}
   - component: {fileID: 664798218}
   m_Layer: 0
   m_Name: Pylon 3
@@ -2552,10 +2601,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  startLowered: 1
-  raisedPosition: {x: 0, y: 0.94, z: 0}
-  loweredPosition: {x: 0, y: -0.65, z: 0}
 --- !u!136 &664798219
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2583,6 +2628,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.25, z: 1.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &664798221
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 664798216}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc564ace318c9814eb0d58feed2bdac9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &678225729
 GameObject:
   m_ObjectHideFlags: 0
@@ -8884,7 +8948,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.18407279, y: 0.7502323, z: 0.23391059, w: 0.59038514}
+  m_LocalRotation: {x: 0.11284395, y: -0.33906925, z: 0.041006535, w: 0.9330685}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -14519,6 +14583,7 @@ GameObject:
   - component: {fileID: 1713240887}
   - component: {fileID: 1713240890}
   - component: {fileID: 1713240889}
+  - component: {fileID: 1713240891}
   - component: {fileID: 1713240888}
   m_Layer: 0
   m_Name: Pylon 5
@@ -14555,10 +14620,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cf37b6321308f2439633b32cfb57d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
-  startLowered: 1
-  raisedPosition: {x: 0, y: 0.94, z: 0}
-  loweredPosition: {x: 0, y: -0.65, z: 0}
 --- !u!136 &1713240889
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -14586,6 +14647,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.35, y: 0.25, z: 1.35}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &1713240891
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1713240886}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bc564ace318c9814eb0d58feed2bdac9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1726092127
 GameObject:
   m_ObjectHideFlags: 0
@@ -15063,7 +15143,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.1830389, y: 0.7513636, z: 0.2332926, w: 0.5895119}
+  m_LocalRotation: {x: 0.18042018, y: -0.37713596, z: 0.07516065, w: 0.9052999}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
