@@ -15,6 +15,9 @@ public class GameLogic : MonoBehaviour
     [HideInInspector]
     public enum StarstoneElement { Fire, Water, Electricity, Darkness };    //public - used across lots of classes!! BE CAREFUL WITH ME
 
+    [HideInInspector]
+    public enum GameplayPhase { Init, PreGame, Subwave, InbetweenSubwave, InbetweenWave, PostGame } // ^
+
 
     //gameplay controller script - there should be only one instance of me!
     //what this script does:
@@ -34,6 +37,7 @@ public class GameLogic : MonoBehaviour
     public float m_fStartRestDuration = 10;    
     [Tooltip("number of seconds between all enemies dying and the next wave starting")]
     public float m_fInterwaveRestDuration = 10;
+    [Space]
     [Tooltip("list of objects to retrieve WaveData from, in order")]
     public List<GameObject> m_oWaveDataContainerList = new List<GameObject>();      //list of objects containing a WaveData script
     [Tooltip("list of pylon objects")]
@@ -66,7 +70,6 @@ public class GameLogic : MonoBehaviour
     bool m_bWaveTimerActive = false;    //should WAVE ticker decrement?
 
 
-    enum GameplayPhase { Init, PreGame, Subwave, InbetweenSubwave, InbetweenWave, PostGame } //gameplay phase
     GameplayPhase m_eGameplayPhase = GameplayPhase.Init;
     //init->pregame->
     //subwave(enemy deaths)->inbetweenSubwave(timer)->subwave(enemy deaths)->...->inbetweenWave(timer)->subwave->...->postGame (win state)
@@ -145,7 +148,7 @@ public class GameLogic : MonoBehaviour
 
                     //gameover if any pylons are up
                     //TODO generator
-                    tell ase to program this //took weekend off im SO tired yall hggggggggggggggggg
+                    //tell ase to program this //took weekend off im SO tired yall hggggggggggggggggg
 
                     break;
 
@@ -155,6 +158,7 @@ public class GameLogic : MonoBehaviour
                     break;
             }
         }
+
 
         #region send to HUD
         //establish reference directly to script
@@ -170,7 +174,7 @@ public class GameLogic : MonoBehaviour
         //starstone element
         oHudControllerScript.WaveStarstoneElement = m_WaveDataArray[m_iCurrentWave].m_eStarstoneElement;
         //gameplay phase
-        oHudControllerScript.GameplayPhase = m_eGameplayPhase.ToString();
+        oHudControllerScript.GameplayPhase = m_eGameplayPhase;
 
         #endregion send to HUD
     }
