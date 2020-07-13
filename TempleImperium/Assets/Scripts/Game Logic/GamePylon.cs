@@ -31,7 +31,7 @@ public class GamePylon : MonoBehaviour
     }
 
     //Pylon state
-    public bool _isPylonRaised() 
+    public bool GetState() 
     {
         if (anim.GetBool("Raise")) 
         {

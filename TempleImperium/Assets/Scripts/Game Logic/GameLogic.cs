@@ -151,7 +151,7 @@ public class GameLogic : MonoBehaviour
                     for (int i = 0; i < m_oPylonList.Count; i++) 
                     {
                         //if a pylon is raised
-                        if(m_oPylonList[i]._isPylonRaised())    //TO ED: how to read pylon state?
+                        if(m_oPylonList[i].GetState())
                         {
                             //gameover player
                             Debug.LogError("pylons up at wave end!! program a gameover!");

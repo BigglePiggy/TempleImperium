@@ -118,6 +118,12 @@ public class HUDController : MonoBehaviour
         //starstone element
         m_sTextStarstoneElement = m_eWaveStarstoneElement.ToString();
 
+
+
+        //kinda awkward place for this line to be but it's Fine unless we need flexible colour changing options for designers to use
+        //starstone colour
+        oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
+
         //refresh HUD
         Write();
     }
