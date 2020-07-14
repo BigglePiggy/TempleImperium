@@ -50,6 +50,24 @@ public class GenericFunctions
         return m_cOutput;
     }
 
+    /// <summary>
+    /// blend between two colors based on lerp between count/max
+    /// </summary>
+    /// <returns></returns>
+    public Color LerpColor(Color input_minColor, Color input_maxColor, float input_count, float input_countMax)
+    {
+        //if count > max, switch
+        if(input_count > input_countMax)
+        {
+            float temp = input_count;       //copy count to temp
+            input_count = input_countMax;   //count -> max
+            input_countMax = temp;          //max -> temp (count)
+        }
+
+        float m_fLerpValue = input_count / input_countMax;  //calc 0-1 lerp value
+
+        return Color.Lerp(input_minColor, input_maxColor, m_fLerpValue);    //return lerped col
+    }
 
 #if UNITY_EDITOR
     void Start()

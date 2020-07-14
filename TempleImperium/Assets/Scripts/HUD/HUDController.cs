@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -57,12 +58,21 @@ public class HUDController : MonoBehaviour
     private int m_iCurrentWeaponAmmoReserve;
     public int CurrentWeaponAmmoReserve { set { m_iCurrentWeaponAmmoReserve = value; } }
     //--
+    private float m_fPlayerHealth;
+    public float PlayerHealth { set { m_fPlayerHealth = value; } }
+    //--
+    private float m_fPlayerHealthMax;
+    public float PlayerHealthMax { set { m_fPlayerHealthMax = value; } }
+    //--
 
     #endregion getset declarations
 
     //-----------------------------------------------------
     //misc public vars
     public bool m_bShowDebug = false;
+    //magazine colour lerps
+    public Color m_cTextColour = Color.white;
+    public Color m_cTextColourAlert = Color.red;
 
     //-----------------------------------------------------
     //text object references (and their private output strings)
@@ -76,14 +86,24 @@ public class HUDController : MonoBehaviour
     string m_sTextWaveTimer = "";
     public Text oTextStarstoneElement;
     string m_sTextStarstoneElement = "";
-    public Text oTextAmmo;
-    string m_sTextAmmo = "";
+    public Text oTextAmmoMag;
+    string m_sTextAmmoMag = "";
+    public Text oTextAmmoReserve;
+    string m_sTextAmmoReserve = "";
     #endregion output text obj refs declarations
     //-----------------------------------------------------
 
 
     void Start()
     {
+        //set colour of every element
+        //this could probably be done way better with reflection getting every var of type UnityEngine Text but i'm not smart enough to figure that out
+        oTextDebugReadout.color     = m_cTextColour;
+        oTextWaveCounter.color      = m_cTextColour;
+        oTextWaveTimer.color        = m_cTextColour;
+        oTextStarstoneElement.color = m_cTextColour;
+        oTextAmmoMag.color          = m_cTextColour;
+        oTextAmmoReserve.color      = m_cTextColour;
     }
 
     void Update()
@@ -129,17 +149,19 @@ public class HUDController : MonoBehaviour
         //wave starstone element
         m_sTextStarstoneElement = m_eWaveStarstoneElement.ToString();
 
-        //ammo counter
-        m_sTextAmmo = (
-            m_iCurrentWeaponAmmoMagazine + "\\" + m_iCurrentWeaponMagSize +
-            "\n" + m_iCurrentWeaponAmmoReserve + " "
-            );
+        //ammo mag
+        m_sTextAmmoMag = m_iCurrentWeaponAmmoMagazine + "\\" + m_iCurrentWeaponMagSize;
+        //ammo reserve
+        m_sTextAmmoReserve = m_iCurrentWeaponAmmoReserve.ToString();
 
 
 
-        //kinda awkward place for this line to be but it's Fine unless we need flexible colour changing options for designers to use
+        //kinda awkward place for these lines to be but It's Fine unless we need flexible colour changing options for designers to use
         //starstone colour
         oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
+        //ammo counter colour (lerp)
+        oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlert, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponMagSize);
+
 
         //refresh HUD
         Write();
@@ -152,6 +174,7 @@ public class HUDController : MonoBehaviour
         oTextWaveCounter.text       = m_sTextWaveCounter;
         oTextWaveTimer.text         = m_sTextWaveTimer;
         oTextStarstoneElement.text  = m_sTextStarstoneElement;
-        oTextAmmo.text              = m_sTextAmmo;
+        oTextAmmoMag.text           = m_sTextAmmoMag;
+        oTextAmmoReserve.text       = m_sTextAmmoReserve;
     }
 }
