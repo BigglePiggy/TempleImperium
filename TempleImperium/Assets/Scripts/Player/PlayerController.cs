@@ -27,6 +27,9 @@ public class PlayerController : MonoBehaviour
     public Vector3 horizontalDrag;
     public Vector3 airHorizontalDrag;
     public float sprintLimitIncrease;
+    public GameObject grenade;
+    public float offensiveCooldown;
+    public float defensiveCooldown;    
 
     //Private
     private float currentRecoil;
@@ -40,11 +43,14 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
     private bool isJumping;
     private bool applyGravity;
+    private float offensiveCurrentCooldown;
+    private float defensiveCurrentCooldown;
 
     //Components    
     private Transform playerCamera;
     private PlayerGun primaryGun;
     private PlayerGun secondaryGun;
+    private Transform grenadeOrigin;
     private Rigidbody playerRb;
     private AudioSource audioOrigin;
 
@@ -58,6 +64,7 @@ public class PlayerController : MonoBehaviour
         //variables
         playerRb = GetComponent<Rigidbody>();
         audioOrigin = GetComponent<AudioSource>();
+        grenadeOrigin = transform.Find("Player Camera").transform.Find("Grenade Origin");
         onSlope = false;
         isGrounded = false;
         isJumping = false;
@@ -72,6 +79,10 @@ public class PlayerController : MonoBehaviour
 
         //Primary gun active
         primaryGun._startHolding();
+
+        //Setting
+        offensiveCurrentCooldown = offensiveCooldown;
+        defensiveCurrentCooldown = defensiveCooldown;
     }
 
     //Called per frame
@@ -199,6 +210,40 @@ public class PlayerController : MonoBehaviour
         { sinceLastJump += Time.deltaTime; }
         else if (isGrounded)
         { isJumping = false; }
+
+
+        //Offensive ability
+        if(Input.GetKeyDown(KeyCode.Q) && offensiveCurrentCooldown >= offensiveCooldown) 
+        {
+            _offensiveAbility();
+            offensiveCurrentCooldown = 0;
+        }
+
+        //Defensive ability
+        if (Input.GetKeyDown(KeyCode.E) && defensiveCurrentCooldown >= defensiveCooldown)
+        {
+            _defensiveAbility();
+            defensiveCurrentCooldown = 0;
+        }
+
+        //Increase Cooldown Counters
+        if(offensiveCurrentCooldown < offensiveCooldown) 
+        { offensiveCurrentCooldown += Time.deltaTime; }
+
+        if (defensiveCurrentCooldown < defensiveCooldown)
+        { defensiveCurrentCooldown += Time.deltaTime; }
+    }    
+
+    //Offensive ability
+    private void _offensiveAbility() 
+    {
+
+    }
+
+    //Defensive ability
+    private void _defensiveAbility()
+    {
+        Instantiate(grenade, grenadeOrigin.position, grenadeOrigin.rotation);
     }
 
     //Weapon switching

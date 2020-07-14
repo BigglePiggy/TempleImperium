@@ -66,7 +66,7 @@ public class EnemyController : MonoBehaviour
     void Update()
     {
         _playerInSight();
-        //_turning();
+        _turning();
         _pathUpdate();
         _pathRead();
     }
@@ -283,6 +283,11 @@ public class EnemyController : MonoBehaviour
         //Slope sliding
         if (moving == false && onSlope && enemyRb.velocity.y != 0)
         { applyGravity = false; }
+        else { applyGravity = true; }
+
+        //Slope climbing
+        if (onSlope) 
+        { applyGravity = false;  }
         else { applyGravity = true; }
     }
 
