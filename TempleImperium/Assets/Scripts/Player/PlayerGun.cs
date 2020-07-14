@@ -49,6 +49,7 @@ public class PlayerGun : MonoBehaviour
     private PlayerController playerController;
     private ParticleSystem bulletParticleSystem;
     private MeshRenderer meshRenderer;
+    private HUDController hudController;
 
     //Sound effects
     public AudioClip shotEffect;
@@ -70,6 +71,7 @@ public class PlayerGun : MonoBehaviour
         audioOrigin = GetComponent<AudioSource>();
         playerController = transform.root.GetComponent<PlayerController>();
         meshRenderer = GetComponent<MeshRenderer>();
+        hudController = GameObject.Find("HUD").GetComponent<HUDController>();
 
         if (particleBased)
         { bulletParticleSystem = bulletOrigin.GetComponent<ParticleSystem>(); }
@@ -81,6 +83,7 @@ public class PlayerGun : MonoBehaviour
         if (isHeld)
         {
             _inputs();
+            _hudValues();
         }
     }
 
@@ -198,6 +201,13 @@ public class PlayerGun : MonoBehaviour
             right = true;
             left = false;
         }
+    }
+
+    //Hud value writing
+    private void _hudValues()
+    {
+        hudController.CurrentWeaponAmmoMagazine = currentMagCapacity;
+        hudController.CurrentWeaponAmmoReserve = ammoCount;
     }
 
     ///Public
