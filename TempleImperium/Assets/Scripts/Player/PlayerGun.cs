@@ -36,7 +36,6 @@ public class PlayerGun : MonoBehaviour
     private int currentMagCapacity;
     private float timeSinceLastShot;
     private float reloadProgress;
-
     private bool left;
     private bool right;
     private float startTime;

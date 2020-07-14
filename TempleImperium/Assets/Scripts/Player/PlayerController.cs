@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
 {
     ////Declarations
     //Public
+    public float startingHealth;
     public float xSensitivity, ySensitivity;
     public float downAngleLimit, upAngleLimit;
     public float gravity;
@@ -45,6 +46,7 @@ public class PlayerController : MonoBehaviour
     private bool applyGravity;
     private float offensiveCurrentCooldown;
     private float defensiveCurrentCooldown;
+    private float health;
 
     //Components    
     private Transform playerCamera;
@@ -83,6 +85,7 @@ public class PlayerController : MonoBehaviour
         //Setting
         offensiveCurrentCooldown = offensiveCooldown;
         defensiveCurrentCooldown = defensiveCooldown;
+        health = startingHealth;
     }
 
     //Called per frame
@@ -449,5 +452,12 @@ public class PlayerController : MonoBehaviour
     public void _shotFired()
     {
         currentRecoil = recoil;
+    }
+
+    //Take damage
+    public void _takeDamage(float damage) 
+    {
+        health -= damage;
+        Debug.Log(health);
     }
 }
