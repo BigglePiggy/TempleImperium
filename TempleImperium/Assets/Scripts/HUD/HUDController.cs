@@ -131,7 +131,8 @@ public class HUDController : MonoBehaviour
 
         //ammo counter
         m_sTextAmmo = (
-            m_iCurrentWeaponAmmoMagazine + "\\"
+            m_iCurrentWeaponAmmoMagazine + "\\" + m_iCurrentWeaponMagSize +
+            "\n" + m_iCurrentWeaponAmmoReserve + " "
             );
 
 
