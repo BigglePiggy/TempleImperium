@@ -48,6 +48,12 @@ public class HUDController : MonoBehaviour
     private GameLogic.GameplayPhase m_eGameplayPhase;
     public GameLogic.GameplayPhase GameplayPhase { set { m_eGameplayPhase = value; } }
     //--
+    private int m_iCurrentWeaponAmmoMagazine;
+    public int CurrentWeaponAmmoMagazine { set { m_iCurrentWeaponAmmoMagazine = value; } }
+    //--
+    private int m_iCurrentWeaponAmmoReserve;
+    public int CurrentWeaponAmmoReserve { set { m_iCurrentWeaponAmmoReserve = value; } }
+    //--
 
     #endregion getset declarations
 
