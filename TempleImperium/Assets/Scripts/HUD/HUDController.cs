@@ -51,6 +51,9 @@ public class HUDController : MonoBehaviour
     private int m_iCurrentWeaponAmmoMagazine;
     public int CurrentWeaponAmmoMagazine { set { m_iCurrentWeaponAmmoMagazine = value; } }
     //--
+    private int m_iCurrentWeaponMagSize;
+    public int CurrentWeaponMagSize { set { m_iCurrentWeaponMagSize = value; } }
+    //--
     private int m_iCurrentWeaponAmmoReserve;
     public int CurrentWeaponAmmoReserve { set { m_iCurrentWeaponAmmoReserve = value; } }
     //--
@@ -73,6 +76,8 @@ public class HUDController : MonoBehaviour
     string m_sTextWaveTimer = "";
     public Text oTextStarstoneElement;
     string m_sTextStarstoneElement = "";
+    public Text oTextAmmo;
+    string m_sTextAmmo = "";
     #endregion output text obj refs declarations
     //-----------------------------------------------------
 
@@ -121,8 +126,13 @@ public class HUDController : MonoBehaviour
         //wave counter
         m_sTextWaveCounter = "Wave " + (m_iWaveCounter + 1); //(0 based)
 
-        //starstone element
+        //wave starstone element
         m_sTextStarstoneElement = m_eWaveStarstoneElement.ToString();
+
+        //ammo counter
+        m_sTextAmmo = (
+            m_iCurrentWeaponAmmoMagazine + "\\"
+            );
 
 
 
@@ -141,6 +151,6 @@ public class HUDController : MonoBehaviour
         oTextWaveCounter.text       = m_sTextWaveCounter;
         oTextWaveTimer.text         = m_sTextWaveTimer;
         oTextStarstoneElement.text  = m_sTextStarstoneElement;
-        
+        oTextAmmo.text              = m_sTextAmmo;
     }
 }
