@@ -216,14 +216,14 @@ public class GameLogic : MonoBehaviour
         {
             case GameplayPhase.Init:        //if init
                 //initialise game
-                Debug.Log("enactphase() switch firing Init");
+                //Debug.Log("enactphase() switch firing Init");
 
                 //put initialisation things here!
                 m_iTickerCurrentPhase = 0;//immediately refire this function for PreGame phase
                 break;
 
             case GameplayPhase.PreGame:     //if pregame
-                Debug.Log("enactphase() switch firing PreGame");
+                //Debug.Log("enactphase() switch firing PreGame");
 
                 //pregame is mostly just a countdown to start wave1sub1
 
@@ -235,7 +235,7 @@ public class GameLogic : MonoBehaviour
                 break;
 
             case GameplayPhase.Subwave:
-                Debug.Log("enactphase() switch firing Subwave");
+                //Debug.Log("enactphase() switch firing Subwave");
 
                 //subwaves are combat sections.
 
@@ -268,14 +268,14 @@ public class GameLogic : MonoBehaviour
                 break;
 
             case GameplayPhase.InbetweenSubwave:
-                Debug.Log("enactphase() switch firing InbetweenSubwave");
+                //Debug.Log("enactphase() switch firing InbetweenSubwave");
                 //this one's called when the player's just beaten a SUBwave - game's waiting to spawn next batch, wave counter's still going
 
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iSubWaveRestDuration);
                 break;
 
             case GameplayPhase.InbetweenWave:
-                Debug.Log("enactphase() switch firing InbetweenWave");
+                //Debug.Log("enactphase() switch firing InbetweenWave");
                 //wave beaten, player's resting before the next wave starts.
                 //turn off WAVE timer
                 m_bWaveTimerActive = false;
@@ -288,7 +288,7 @@ public class GameLogic : MonoBehaviour
                 break;
 
             case GameplayPhase.PostGame:
-                Debug.Log("enactphase() switch firing PostGame");
+                //Debug.Log("enactphase() switch firing PostGame");
                 //win!
                 Debug.LogWarning("gamelogic enactphase() doesn't have a win condition programmed yet!");
                 break;
@@ -306,7 +306,7 @@ public class GameLogic : MonoBehaviour
     }
     #endregion
 
-#region wave arbitrary event handling
+    #region wave arbitrary event handling
     //called when an enemy dies
     public void WaveEventEnemyDeath()
     {
