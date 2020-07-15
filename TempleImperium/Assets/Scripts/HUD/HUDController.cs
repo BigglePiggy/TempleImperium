@@ -88,6 +88,8 @@ public class HUDController : MonoBehaviour
     string m_sTextStarstoneElement = "";
     public Text oTextAmmoMag;
     string m_sTextAmmoMag = "";
+    public Text oTextAmmoMagMax;
+    string m_sTextAmmoMagMax = "";
     public Text oTextAmmoReserve;
     string m_sTextAmmoReserve = "";
     #endregion output text obj refs declarations
@@ -97,13 +99,26 @@ public class HUDController : MonoBehaviour
     void Start()
     {
         //set colour of every element
-        //this could probably be done way better with reflection getting every var of type UnityEngine Text but i'm not smart enough to figure that out
+
         oTextDebugReadout.color     = m_cTextColour;
         oTextWaveCounter.color      = m_cTextColour;
         oTextWaveTimer.color        = m_cTextColour;
         oTextStarstoneElement.color = m_cTextColour;
         oTextAmmoMag.color          = m_cTextColour;
+        oTextAmmoMagMax.color       = m_cTextColour;
         oTextAmmoReserve.color      = m_cTextColour;
+
+
+        //reflection attempt
+        //TODO make me work somehow? PropertyInfo.SetValue wants an object and i'm not sure why / how to give it a UnityEngine.Text
+        //Text dummy = new Text();  //grrr let me instantiate in code you cowards
+        /*
+        PropertyInfo[] m_ReflectionPropertyInfos = typeof(Text).GetProperties();
+        foreach (PropertyInfo m_ThisPropertyInfo in m_ReflectionPropertyInfos)
+        {
+            m_ThisPropertyInfo.SetValue(m_ThisPropertyInfo, m_cTextColour);
+        }
+        */
     }
 
     void Update()
@@ -150,7 +165,9 @@ public class HUDController : MonoBehaviour
         m_sTextStarstoneElement = m_eWaveStarstoneElement.ToString();
 
         //ammo mag
-        m_sTextAmmoMag = m_iCurrentWeaponAmmoMagazine + "\\" + m_iCurrentWeaponMagSize;
+        m_sTextAmmoMag = m_iCurrentWeaponAmmoMagazine.ToString();
+        //ammo mag max
+        m_sTextAmmoMagMax = "\\" + m_iCurrentWeaponMagSize;
         //ammo reserve
         m_sTextAmmoReserve = m_iCurrentWeaponAmmoReserve.ToString();
 
@@ -175,6 +192,7 @@ public class HUDController : MonoBehaviour
         oTextWaveTimer.text         = m_sTextWaveTimer;
         oTextStarstoneElement.text  = m_sTextStarstoneElement;
         oTextAmmoMag.text           = m_sTextAmmoMag;
+        oTextAmmoMagMax.text        = m_sTextAmmoMagMax;
         oTextAmmoReserve.text       = m_sTextAmmoReserve;
     }
 }
