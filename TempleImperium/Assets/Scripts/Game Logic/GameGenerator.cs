@@ -24,5 +24,6 @@ public class GameGenerator : MonoBehaviour
         //change material based on element!
         //TODO
         //generic functions starstone enum --> material reference function?
+        Debug.LogWarning("bug Ase about programming GameGenerator.SetElement()!");
     }
 }
