@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
     Transform m_grenadeOrigin;  //Defensive ability grenade origin  
     #endregion
 
-    #region Core locations
+
     //Initalization
     private void Start()
     {
@@ -137,10 +137,9 @@ public class PlayerController : MonoBehaviour
         LinearDrag();
         VelocityLimits();
     }
-    #endregion
 
-    ////Bespoke functions
-    ///Private
+
+    #region Mouse & Weapons
     private void MouseInput()
     {
         //Mouse Axis
@@ -181,7 +180,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Keyboard inputs
+    public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
+    {
+        m_gunRecoil = newRecoil;
+        m_gunRecoilDampening = newRecoilDampening;
+        m_gunRecoilControl = newRecoilControl;
+    }
+
+    public void ShotFired()
+    {
+        m_currentRecoil = m_gunRecoil;
+    }
+
+    private void WeaponSwitching()
+    {
+        //Switch to primary
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot1) && m_primaryGun._getIsHeld() == false)
+        {
+            m_secondaryGun._stopHolding();
+            m_primaryGun._startHolding();
+        }
+
+        //Switch to secondary
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot2) && m_secondaryGun._getIsHeld() == false)
+        {
+            m_primaryGun._stopHolding();
+            m_secondaryGun._startHolding();
+        }
+    }
+    #endregion
+
+
+    #region Keyboard & Abilities
     private void KeyboardInput()
     {
         ////Left & Right
@@ -268,37 +298,19 @@ public class PlayerController : MonoBehaviour
         { m_defensiveCurrentCooldown += Time.deltaTime; }
     }
 
-    //Offensive ability
     private void OffensiveAbility()
     {
 
     }
 
-    //Defensive ability
     private void DefensiveAbility()
     {
         Instantiate(grenade, m_grenadeOrigin.position, m_grenadeOrigin.rotation);
     }
+    #endregion
 
-    //Weapon switching
-    private void WeaponSwitching()
-    {
-        //Switch to primary
-        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot1) && m_primaryGun._getIsHeld() == false)
-        {
-            m_secondaryGun._stopHolding();
-            m_primaryGun._startHolding();
-        }
 
-        //Switch to secondary
-        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot2) && m_secondaryGun._getIsHeld() == false)
-        {
-            m_primaryGun._stopHolding();
-            m_secondaryGun._startHolding();
-        }
-    }
-
-    //Grounded check
+    #region Physics & Movement
     private void ExtremityCheck()
     {
         float startHeight = -0.88f;
@@ -345,7 +357,6 @@ public class PlayerController : MonoBehaviour
         { m_isGrounded = false; }
     }
 
-    //Movement application
     private void Movement()
     {
         Vector3 direction = new Vector3();
@@ -381,7 +392,6 @@ public class PlayerController : MonoBehaviour
         m_playerRb.AddRelativeForce(new Vector3(direction.normalized.x * speeds.x, 0, direction.normalized.z * speeds.z) * (Time.deltaTime * 100), ForceMode.Acceleration);
     }
 
-    //Velocity limiter
     private void VelocityLimits()
     {
         //Velocity relative to view
@@ -415,7 +425,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Linear drag 
     private void LinearDrag()
     {
         //Velocity relative to view
@@ -449,7 +458,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Gravity
     private void Gravity()
     {
         //Gravity
@@ -457,7 +465,6 @@ public class PlayerController : MonoBehaviour
         { m_playerRb.AddForce(Vector3.down * m_gravity * (Time.deltaTime * 100), ForceMode.Acceleration); }
     }
 
-    //Exceptions
     private void Exceptions()
     {
         //Slope stop Y velocity Avoidance
@@ -469,25 +476,13 @@ public class PlayerController : MonoBehaviour
         { m_applyGravity = false; }
         else { m_applyGravity = true; }
     }
+    #endregion
 
-    ///Public
-    //Recoil values
-    public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
-    {
-        m_gunRecoil = newRecoil;
-        m_gunRecoilDampening = newRecoilDampening;
-        m_gunRecoilControl = newRecoilControl;
-    }
 
-    //Shot fired
-    public void ShotFired()
-    {
-        m_currentRecoil = m_gunRecoil;
-    }
-
-    //Take damage
+    #region Health & Player state
     public void TakeDamage(float damage)
     {
         m_health -= damage;
     }
+    #endregion
 }
