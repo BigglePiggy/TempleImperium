@@ -44,6 +44,10 @@ public class PlayerGun : MonoBehaviour
     private Vector3 objectPosition;
 
     //Components
+    private SettingsObject settings;
+    public void setSettingsObject(SettingsObject value)
+    { settings = value; }
+
     private Transform bulletOrigin;
     private AudioSource audioOrigin;
     private PlayerController playerController;
@@ -105,7 +109,7 @@ public class PlayerGun : MonoBehaviour
         if (currentMagCapacity != 0 && reloadProgress >= reloadTime)
         {
             //Automatic
-            if (automatic && Input.GetMouseButton(0) && timeSinceLastShot >= fireRate)
+            if (automatic && Input.GetKey(settings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
             {
                 currentMagCapacity--;
                 timeSinceLastShot = 0;
@@ -131,7 +135,7 @@ public class PlayerGun : MonoBehaviour
             }
 
             //Semi Automatic
-            else if (automatic == false && Input.GetMouseButtonDown(0) && timeSinceLastShot >= fireRate)
+            else if (automatic == false && Input.GetKeyDown(settings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
             {
                 currentMagCapacity--;
                 timeSinceLastShot = 0;
@@ -155,7 +159,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         ////Reload
-        if (Input.GetKeyDown(KeyCode.R) && currentMagCapacity != maxMagCapacity && ammoCount > 0)
+        if (Input.GetKeyDown(settings.m_kcKeyReload) && currentMagCapacity != maxMagCapacity && ammoCount > 0)
         {
             reloadProgress = 0;
 
@@ -183,7 +187,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Down - Go left
-        if (Input.GetMouseButtonDown(1))
+        if (Input.GetKeyDown(settings.m_kcKeyAltFire))
         {
             startTime = Time.time;
             objectPosition = transform.localPosition;
@@ -193,7 +197,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Up - Go right
-        if (Input.GetMouseButtonUp(1))
+        if (Input.GetKeyUp(settings.m_kcKeyAltFire))
         {
             startTime = Time.time;
             objectPosition = transform.localPosition;

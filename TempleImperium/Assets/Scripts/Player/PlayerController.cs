@@ -49,6 +49,10 @@ public class PlayerController : MonoBehaviour
     private float health;
 
     //Components    
+    private SettingsObject settings; 
+    public void setSettingsObject(SettingsObject value)  
+    { settings = value;  }
+
     private Transform playerCamera;
     private PlayerGun primaryGun;
     private PlayerGun secondaryGun;
@@ -155,48 +159,48 @@ public class PlayerController : MonoBehaviour
     {
         ////Left & Right
         //Records the last direction pressed
-        if (Input.GetKeyDown(KeyCode.A))
+        if (Input.GetKeyDown(settings.m_kcKeyMoveLeft))
         { lastKeyDownX = "Left"; }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(settings.m_kcKeyMoveRight))
         { lastKeyDownX = "Right"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+        if (Input.GetKey(settings.m_kcKeyMoveLeft) && Input.GetKey(settings.m_kcKeyMoveRight))
         { xDirection = lastKeyDownX; }
         else
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(settings.m_kcKeyMoveLeft))
             { xDirection = "Left"; }
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(settings.m_kcKeyMoveRight))
             { xDirection = "Right"; }
         }
         //No input setting
-        if (Input.GetKey(KeyCode.A) == false && Input.GetKey(KeyCode.D) == false)
+        if (Input.GetKey(settings.m_kcKeyMoveLeft) == false && Input.GetKey(settings.m_kcKeyMoveRight) == false)
         { xDirection = "None"; }
 
 
         ////Forward & Back
         //Records the last direction pressed
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(settings.m_kcKeyMoveForward))
         { lastKeyDownZ = "Forward"; }
-        if (Input.GetKeyDown(KeyCode.S))
+        if (Input.GetKeyDown(settings.m_kcKeyMoveBackward))
         { lastKeyDownZ = "Back"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.S))
+        if (Input.GetKey(settings.m_kcKeyMoveForward) && Input.GetKey(settings.m_kcKeyMoveBackward))
         { zDirection = lastKeyDownZ; }
         else
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKey(settings.m_kcKeyMoveForward))
             { zDirection = "Forward"; }
-            if (Input.GetKey(KeyCode.S))
+            if (Input.GetKey(settings.m_kcKeyMoveBackward))
             { zDirection = "Back"; }
         }
         //No input setting
-        if (Input.GetKey(KeyCode.W) == false && Input.GetKey(KeyCode.S) == false)
+        if (Input.GetKey(settings.m_kcKeyMoveForward) == false && Input.GetKey(settings.m_kcKeyMoveBackward) == false)
         { zDirection = "None"; }
 
 
         //Jump
-        if (Input.GetKeyDown(KeyCode.Space) && sinceLastJump > jumpBuffer && isGrounded)
+        if (Input.GetKeyDown(settings.m_kcKeyJump) && sinceLastJump > jumpBuffer && isGrounded)
         {
             isJumping = true;
 
@@ -216,14 +220,14 @@ public class PlayerController : MonoBehaviour
 
 
         //Offensive ability
-        if (Input.GetKeyDown(KeyCode.Q) && offensiveCurrentCooldown >= offensiveCooldown)
+        if (Input.GetKeyDown(settings.m_kcKeyAbility1) && offensiveCurrentCooldown >= offensiveCooldown)
         {
             _offensiveAbility();
             offensiveCurrentCooldown = 0;
         }
 
         //Defensive ability
-        if (Input.GetKeyDown(KeyCode.E) && defensiveCurrentCooldown >= defensiveCooldown)
+        if (Input.GetKeyDown(settings.m_kcKeyAbility2) && defensiveCurrentCooldown >= defensiveCooldown)
         {
             _defensiveAbility();
             defensiveCurrentCooldown = 0;
@@ -253,14 +257,14 @@ public class PlayerController : MonoBehaviour
     private void _weaponSwitching()
     {
         //Switch to primary
-        if (Input.GetKeyDown(KeyCode.Alpha1) && primaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(settings.m_kcKeyWeaponSlot1) && primaryGun._getIsHeld() == false)
         {
             secondaryGun._stopHolding();
             primaryGun._startHolding();
         }
 
         //Switch to secondary
-        if (Input.GetKeyDown(KeyCode.Alpha2) && secondaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(settings.m_kcKeyWeaponSlot2) && secondaryGun._getIsHeld() == false)
         {
             primaryGun._stopHolding();
             secondaryGun._startHolding();

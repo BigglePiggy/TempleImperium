@@ -50,6 +50,9 @@ public class SettingsManager : MonoBehaviour
         if (m_SettingsObject == null || input_RebuildSettingsObject) { BuildSettingsObject(); }
 
         //todo dispatch to scripts!
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().setSettingsObject(m_SettingsObject);
+        GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Primary Gun").GetComponent<PlayerGun>().setSettingsObject(m_SettingsObject);
+        GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Secondary Gun").GetComponent<PlayerGun>().setSettingsObject(m_SettingsObject);
     }
     public void BuildSettingsObject()
     {
@@ -77,6 +80,7 @@ public class SettingsManager : MonoBehaviour
     void Start()
     {
         ReadFromPrefs();
+        SendToScripts(true);
     }
     void Update()
     {
