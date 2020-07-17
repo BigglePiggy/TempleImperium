@@ -177,14 +177,6 @@ public class HUDController : MonoBehaviour
 
 
 
-        //colour ------------------------------
-        //starstone colour
-        oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
-        //ammo mag counter colour (lerp)
-        oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponAmmoMagazineMax);
-        //ammo reserve counter colour (lerp <50%, highlight max)
-
-
         //refresh HUD
         Write();
     }
@@ -199,5 +191,14 @@ public class HUDController : MonoBehaviour
         oTextAmmoMag.text           = m_sTextAmmoMag;
         oTextAmmoMagMax.text        = m_sTextAmmoMagMax;
         oTextAmmoReserve.text       = m_sTextAmmoReserve;
+
+        //colour ------------------------------
+        //starstone colour
+        oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
+        //ammo mag counter colour (lerp)
+        oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponAmmoMagazineMax);
+        //ammo reserve counter colour (lerp <50%, highlight max)
+        oTextAmmoReserve.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoReserve, m_iCurrentWeaponAmmoReserveMax / 2);
+        if (m_iCurrentWeaponAmmoReserve == m_iCurrentWeaponAmmoReserveMax) { oTextAmmoReserve.color = m_cTextColourAlertGood; }
     }
 }
