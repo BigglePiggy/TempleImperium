@@ -52,11 +52,14 @@ public class HUDController : MonoBehaviour
     private int m_iCurrentWeaponAmmoMagazine;
     public int CurrentWeaponAmmoMagazine { set { m_iCurrentWeaponAmmoMagazine = value; } }
     //--
-    private int m_iCurrentWeaponMagSize;
-    public int CurrentWeaponMagSize { set { m_iCurrentWeaponMagSize = value; } }
+    private int m_iCurrentWeaponAmmoMagazineMax;
+    public int CurrentWeaponAmmoMagazineMax { set { m_iCurrentWeaponAmmoMagazineMax = value; } }
     //--
     private int m_iCurrentWeaponAmmoReserve;
     public int CurrentWeaponAmmoReserve { set { m_iCurrentWeaponAmmoReserve = value; } }
+    //--
+    private int m_iCurrentWeaponAmmoReserveMax;
+    public int CurrentWeaponAmmoReserveMax { set { m_iCurrentWeaponAmmoReserveMax = value; } }
     //--
     private float m_fPlayerHealth;
     public float PlayerHealth { set { m_fPlayerHealth = value; } }
@@ -72,7 +75,8 @@ public class HUDController : MonoBehaviour
     public bool m_bShowDebug = false;
     //magazine colour lerps
     public Color m_cTextColour = Color.white;
-    public Color m_cTextColourAlert = Color.red;
+    public Color m_cTextColourAlertBad = Color.red;
+    public Color m_cTextColourAlertGood = Color.green;
 
     //-----------------------------------------------------
     //text object references (and their private output strings)
@@ -167,17 +171,18 @@ public class HUDController : MonoBehaviour
         //ammo mag
         m_sTextAmmoMag = m_iCurrentWeaponAmmoMagazine.ToString();
         //ammo mag max
-        m_sTextAmmoMagMax = "\\" + m_iCurrentWeaponMagSize;
+        m_sTextAmmoMagMax = "\\" + m_iCurrentWeaponAmmoMagazineMax;
         //ammo reserve
         m_sTextAmmoReserve = m_iCurrentWeaponAmmoReserve.ToString();
 
 
 
-        //kinda awkward place for these lines to be but It's Fine unless we need flexible colour changing options for designers to use
+        //colour ------------------------------
         //starstone colour
         oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
-        //ammo counter colour (lerp)
-        oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlert, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponMagSize);
+        //ammo mag counter colour (lerp)
+        oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponAmmoMagazineMax);
+        //ammo reserve counter colour (lerp <50%, highlight max)
 
 
         //refresh HUD
