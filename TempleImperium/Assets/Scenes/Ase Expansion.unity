@@ -2661,7 +2661,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.060456045, y: 0.8726142, z: 0.111871555, w: -0.4715658}
+  m_LocalRotation: {x: -0.069574304, y: 0.90365225, z: 0.16089927, w: 0.39074743}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3039,7 +3039,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: 0.07203764, y: 0.8858447, z: 0.14698705, w: -0.43414813}
+  m_LocalRotation: {x: -0.06974365, y: 0.90386856, z: 0.16168338, w: 0.3898922}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5385,8 +5385,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_bShowDebug: 1
+  m_iTimerAlertThreshold: 30
   m_cTextColour: {r: 1, g: 1, b: 1, a: 1}
-  m_cTextColourAlert: {r: 1, g: 0, b: 0, a: 1}
+  m_cTextColourAlertBad: {r: 1, g: 0, b: 0, a: 1}
+  m_cTextColourAlertGood: {r: 0, g: 1, b: 0, a: 1}
   oTextDebugReadout: {fileID: 572815487}
   oTextWaveCounter: {fileID: 1754752372}
   oTextWaveTimer: {fileID: 1867551824}
@@ -13511,7 +13513,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: 0.081980444, y: 0.866578, z: 0.15170161, w: -0.46830383}
+  m_LocalRotation: {x: -0.06999258, y: 0.90347946, z: 0.16186658, w: 0.3906727}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -14359,12 +14361,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveNickname: wave 1
-  m_iWaveDuration: 50
+  m_iWaveDuration: 40
   m_iSubWaveRestDuration: 3
   m_iSubWaveKillLenience: 0
   m_eStarstoneElement: 3
   m_iPylonCount: 4
-  m_fPylonBonusTime: 25
+  m_fPylonBonusTime: 15
   m_sSubWavesList:
   - 1,1,1
   - 5,0,0
@@ -20805,7 +20807,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: 0.053010434, y: 0.89141834, z: 0.108163565, w: -0.43687972}
+  m_LocalRotation: {x: -0.06932676, y: 0.90404093, z: 0.16071692, w: 0.38996658}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

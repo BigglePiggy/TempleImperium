@@ -56,6 +56,7 @@ public class GenericFunctions
     /// <returns></returns>
     public Color LerpColor(Color input_minColor, Color input_maxColor, float input_count, float input_countMax)
     {
+        //unnessecary
         //if count > max, switch
         /*
         if(input_count > input_countMax)

@@ -71,9 +71,12 @@ public class HUDController : MonoBehaviour
     #endregion getset declarations
 
     //-----------------------------------------------------
-    //misc public vars
+    //settings vars
     public bool m_bShowDebug = false;
-    //magazine colour lerps
+    [Tooltip("Start fading timer colour from default to AlertBad at this number of seconds")]
+    public int m_iTimerAlertThreshold = 30;
+    [Space]
+    //colours
     public Color m_cTextColour = Color.white;
     public Color m_cTextColourAlertBad = Color.red;
     public Color m_cTextColourAlertGood = Color.green;
@@ -141,18 +144,21 @@ public class HUDController : MonoBehaviour
         else { m_sTextDebugReadout = ""; }
 
         //timer
+        float m_iTimerNumber = 0;   //this exists for timer colouring (int.Parse threw TONS of errors on the full string)
         switch (m_eGameplayPhase)
         {
             //write WAVE ticker
             case GameLogic.GameplayPhase.Subwave:
             case GameLogic.GameplayPhase.InbetweenSubwave:
-                m_sTextWaveTimer = "Time: \n" + Mathf.FloorToInt(cGenericFunctions.ConvertTickstoSeconds(m_iWaveTimerTicks)); //ticks --> seconds
+                m_iTimerNumber = Mathf.FloorToInt(cGenericFunctions.ConvertTickstoSeconds(m_iWaveTimerTicks)); //ticks --> seconds
+                m_sTextWaveTimer = "Time: \n" + m_iTimerNumber.ToString();
                 break;
 
             //write PHASE ticker
             case GameLogic.GameplayPhase.InbetweenWave:
             case GameLogic.GameplayPhase.PreGame:
-                m_sTextWaveTimer = "Prepare... \n" + Mathf.FloorToInt(cGenericFunctions.ConvertTickstoSeconds(m_iPhaseTimerTicks)); //ticks --> seconds
+                m_iTimerNumber = Mathf.FloorToInt(cGenericFunctions.ConvertTickstoSeconds(m_iPhaseTimerTicks)); //ticks --> seconds
+                m_sTextWaveTimer = "Prepare... \n" + m_iTimerNumber.ToString(); 
                 break;
 
             //write BLANK
@@ -177,24 +183,23 @@ public class HUDController : MonoBehaviour
 
 
 
-        //refresh HUD
-        Write();
-    }
+        //WRITE --------------------------------------------------------------
 
-    //write to HUD objects
-    void Write()
-    {
-        oTextDebugReadout.text      = m_sTextDebugReadout;
-        oTextWaveCounter.text       = m_sTextWaveCounter;
-        oTextWaveTimer.text         = m_sTextWaveTimer;
-        oTextStarstoneElement.text  = m_sTextStarstoneElement;
-        oTextAmmoMag.text           = m_sTextAmmoMag;
-        oTextAmmoMagMax.text        = m_sTextAmmoMagMax;
-        oTextAmmoReserve.text       = m_sTextAmmoReserve;
+        oTextDebugReadout.text = m_sTextDebugReadout;
+        oTextWaveCounter.text = m_sTextWaveCounter;
+        oTextWaveTimer.text = m_sTextWaveTimer;
+        oTextStarstoneElement.text = m_sTextStarstoneElement;
+        oTextAmmoMag.text = m_sTextAmmoMag;
+        oTextAmmoMagMax.text = m_sTextAmmoMagMax;
+        oTextAmmoReserve.text = m_sTextAmmoReserve;
 
         //colour ------------------------------
         //starstone colour
         oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
+
+        //wave timer
+        oTextWaveTimer.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iTimerNumber, m_iTimerAlertThreshold);
+
         //ammo mag counter colour (lerp)
         oTextAmmoMag.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoMagazine, m_iCurrentWeaponAmmoMagazineMax);
         //ammo reserve counter colour (lerp <50%, highlight max)
