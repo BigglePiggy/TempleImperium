@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
     public float startingHealth;
     public float viewDistance;
     public float stopDistance;
-    private Transform player;
+    public float shootingDistance;
     public float gravity;
     public Vector3 acceleration;
     public float verticalLimit;
@@ -26,6 +26,13 @@ public class EnemyController : MonoBehaviour
     public Vector3 horizontalDrag;
     public Vector3 airHorizontalDrag;
     public Vector2 rotateSpeed;
+    public Vector3 accuracyOffset;
+    public float fireRate;
+    public float maxShotDistance;
+    public float shotDamage;
+
+    //Audio effects
+    public AudioClip shotEffect;
 
     //Private 
     private Stack<Vector3> path;
@@ -36,12 +43,14 @@ public class EnemyController : MonoBehaviour
     private bool moving;
     private bool playerInSight;
     private float currentHealth;
+    private float timeSinceLastShot;
 
     //Components
     private Pathfinder pathfinder;
     private Transform enemyHead;
     private Rigidbody enemyRb;
-
+    private AudioSource audioSource;
+    private Transform player;
 
     //Initalization
     void Start()
@@ -51,6 +60,7 @@ public class EnemyController : MonoBehaviour
         pathfinder = GameObject.FindGameObjectWithTag("Nodes").GetComponent<Pathfinder>();
         enemyHead = transform.Find("Enemy Head");
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        audioSource = GetComponent<AudioSource>();
 
         //Variable assignment
         path = new Stack<Vector3>();
@@ -60,6 +70,7 @@ public class EnemyController : MonoBehaviour
         applyGravity = true;
         moving = true;
         playerInSight = false;
+        timeSinceLastShot = 0;
     }
 
     //Called per frame
@@ -67,6 +78,7 @@ public class EnemyController : MonoBehaviour
     {
         _playerInSight();
         _turning();
+        _shooting();
         _pathUpdate();
         _pathRead();
     }
@@ -175,6 +187,31 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
+    //Shooting
+    private void _shooting()
+    {
+        if (timeSinceLastShot < fireRate)
+        { timeSinceLastShot += Time.deltaTime; }
+
+        if (timeSinceLastShot >= fireRate && playerInSight && Vector3.Distance(transform.position, player.position) < shootingDistance)
+        {
+            Vector3 offset = new Vector3(Random.Range(-accuracyOffset.x, accuracyOffset.x), Random.Range(-accuracyOffset.y, accuracyOffset.y), Random.Range(-accuracyOffset.z, accuracyOffset.z));
+            RaycastHit[] bulletCollisions = Physics.RaycastAll(enemyHead.position, (player.position + offset) - enemyHead.position, viewDistance);
+            Debug.DrawRay(enemyHead.position, (player.position + offset) - enemyHead.position, Color.green, 100);
+
+            if (bulletCollisions.Length > 0)
+            {
+                if (bulletCollisions[0].transform.root.CompareTag("Player"))
+                {
+                    bulletCollisions[0].transform.root.GetComponent<PlayerController>()._takeDamage(shotDamage);
+                }
+            }
+
+            timeSinceLastShot = 0;
+            audioSource.PlayOneShot(shotEffect);
+        }
+    }
+
     //Movement
     private void _movement()
     {
@@ -186,7 +223,7 @@ public class EnemyController : MonoBehaviour
 
         //Movement applciation
         if (moving)
-        { enemyRb.AddRelativeForce(Vector3.forward * acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
+        { enemyRb.AddForce((nextNode - transform.position).normalized * acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
     }
 
     //Velocity limiter
@@ -232,22 +269,6 @@ public class EnemyController : MonoBehaviour
         //Drag application
         if (relativeVelocity.x != 0 || relativeVelocity.z != 0)
         {
-            ////Left 
-            //if (relativeVelocity.x > 0 && xDirection != "Right")
-            //{ enemyRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
-
-            ////Right 
-            //if (relativeVelocity.x < 0 && xDirection != "Left")
-            //{ enemyRb.AddRelativeForce(Vector3.right * (relativeVelocity.x * -drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
-
-            ////Forward 
-            //if (relativeVelocity.z > 0 && zDirection != "Forward")
-            //{ enemyRb.AddRelativeForce(Vector3.back * (relativeVelocity.z * drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
-
-            ////Back
-            //if (relativeVelocity.z < 0 && zDirection != "Back")
-            //{ enemyRb.AddRelativeForce(Vector3.forward * (relativeVelocity.z * -drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
-
             //Left 
             if (relativeVelocity.x > 0)
             { enemyRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
@@ -284,13 +305,18 @@ public class EnemyController : MonoBehaviour
         if (moving == false && onSlope && enemyRb.velocity.y != 0)
         { applyGravity = false; }
         else { applyGravity = true; }
+
+        //Slope climbing
+        if (onSlope)
+        { applyGravity = false; }
+        else { applyGravity = true; }
     }
 
     //Take Damage
     private void _takeDamage(float change)
     {
         if (currentHealth - change < 0)
-        { 
+        {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath();
         }
