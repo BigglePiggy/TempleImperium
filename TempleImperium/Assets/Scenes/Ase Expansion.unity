@@ -2661,7 +2661,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.069574304, y: 0.90365225, z: 0.16089927, w: 0.39074743}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3039,7 +3039,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.06974365, y: 0.90386856, z: 0.16168338, w: 0.3898922}
+  m_LocalRotation: {x: -0, y: 0.8112422, z: -0.58471024, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -13513,7 +13513,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.06999258, y: 0.90347946, z: 0.16186658, w: 0.3906727}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -14592,8 +14592,8 @@ MonoBehaviour:
   m_kcKeyCrouch: 306
   m_kcKeyFire: 323
   m_kcKeyAltFire: 324
-  m_fMouseSensitivityX: 5
-  m_fMouseSensitivityY: 5
+  m_fMouseSensitivityX: 2.25
+  m_fMouseSensitivityY: 2.25
   m_bMouseInvertX: 0
   m_bMouseInvertY: 0
   m_kcKeyReload: 114
@@ -20807,7 +20807,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.06932676, y: 0.90404093, z: 0.16071692, w: 0.38996658}
+  m_LocalRotation: {x: -0, y: 0.78820544, z: -0.61541224, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

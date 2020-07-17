@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     ////Declarations
     //Public
     public float startingHealth;
-    public float xSensitivity, ySensitivity;
     public float downAngleLimit, upAngleLimit;
     public float gravity;
     public Vector3 acceleration;
@@ -116,15 +115,19 @@ public class PlayerController : MonoBehaviour
     ///Private
     private void _mouseInput()
     {
+        //Mouse Axis
+        float rotateVertical = Input.GetAxis("Mouse Y") * settings.m_fMouseSensitivityY * (Time.deltaTime * 100);
+        float rotateHorizontal = Input.GetAxis("Mouse X") * settings.m_fMouseSensitivityX * (Time.deltaTime * 100);
+
+        //Player body rotation
+        transform.Rotate(transform.up * rotateHorizontal);
+
         //Recoil value manager
         if (currentRecoil < 0 && playerCamera.localRotation.x > -0.7 * (upAngleLimit / 90))
         {
             currentRecoil += recoilDampening * (Time.deltaTime * 100);
             playerCamera.Rotate(currentRecoil, 0, 0);
         }
-
-        //Vertical axis
-        float rotateVertical = Input.GetAxis("Mouse Y") * (Time.deltaTime * 100);
 
         //Recoil control
         if (currentRecoil < 0 && rotateVertical < 0)
@@ -138,20 +141,16 @@ public class PlayerController : MonoBehaviour
             if (playerCamera.localRotation.x >= 0.7 * (downAngleLimit / 90))
             {
                 if (rotateVertical > 0)
-                { playerCamera.transform.Rotate(-rotateVertical * ySensitivity, 0, 0); }
+                { playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
             }
             else if (playerCamera.localRotation.x <= -0.7 * (upAngleLimit / 90))
             {
                 if (rotateVertical < 0)
-                { playerCamera.Rotate(-rotateVertical * ySensitivity, 0, 0); }
+                { playerCamera.Rotate(-rotateVertical, 0, 0); }
             }
             else
-            { playerCamera.Rotate(-rotateVertical * ySensitivity, 0, 0); }
+            { playerCamera.Rotate(-rotateVertical, 0, 0); }
         }
-
-        //Player horizontal rotation
-        float rotateHorizontal = Input.GetAxis("Mouse X") * (Time.deltaTime * 100);
-        transform.Rotate(transform.up * rotateHorizontal * xSensitivity);
     }
 
     //Keyboard inputs
