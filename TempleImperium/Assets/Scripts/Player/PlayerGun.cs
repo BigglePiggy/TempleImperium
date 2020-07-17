@@ -209,6 +209,7 @@ public class PlayerGun : MonoBehaviour
         hudController.CurrentWeaponAmmoMagazine = currentMagCapacity;
         hudController.CurrentWeaponAmmoReserve = ammoCount;
         hudController.CurrentWeaponAmmoMagazineMax = maxMagCapacity;
+        hudController.CurrentWeaponAmmoReserveMax = startingAmmoCount;
     }
 
     ///Public
