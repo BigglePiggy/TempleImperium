@@ -35,7 +35,7 @@ public class WaveDataObject
 #if UNITY_EDITOR
     void Start()
     {
-        Debug.LogError("WaveDataObject script attached to a Unity GameObject! this is a C# object class! Use WaveData instead!");
+        Debug.LogError("WaveDataObject script (somehow) attached to a Unity GameObject! this is a C# object class! Use WaveData instead!");
     }
 #endif
 
