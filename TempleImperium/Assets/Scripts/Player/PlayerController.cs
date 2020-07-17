@@ -1,277 +1,305 @@
-﻿//////////////////////////////////////////////////                                              
-//                                              //
-//  PlayerController                            //
-//  Handles all player movement & interactions  //
-//                                              //
-//  Contributors : Eddie                        //
-//                                              //
-////////////////////////////////////////////////// 
-
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
+
+//Created by Eddie
 
 public class PlayerController : MonoBehaviour
 {
-    ////Declarations
-    //Public
-    public float startingHealth;
-    public float downAngleLimit, upAngleLimit;
-    public float gravity;
-    public Vector3 acceleration;
-    public Vector3 airAcceleration;
-    public float jumpPower;
-    public float jumpBuffer;
-    public float verticalLimit;
-    public float horizontalLimit;
-    public Vector3 horizontalDrag;
-    public Vector3 airHorizontalDrag;
-    public float sprintLimitIncrease;
+    //Player controller script - there should be only one player object with an instance of me!
+    //What this script does:
+    /*
+        - handles keyboard and mouse inputs
+        - handles bespoke player phyics
+        - manages weapon switching
+        - manages abilities
+    */
+
+    #region Declarations
+    [Header("Player configuration")]
+    [Tooltip("Maximum health the player can have")]
+    public float m_maximumHealth;
+    [Tooltip("Maximum angle that the player is able to look up at")]
+    public float m_upAngleLimit;
+    [Tooltip("Maximum angle that the player is able to look down at")]
+    public float m_downAngleLimit;
+    [Tooltip("Buffer in seconds between offensive ability uses")]
+    public float m_offensiveCooldown;
+    [Tooltip("Buffer in seconds between defensive ability uses")]
+    public float m_defensiveCooldown;
+    [Tooltip("Prefab of the defenisve ability greande")]
     public GameObject grenade;
-    public float offensiveCooldown;
-    public float defensiveCooldown;
+    [Space]
 
-    //Private
-    private float currentRecoil;
-    private float recoil;
-    private float recoilDampening;
-    private float recoilControl;
-    private string xDirection, zDirection;
-    private string lastKeyDownX, lastKeyDownZ;
-    private float sinceLastJump;
-    private bool onSlope;
-    private bool isGrounded;
-    private bool isJumping;
-    private bool applyGravity;
-    private float offensiveCurrentCooldown;
-    private float defensiveCurrentCooldown;
-    private float health;
+    [Header("Sound effects")]
+    [Tooltip("Effect played when the player jumps")]
+    public AudioClip jumpClip;
+    [Space]
 
-    //Components    
-    private SettingsObject settings; 
-    public void setSettingsObject(SettingsObject value)  
-    { settings = value;  }
+    [Header("Player physics")]
+    [Tooltip("Downward force the player experiences")]
+    public float m_gravity;
+    [Tooltip("Acceleration the player's ground inputs apply")]
+    public Vector3 m_acceleration;
+    [Tooltip("Acceleration the player's in-air inputs apply")]
+    public Vector3 m_airAcceleration;
+    [Tooltip("Maximum Y axis velocity the player can experience")]
+    public float m_verticalLimit;
+    [Tooltip("Maximum Z & X axis velocity the player can experience")]
+    public float m_horizontalLimit;
+    [Tooltip("Z & X axis drag applied to the player whilst on the ground")]
+    public Vector3 m_horizontalDrag;
+    [Tooltip("Z & X axis drag applied to the player whilst in the air")]
+    public Vector3 m_airHorizontalDrag;
+    [Space]
 
-    private Transform playerCamera;
-    private PlayerGun primaryGun;
-    private PlayerGun secondaryGun;
-    private Transform grenadeOrigin;
-    private Rigidbody playerRb;
-    private AudioSource audioOrigin;
-
-    //Sound effects
-    public AudioClip jump;
+    [Tooltip("Increase to the maximum horizonal velocity when sprinting")]
+    public float m_sprintLimitIncrease;
+    [Tooltip("Acceleration the player's jump action applies")]
+    public float m_jumpPower;
+    [Tooltip("Buffer in seconds between jump actions")]
+    public float m_jumpBuffer;
 
 
+    //Recoil 
+    float m_currentRecoil;      //Amount of recoil being applied to the player's veiw
+    float m_gunRecoil;          //Is set to m_currentRecoil when a bullet is shot - Taken from the currently held gun  
+    float m_gunRecoilDampening; //Rate of decay on m_currentRecoil- Taken from the currently held gun   
+    float m_gunRecoilControl;   //Amount of control the player's Y Mouse input has on m_currentRecoil
+
+    //Movement
+    string m_zDirection;    //Holds "Forward" or "Back"
+    string m_xDirection;    //Holds "Left" or "Right"
+    string m_lastKeyDownZ;  //Used to determine the value of m_zDirection
+    string m_lastKeyDownX;  //Used to determine the value of m_xDirection
+
+    float m_sinceLastJump;  //Tracks the jump buffer in seconds
+
+    //Player States
+    bool m_isGrounded;      //Is true when on a surface
+    bool m_onSlope;         //Is true when on a slope
+    bool m_isJumping;       //Is true whilst in the air
+    bool m_applyGravity;    //Changes state dependent on the above three (stops slope momentum issues)
+
+    float m_offensiveCurrentCooldown;   //Tracks the offensive ability cooldown in seconds
+    float m_defensiveCurrentCooldown;   //Tracks the defensive ability cooldown in seconds
+
+    float m_health; //Players current health
+   
+    private SettingsObject m_settings;  //Settings object used to determine all input keys
+    public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
+
+    Rigidbody m_playerRb;       //Rigidbody component
+    AudioSource m_audioOrigin;  //Audio source component
+    PlayerGun m_primaryGun;     //Primary weapon script
+    PlayerGun m_secondaryGun;   //Secondary weapon script
+
+    Transform m_playerCamera;   //Player's POV camera
+    Transform m_grenadeOrigin;  //Defensive ability grenade origin  
+    #endregion
+
+    #region Core locations
     //Initalization
     private void Start()
     {
-        //variables
-        playerRb = GetComponent<Rigidbody>();
-        audioOrigin = GetComponent<AudioSource>();
-        grenadeOrigin = transform.Find("Player Camera").transform.Find("Grenade Origin");
-        onSlope = false;
-        isGrounded = false;
-        isJumping = false;
-        applyGravity = true;
+        m_sinceLastJump = m_jumpBuffer; //Jump buffer setting
+        m_offensiveCurrentCooldown = m_offensiveCooldown;   //Offensive cooldown setting
+        m_defensiveCurrentCooldown = m_defensiveCooldown;   //Defensive cooldown setting
 
-        Cursor.lockState = CursorLockMode.Locked;
-        playerCamera = transform.Find("Player Camera");
+        m_health = m_maximumHealth; //Health set to maximum
 
-        //Gun setting
-        primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();
-        secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();
+        m_playerRb = GetComponent<Rigidbody>();     //Rigidbody reference
+        m_audioOrigin = GetComponent<AudioSource>();    //AudioSource reference
+        m_playerCamera = transform.Find("Player Camera");   //Player Camera reference
+        m_grenadeOrigin = transform.Find("Player Camera").transform.Find("Grenade Origin"); //Grenade Origin reference
 
-        //Primary gun active
-        primaryGun._startHolding();
+        m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
+        m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
+        m_primaryGun._startHolding();   //Primary gun configured to be held
 
-        //Setting
-        offensiveCurrentCooldown = offensiveCooldown;
-        defensiveCurrentCooldown = defensiveCooldown;
-        health = startingHealth;
+        Cursor.lockState = CursorLockMode.Locked;   //Locks the mouse
     }
 
     //Called per frame
     private void Update()
     {
-        _keyboardInput();
-        _mouseInput();
-        _weaponSwitching();
+        KeyboardInput();
+        MouseInput();
+        WeaponSwitching();
     }
 
     //Fixed update
     private void FixedUpdate()
     {
-        _extremityCheck();
-        _exceptions();
-        _gravity();
-        _movement();
-        _linearDrag();
-        _velocityLimits();
+        ExtremityCheck();
+        Exceptions();
+        Gravity();
+        Movement();
+        LinearDrag();
+        VelocityLimits();
     }
-
+    #endregion
 
     ////Bespoke functions
     ///Private
-    private void _mouseInput()
+    private void MouseInput()
     {
         //Mouse Axis
-        float rotateVertical = Input.GetAxis("Mouse Y") * settings.m_fMouseSensitivityY * (Time.deltaTime * 100);
-        float rotateHorizontal = Input.GetAxis("Mouse X") * settings.m_fMouseSensitivityX * (Time.deltaTime * 100);
+        float rotateVertical = Input.GetAxis("Mouse Y") * m_settings.m_fMouseSensitivityY * (Time.deltaTime * 100);
+        float rotateHorizontal = Input.GetAxis("Mouse X") * m_settings.m_fMouseSensitivityX * (Time.deltaTime * 100);
 
         //Player body rotation
         transform.Rotate(transform.up * rotateHorizontal);
 
         //Recoil value manager
-        if (currentRecoil < 0 && playerCamera.localRotation.x > -0.7 * (upAngleLimit / 90))
+        if (m_currentRecoil < 0 && m_playerCamera.localRotation.x > -0.7 * (m_upAngleLimit / 90))
         {
-            currentRecoil += recoilDampening * (Time.deltaTime * 100);
-            playerCamera.Rotate(currentRecoil, 0, 0);
+            m_currentRecoil += m_gunRecoilDampening * (Time.deltaTime * 100);
+            m_playerCamera.Rotate(m_currentRecoil, 0, 0);
         }
 
         //Recoil control
-        if (currentRecoil < 0 && rotateVertical < 0)
+        if (m_currentRecoil < 0 && rotateVertical < 0)
         {
-            playerCamera.transform.Rotate(recoilControl * (Time.deltaTime * 100), 0, 0);
+            m_playerCamera.transform.Rotate(m_gunRecoilControl * (Time.deltaTime * 100), 0, 0);
         }
 
         //Normal control
         else
         {
-            if (playerCamera.localRotation.x >= 0.7 * (downAngleLimit / 90))
+            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))
             {
                 if (rotateVertical > 0)
-                { playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
+                { m_playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
             }
-            else if (playerCamera.localRotation.x <= -0.7 * (upAngleLimit / 90))
+            else if (m_playerCamera.localRotation.x <= -0.7 * (m_upAngleLimit / 90))
             {
                 if (rotateVertical < 0)
-                { playerCamera.Rotate(-rotateVertical, 0, 0); }
+                { m_playerCamera.Rotate(-rotateVertical, 0, 0); }
             }
             else
-            { playerCamera.Rotate(-rotateVertical, 0, 0); }
+            { m_playerCamera.Rotate(-rotateVertical, 0, 0); }
         }
     }
 
     //Keyboard inputs
-    private void _keyboardInput()
+    private void KeyboardInput()
     {
         ////Left & Right
         //Records the last direction pressed
-        if (Input.GetKeyDown(settings.m_kcKeyMoveLeft))
-        { lastKeyDownX = "Left"; }
-        if (Input.GetKeyDown(settings.m_kcKeyMoveRight))
-        { lastKeyDownX = "Right"; }
+        if (Input.GetKeyDown(m_settings.m_kcKeyMoveLeft))
+        { m_lastKeyDownX = "Left"; }
+        if (Input.GetKeyDown(m_settings.m_kcKeyMoveRight))
+        { m_lastKeyDownX = "Right"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(settings.m_kcKeyMoveLeft) && Input.GetKey(settings.m_kcKeyMoveRight))
-        { xDirection = lastKeyDownX; }
+        if (Input.GetKey(m_settings.m_kcKeyMoveLeft) && Input.GetKey(m_settings.m_kcKeyMoveRight))
+        { m_xDirection = m_lastKeyDownX; }
         else
         {
-            if (Input.GetKey(settings.m_kcKeyMoveLeft))
-            { xDirection = "Left"; }
-            if (Input.GetKey(settings.m_kcKeyMoveRight))
-            { xDirection = "Right"; }
+            if (Input.GetKey(m_settings.m_kcKeyMoveLeft))
+            { m_xDirection = "Left"; }
+            if (Input.GetKey(m_settings.m_kcKeyMoveRight))
+            { m_xDirection = "Right"; }
         }
         //No input setting
-        if (Input.GetKey(settings.m_kcKeyMoveLeft) == false && Input.GetKey(settings.m_kcKeyMoveRight) == false)
-        { xDirection = "None"; }
+        if (Input.GetKey(m_settings.m_kcKeyMoveLeft) == false && Input.GetKey(m_settings.m_kcKeyMoveRight) == false)
+        { m_xDirection = "None"; }
 
 
         ////Forward & Back
         //Records the last direction pressed
-        if (Input.GetKeyDown(settings.m_kcKeyMoveForward))
-        { lastKeyDownZ = "Forward"; }
-        if (Input.GetKeyDown(settings.m_kcKeyMoveBackward))
-        { lastKeyDownZ = "Back"; }
+        if (Input.GetKeyDown(m_settings.m_kcKeyMoveForward))
+        { m_lastKeyDownZ = "Forward"; }
+        if (Input.GetKeyDown(m_settings.m_kcKeyMoveBackward))
+        { m_lastKeyDownZ = "Back"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(settings.m_kcKeyMoveForward) && Input.GetKey(settings.m_kcKeyMoveBackward))
-        { zDirection = lastKeyDownZ; }
+        if (Input.GetKey(m_settings.m_kcKeyMoveForward) && Input.GetKey(m_settings.m_kcKeyMoveBackward))
+        { m_zDirection = m_lastKeyDownZ; }
         else
         {
-            if (Input.GetKey(settings.m_kcKeyMoveForward))
-            { zDirection = "Forward"; }
-            if (Input.GetKey(settings.m_kcKeyMoveBackward))
-            { zDirection = "Back"; }
+            if (Input.GetKey(m_settings.m_kcKeyMoveForward))
+            { m_zDirection = "Forward"; }
+            if (Input.GetKey(m_settings.m_kcKeyMoveBackward))
+            { m_zDirection = "Back"; }
         }
         //No input setting
-        if (Input.GetKey(settings.m_kcKeyMoveForward) == false && Input.GetKey(settings.m_kcKeyMoveBackward) == false)
-        { zDirection = "None"; }
+        if (Input.GetKey(m_settings.m_kcKeyMoveForward) == false && Input.GetKey(m_settings.m_kcKeyMoveBackward) == false)
+        { m_zDirection = "None"; }
 
 
         //Jump
-        if (Input.GetKeyDown(settings.m_kcKeyJump) && sinceLastJump > jumpBuffer && isGrounded)
+        if (Input.GetKeyDown(m_settings.m_kcKeyJump) && m_sinceLastJump > m_jumpBuffer && m_isGrounded)
         {
-            isJumping = true;
+            m_isJumping = true;
 
-            playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z);
+            m_playerRb.velocity = new Vector3(m_playerRb.velocity.x, 0, m_playerRb.velocity.z);
 
-            playerRb.AddRelativeForce(Vector3.up * jumpPower);
-            sinceLastJump = 0;
+            m_playerRb.AddRelativeForce(Vector3.up * m_jumpPower);
+            m_sinceLastJump = 0;
 
-            audioOrigin.PlayOneShot(jump);
+            m_audioOrigin.PlayOneShot(jumpClip);
         }
 
         //Jump buffer
-        if (sinceLastJump < jumpBuffer)
-        { sinceLastJump += Time.deltaTime; }
-        else if (isGrounded)
-        { isJumping = false; }
+        if (m_sinceLastJump < m_jumpBuffer)
+        { m_sinceLastJump += Time.deltaTime; }
+        else if (m_isGrounded)
+        { m_isJumping = false; }
 
 
         //Offensive ability
-        if (Input.GetKeyDown(settings.m_kcKeyAbility1) && offensiveCurrentCooldown >= offensiveCooldown)
+        if (Input.GetKeyDown(m_settings.m_kcKeyAbility1) && m_offensiveCurrentCooldown >= m_offensiveCooldown)
         {
-            _offensiveAbility();
-            offensiveCurrentCooldown = 0;
+            OffensiveAbility();
+            m_offensiveCurrentCooldown = 0;
         }
 
         //Defensive ability
-        if (Input.GetKeyDown(settings.m_kcKeyAbility2) && defensiveCurrentCooldown >= defensiveCooldown)
+        if (Input.GetKeyDown(m_settings.m_kcKeyAbility2) && m_defensiveCurrentCooldown >= m_defensiveCooldown)
         {
-            _defensiveAbility();
-            defensiveCurrentCooldown = 0;
+            DefensiveAbility();
+            m_defensiveCurrentCooldown = 0;
         }
 
         //Increase Cooldown Counters
-        if (offensiveCurrentCooldown < offensiveCooldown)
-        { offensiveCurrentCooldown += Time.deltaTime; }
+        if (m_offensiveCurrentCooldown < m_offensiveCooldown)
+        { m_offensiveCurrentCooldown += Time.deltaTime; }
 
-        if (defensiveCurrentCooldown < defensiveCooldown)
-        { defensiveCurrentCooldown += Time.deltaTime; }
+        if (m_defensiveCurrentCooldown < m_defensiveCooldown)
+        { m_defensiveCurrentCooldown += Time.deltaTime; }
     }
 
     //Offensive ability
-    private void _offensiveAbility()
+    private void OffensiveAbility()
     {
 
     }
 
     //Defensive ability
-    private void _defensiveAbility()
+    private void DefensiveAbility()
     {
-        Instantiate(grenade, grenadeOrigin.position, grenadeOrigin.rotation);
+        Instantiate(grenade, m_grenadeOrigin.position, m_grenadeOrigin.rotation);
     }
 
     //Weapon switching
-    private void _weaponSwitching()
+    private void WeaponSwitching()
     {
         //Switch to primary
-        if (Input.GetKeyDown(settings.m_kcKeyWeaponSlot1) && primaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot1) && m_primaryGun._getIsHeld() == false)
         {
-            secondaryGun._stopHolding();
-            primaryGun._startHolding();
+            m_secondaryGun._stopHolding();
+            m_primaryGun._startHolding();
         }
 
         //Switch to secondary
-        if (Input.GetKeyDown(settings.m_kcKeyWeaponSlot2) && secondaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot2) && m_secondaryGun._getIsHeld() == false)
         {
-            primaryGun._stopHolding();
-            secondaryGun._startHolding();
+            m_primaryGun._stopHolding();
+            m_secondaryGun._startHolding();
         }
     }
 
     //Grounded check
-    private void _extremityCheck()
+    private void ExtremityCheck()
     {
         float startHeight = -0.88f;
         float spacing = 0.1f;
@@ -306,23 +334,23 @@ public class PlayerController : MonoBehaviour
         }
 
         if (slope)
-        { onSlope = true; }
+        { m_onSlope = true; }
         else
-        { onSlope = false; }
+        { m_onSlope = false; }
 
         //Grounded Check
         if (allHits.Count > 0)
-        { isGrounded = true; }
+        { m_isGrounded = true; }
         else
-        { isGrounded = false; }
+        { m_isGrounded = false; }
     }
 
     //Movement application
-    private void _movement()
+    private void Movement()
     {
         Vector3 direction = new Vector3();
 
-        switch (xDirection)
+        switch (m_xDirection)
         {
             case "Left":
                 direction.x = -1;
@@ -333,7 +361,7 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        switch (zDirection)
+        switch (m_zDirection)
         {
             case "Forward":
                 direction.z = 1;
@@ -344,122 +372,122 @@ public class PlayerController : MonoBehaviour
                 break;
         }
 
-        Vector3 speeds = acceleration;
+        Vector3 speeds = m_acceleration;
 
-        if (isGrounded == false)
-        { speeds = airAcceleration; }
+        if (m_isGrounded == false)
+        { speeds = m_airAcceleration; }
         speeds *= Time.deltaTime * 100;
 
-        playerRb.AddRelativeForce(new Vector3(direction.normalized.x * speeds.x, 0, direction.normalized.z * speeds.z) * (Time.deltaTime * 100), ForceMode.Acceleration);
+        m_playerRb.AddRelativeForce(new Vector3(direction.normalized.x * speeds.x, 0, direction.normalized.z * speeds.z) * (Time.deltaTime * 100), ForceMode.Acceleration);
     }
 
     //Velocity limiter
-    private void _velocityLimits()
+    private void VelocityLimits()
     {
         //Velocity relative to view
         Vector3 relativeVelocity = new Vector3();
-        relativeVelocity.x = (Vector3.right * Vector3.Dot(playerRb.velocity, transform.right)).x;
-        relativeVelocity.z = (Vector3.forward * Vector3.Dot(playerRb.velocity, transform.forward)).z;
+        relativeVelocity.x = (Vector3.right * Vector3.Dot(m_playerRb.velocity, transform.right)).x;
+        relativeVelocity.z = (Vector3.forward * Vector3.Dot(m_playerRb.velocity, transform.forward)).z;
 
         //Clamps velocity
         Vector3 limitedVeloicty = new Vector3();
-        float totalHorLimit = horizontalLimit;
+        float totalHorLimit = m_horizontalLimit;
 
         //Sprint modifer
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            totalHorLimit += sprintLimitIncrease;
-            verticalLimit = verticalLimit + sprintLimitIncrease;
+            totalHorLimit += m_sprintLimitIncrease;
+            m_verticalLimit = m_verticalLimit + m_sprintLimitIncrease;
         }
 
         //Total Horizonal Velocity
         if (new Vector3(relativeVelocity.x, 0, relativeVelocity.z).magnitude > totalHorLimit)
         {
-            limitedVeloicty = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z).normalized * totalHorLimit;
-            playerRb.velocity = new Vector3(limitedVeloicty.x, playerRb.velocity.y, limitedVeloicty.z);
+            limitedVeloicty = new Vector3(m_playerRb.velocity.x, 0, m_playerRb.velocity.z).normalized * totalHorLimit;
+            m_playerRb.velocity = new Vector3(limitedVeloicty.x, m_playerRb.velocity.y, limitedVeloicty.z);
         }
 
         //Vertical Velocity
-        if (new Vector3(0, playerRb.velocity.y, 0).magnitude > verticalLimit)
+        if (new Vector3(0, m_playerRb.velocity.y, 0).magnitude > m_verticalLimit)
         {
-            limitedVeloicty = new Vector3(0, playerRb.velocity.y, 0).normalized * verticalLimit;
-            playerRb.velocity = new Vector3(playerRb.velocity.x, limitedVeloicty.y, playerRb.velocity.z);
+            limitedVeloicty = new Vector3(0, m_playerRb.velocity.y, 0).normalized * m_verticalLimit;
+            m_playerRb.velocity = new Vector3(m_playerRb.velocity.x, limitedVeloicty.y, m_playerRb.velocity.z);
         }
     }
 
     //Linear drag 
-    private void _linearDrag()
+    private void LinearDrag()
     {
         //Velocity relative to view
         Vector3 relativeVelocity = new Vector3();
-        relativeVelocity.x = (Vector3.right * Vector3.Dot(playerRb.velocity, transform.right)).x;
-        relativeVelocity.z = (Vector3.forward * Vector3.Dot(playerRb.velocity, transform.forward)).z;
-        Vector3 drag = horizontalDrag;
+        relativeVelocity.x = (Vector3.right * Vector3.Dot(m_playerRb.velocity, transform.right)).x;
+        relativeVelocity.z = (Vector3.forward * Vector3.Dot(m_playerRb.velocity, transform.forward)).z;
+        Vector3 drag = m_horizontalDrag;
 
         //Air modifer
-        if (isGrounded == false)
-        { drag = airHorizontalDrag; }
+        if (m_isGrounded == false)
+        { drag = m_airHorizontalDrag; }
 
         //Drag application
         if (relativeVelocity.x != 0 || relativeVelocity.z != 0)
         {
             //Left 
-            if (relativeVelocity.x > 0 && xDirection != "Right")
-            { playerRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            if (relativeVelocity.x > 0 && m_xDirection != "Right")
+            { m_playerRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Right 
-            if (relativeVelocity.x < 0 && xDirection != "Left")
-            { playerRb.AddRelativeForce(Vector3.right * (relativeVelocity.x * -drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            if (relativeVelocity.x < 0 && m_xDirection != "Left")
+            { m_playerRb.AddRelativeForce(Vector3.right * (relativeVelocity.x * -drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Forward 
-            if (relativeVelocity.z > 0 && zDirection != "Forward")
-            { playerRb.AddRelativeForce(Vector3.back * (relativeVelocity.z * drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            if (relativeVelocity.z > 0 && m_zDirection != "Forward")
+            { m_playerRb.AddRelativeForce(Vector3.back * (relativeVelocity.z * drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Back
-            if (relativeVelocity.z < 0 && zDirection != "Back")
-            { playerRb.AddRelativeForce(Vector3.forward * (relativeVelocity.z * -drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            if (relativeVelocity.z < 0 && m_zDirection != "Back")
+            { m_playerRb.AddRelativeForce(Vector3.forward * (relativeVelocity.z * -drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
         }
     }
 
     //Gravity
-    private void _gravity()
+    private void Gravity()
     {
         //Gravity
-        if (applyGravity)
-        { playerRb.AddForce(Vector3.down * gravity * (Time.deltaTime * 100), ForceMode.Acceleration); }
+        if (m_applyGravity)
+        { m_playerRb.AddForce(Vector3.down * m_gravity * (Time.deltaTime * 100), ForceMode.Acceleration); }
     }
 
     //Exceptions
-    private void _exceptions()
+    private void Exceptions()
     {
         //Slope stop Y velocity Avoidance
-        if (isJumping == false && onSlope && xDirection == "None" && zDirection == "None" && playerRb.velocity.y > 0)
-        { playerRb.velocity = new Vector3(playerRb.velocity.x, 0, playerRb.velocity.z); }
+        if (m_isJumping == false && m_onSlope && m_xDirection == "None" && m_zDirection == "None" && m_playerRb.velocity.y > 0)
+        { m_playerRb.velocity = new Vector3(m_playerRb.velocity.x, 0, m_playerRb.velocity.z); }
 
         //Slope sliding
-        if (onSlope && xDirection == "None" && zDirection == "None" && playerRb.velocity.y != 0)
-        { applyGravity = false; }
-        else { applyGravity = true; }
+        if (m_onSlope && m_xDirection == "None" && m_zDirection == "None" && m_playerRb.velocity.y != 0)
+        { m_applyGravity = false; }
+        else { m_applyGravity = true; }
     }
 
     ///Public
     //Recoil values
-    public void _newRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
+    public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
     {
-        recoil = newRecoil;
-        recoilDampening = newRecoilDampening;
-        recoilControl = newRecoilControl;
+        m_gunRecoil = newRecoil;
+        m_gunRecoilDampening = newRecoilDampening;
+        m_gunRecoilControl = newRecoilControl;
     }
 
     //Shot fired
-    public void _shotFired()
+    public void ShotFired()
     {
-        currentRecoil = recoil;
+        m_currentRecoil = m_gunRecoil;
     }
 
     //Take damage
-    public void _takeDamage(float damage)
+    public void TakeDamage(float damage)
     {
-        health -= damage;
+        m_health -= damage;
     }
 }

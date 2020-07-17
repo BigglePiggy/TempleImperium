@@ -7399,25 +7399,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bdad6c82c2f4cd3408f62d2f577422ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 10
-  xSensitivity: 2.25
-  ySensitivity: 2.25
-  downAngleLimit: 90
-  upAngleLimit: 90
-  gravity: 15
-  acceleration: {x: 12, y: 0, z: 12}
-  airAcceleration: {x: 4, y: 0, z: 4}
-  jumpPower: 1800
-  jumpBuffer: 0.1
-  verticalLimit: 12
-  horizontalLimit: 6
-  horizontalDrag: {x: 8, y: 0, z: 8}
-  airHorizontalDrag: {x: 6, y: 0, z: 6}
-  sprintLimitIncrease: 1.5
+  m_maximumHealth: 10
+  m_upAngleLimit: 90
+  m_downAngleLimit: 90
+  m_offensiveCooldown: 5
+  m_defensiveCooldown: 5.5
   grenade: {fileID: 4247020981666605293, guid: 6f0781a07f18a0448897b10cf3751278, type: 3}
-  offensiveCooldown: 3
-  defensiveCooldown: 3
-  jump: {fileID: 8300000, guid: 3ba01f88c7113ec41a914149f6ecff35, type: 3}
+  jumpClip: {fileID: 8300000, guid: 3ba01f88c7113ec41a914149f6ecff35, type: 3}
+  m_gravity: 15
+  m_acceleration: {x: 12, y: 0, z: 12}
+  m_airAcceleration: {x: 4, y: 0, z: 4}
+  m_verticalLimit: 12
+  m_horizontalLimit: 6
+  m_horizontalDrag: {x: 8, y: 0, z: 8}
+  m_airHorizontalDrag: {x: 6, y: 0, z: 6}
+  m_sprintLimitIncrease: 2
+  m_jumpPower: 1800
+  m_jumpBuffer: 0.1
 --- !u!82 &1183024600
 AudioSource:
   m_ObjectHideFlags: 0

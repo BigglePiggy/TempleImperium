@@ -203,7 +203,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (bulletCollisions[0].transform.root.CompareTag("Player"))
                 {
-                    bulletCollisions[0].transform.root.GetComponent<PlayerController>()._takeDamage(shotDamage);
+                    bulletCollisions[0].transform.root.GetComponent<PlayerController>().TakeDamage(shotDamage);
                 }
             }
 

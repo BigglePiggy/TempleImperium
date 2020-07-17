@@ -44,9 +44,8 @@ public class PlayerGun : MonoBehaviour
     private Vector3 objectPosition;
 
     //Components
-    private SettingsObject settings;
-    public void setSettingsObject(SettingsObject value)
-    { settings = value; }
+    private SettingsObject playerSettings;
+    public SettingsObject Settings { set { playerSettings = value; } }
 
     private Transform bulletOrigin;
     private AudioSource audioOrigin;
@@ -109,7 +108,7 @@ public class PlayerGun : MonoBehaviour
         if (currentMagCapacity != 0 && reloadProgress >= reloadTime)
         {
             //Automatic
-            if (automatic && Input.GetKey(settings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
+            if (automatic && Input.GetKey(playerSettings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
             {
                 currentMagCapacity--;
                 timeSinceLastShot = 0;
@@ -131,11 +130,11 @@ public class PlayerGun : MonoBehaviour
                 }
 
                 //Apply recoil
-                playerController._shotFired();
+                playerController.ShotFired();
             }
 
             //Semi Automatic
-            else if (automatic == false && Input.GetKeyDown(settings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
+            else if (automatic == false && Input.GetKeyDown(playerSettings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
             {
                 currentMagCapacity--;
                 timeSinceLastShot = 0;
@@ -154,12 +153,12 @@ public class PlayerGun : MonoBehaviour
                 }
 
                 //Apply recoil
-                playerController._shotFired();
+                playerController.ShotFired();
             }
         }
 
         ////Reload
-        if (Input.GetKeyDown(settings.m_kcKeyReload) && currentMagCapacity != maxMagCapacity && ammoCount > 0)
+        if (Input.GetKeyDown(playerSettings.m_kcKeyReload) && currentMagCapacity != maxMagCapacity && ammoCount > 0)
         {
             reloadProgress = 0;
 
@@ -187,7 +186,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Down - Go left
-        if (Input.GetKeyDown(settings.m_kcKeyAltFire))
+        if (Input.GetKeyDown(playerSettings.m_kcKeyAltFire))
         {
             startTime = Time.time;
             objectPosition = transform.localPosition;
@@ -197,7 +196,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Up - Go right
-        if (Input.GetKeyUp(settings.m_kcKeyAltFire))
+        if (Input.GetKeyUp(playerSettings.m_kcKeyAltFire))
         {
             startTime = Time.time;
             objectPosition = transform.localPosition;
@@ -231,7 +230,7 @@ public class PlayerGun : MonoBehaviour
         left = false;
 
         //Updates recoil values and enables gun
-        playerController._newRecoilValues(recoil, recoilDampening, recoilControl);
+        playerController.NewRecoilValues(recoil, recoilDampening, recoilControl);
     }
 
     //stop holding
