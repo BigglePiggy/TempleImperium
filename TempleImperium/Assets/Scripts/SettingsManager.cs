@@ -62,15 +62,15 @@ public class SettingsManager : MonoBehaviour
 
 
     #region filesystem IO
-    void WriteToFile()
+    void WriteToPrefs()
     {
         //TODO
-        Debug.LogWarning("SettingsManager.WriteToFile() needs to be programmed! bug Ase about it");
+        Debug.LogWarning("SettingsManager.WriteToPrefs() needs to be programmed! bug Ase about it");
     }
-    void ReadFromFile()
+    void ReadFromPrefs()
     {
         //TODO
-        Debug.LogWarning("SettingsManager.ReadFromFile() needs to be programmed! bug Ase about it");
+        Debug.LogWarning("SettingsManager.ReadFromPrefs() needs to be programmed! bug Ase about it");
     }
     #endregion filesystem IO
 
