@@ -203,8 +203,6 @@ public class PlayerController : MonoBehaviour
     {
         m_currentRecoil = m_gunRecoil;
     }
-
- 
     #endregion
 
 
@@ -254,7 +252,7 @@ public class PlayerController : MonoBehaviour
 
 
         //Jump
-        if (Input.GetKeyDown(m_settings.m_kcKeyJump) && m_sinceLastJump > m_jumpBuffer && m_isGrounded)
+        if (Input.GetKeyDown(m_settings.m_kcKeyJump) && m_sinceLastJump >= m_jumpBuffer && m_isGrounded)
         {
             m_isJumping = true;
 
