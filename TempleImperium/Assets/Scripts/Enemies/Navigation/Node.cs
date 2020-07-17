@@ -53,7 +53,7 @@ public class Node : MonoBehaviour
         }
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, maxConnectionDistance);
+        //Gizmos.DrawWireSphere(transform.position, maxConnectionDistance);
 
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position, 0.1f);
