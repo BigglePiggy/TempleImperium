@@ -123,7 +123,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         KeyboardInput();
-        MouseInput();
+        MouseInputRecoil();
         WeaponSwitching();
     }
 
@@ -140,32 +140,27 @@ public class PlayerController : MonoBehaviour
 
 
     #region Mouse & Weapons
-    private void MouseInput()
+    private void MouseInputRecoil()
     {
-        //Mouse Axis
-        float rotateVertical = Input.GetAxis("Mouse Y") * m_settings.m_fMouseSensitivityY * (Time.deltaTime * 100);
-        float rotateHorizontal = Input.GetAxis("Mouse X") * m_settings.m_fMouseSensitivityX * (Time.deltaTime * 100);
+        float rotateVertical = Input.GetAxis("Mouse Y") * m_settings.m_fMouseSensitivityY * (Time.deltaTime * 100);     //Frame rate indenpentdent Y rotation value
+        float rotateHorizontal = Input.GetAxis("Mouse X") * m_settings.m_fMouseSensitivityX * (Time.deltaTime * 100);   //Frame rate indenpentdent X rotation value
 
-        //Player body rotation
-        transform.Rotate(transform.up * rotateHorizontal);
+        transform.Rotate(transform.up * rotateHorizontal);  //Rotates the X Axis
 
         //Recoil value manager
-        if (m_currentRecoil < 0 && m_playerCamera.localRotation.x > -0.7 * (m_upAngleLimit / 90))
+        if (m_currentRecoil < 0 && m_playerCamera.localRotation.x > -0.7 * (m_upAngleLimit / 90)) //Limits the camera's angle of rotation
         {
-            m_currentRecoil += m_gunRecoilDampening * (Time.deltaTime * 100);
-            m_playerCamera.Rotate(m_currentRecoil, 0, 0);
+            m_playerCamera.Rotate(m_currentRecoil, 0, 0); //Applies current recoil to the camera
+            m_currentRecoil += m_gunRecoilDampening * (Time.deltaTime * 100);   //Reduces current recoil recoil 
         }
 
-        //Recoil control
-        if (m_currentRecoil < 0 && rotateVertical < 0)
-        {
-            m_playerCamera.transform.Rotate(m_gunRecoilControl * (Time.deltaTime * 100), 0, 0);
-        }
+        if (m_currentRecoil < 0 && rotateVertical < 0 && m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90)) //Limits the camera's angle of rotation
+        { m_playerCamera.transform.Rotate(rotateVertical * m_gunRecoilControl, 0, 0); } //Applies the players mouse inputs against recoil
 
         //Normal control
         else
         {
-            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))
+            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))   
             {
                 if (rotateVertical > 0)
                 { m_playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
@@ -178,18 +173,6 @@ public class PlayerController : MonoBehaviour
             else
             { m_playerCamera.Rotate(-rotateVertical, 0, 0); }
         }
-    }
-
-    public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
-    {
-        m_gunRecoil = newRecoil;
-        m_gunRecoilDampening = newRecoilDampening;
-        m_gunRecoilControl = newRecoilControl;
-    }
-
-    public void ShotFired()
-    {
-        m_currentRecoil = m_gunRecoil;
     }
 
     private void WeaponSwitching()
@@ -208,6 +191,20 @@ public class PlayerController : MonoBehaviour
             m_secondaryGun._startHolding();
         }
     }
+
+    public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
+    {
+        m_gunRecoil = newRecoil;
+        m_gunRecoilDampening = newRecoilDampening;
+        m_gunRecoilControl = newRecoilControl;
+    }
+
+    public void ShotFired()
+    {
+        m_currentRecoil = m_gunRecoil;
+    }
+
+ 
     #endregion
 
 
