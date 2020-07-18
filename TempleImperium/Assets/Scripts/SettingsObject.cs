@@ -32,12 +32,13 @@ public class SettingsObject
     public KeyCode m_kcKeyWeaponSlot3;
     public KeyCode m_kcKeyWeaponQuickSwitch;
     public KeyCode m_kcKeyEscape;
+    public float m_fVolumeOverall;
 
     public SettingsObject(KeyCode input_KeyMoveForward, KeyCode input_KeyMoveBackward, KeyCode input_KeyMoveLeft, KeyCode input_KeyMoveRight,
         KeyCode input_KeyJump, KeyCode input_KeyCrouch, KeyCode input_KeyFire, KeyCode input_KeyAltFire, float input_MouseSensitivityX, float input_MouseSensitivityY,
         bool input_MouseInvertX, bool input_MouseInvertY, KeyCode input_KeyReload, KeyCode input_KeyMelee, KeyCode input_KeyAbility1, KeyCode input_KeyAbility2,
         KeyCode input_KeyWeaponSlot1, KeyCode input_KeyWeaponSlot2, KeyCode input_KeyWeaponSlot3, KeyCode input_KeyWeaponQuickSwitch,
-        KeyCode input_KeyEscape)
+        KeyCode input_KeyEscape, float input_VolumeOverall)
     {
         m_kcKeyMoveForward              = input_KeyMoveForward;
         m_kcKeyMoveBackward             = input_KeyMoveBackward;
@@ -60,6 +61,7 @@ public class SettingsObject
         m_kcKeyWeaponSlot3              = input_KeyWeaponSlot3;
         m_kcKeyWeaponQuickSwitch        = input_KeyWeaponQuickSwitch;
         m_kcKeyEscape                   = input_KeyEscape;
+        m_fVolumeOverall                = input_VolumeOverall;
     }
 
 #if UNITY_EDITOR

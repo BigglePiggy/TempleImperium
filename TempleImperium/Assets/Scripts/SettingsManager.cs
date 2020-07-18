@@ -37,6 +37,9 @@ public class SettingsManager : MonoBehaviour
     [Space]
     public KeyCode m_kcKeyEscape            = KeyCode.Escape;
 
+    [Header("Default Configs")]
+    public float m_fVolumeOverall           = 0.5f;
+
 
     SettingsObject m_SettingsObject;
 
@@ -59,7 +62,7 @@ public class SettingsManager : MonoBehaviour
         m_SettingsObject = new SettingsObject(
             m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeyFire, m_kcKeyAltFire,
             m_fMouseSensitivityX, m_fMouseSensitivityY, m_bMouseInvertX, m_bMouseInvertY, m_kcKeyReload, m_kcKeyMelee, m_kcKeyAbility1, m_kcKeyAbility2,
-            m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape
+            m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape, m_fVolumeOverall
             );
     }
 
@@ -79,8 +82,8 @@ public class SettingsManager : MonoBehaviour
 
     void Start()
     {
-        ReadFromPrefs();
-        SendToScripts(true);
+        ReadFromPrefs();        //read prefs
+        SendToScripts(true);    //push to scripts (with new SettingsObject)
     }
     void Update()
     {
