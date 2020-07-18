@@ -49,6 +49,8 @@ public class GameLogic : MonoBehaviour
     [Tooltip("reference to a GameObject that has a HUDController script attached")]
     public GameObject oHudController;   //entity that has HUDController script
     HUDController oHudControllerScript; //HUDController direct script (this is called a lot, direct reference might be a bit quicker)
+    [Tooltip("reference to a GameObject that has a GameGenerator script attached")]
+    public GameObject oGenerator;   //entity that has the GameGenerator script
 
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
@@ -252,6 +254,9 @@ public class GameLogic : MonoBehaviour
                 DispatchSubwave(m_ThisSubWaveData[0], m_ThisSubWaveData[1], m_ThisSubWaveData[2],
                     m_WaveDataArray[m_iCurrentWave].m_eStarstoneElement);
 
+                //inform the generator
+                oGenerator.GetComponent<GameGenerator>().SetElement(m_WaveDataArray[m_iCurrentWave].m_eStarstoneElement);
+
                 //set the PHASE timer really high. it doesn't matter here, and leaving it 0 would take a few extra cycles
                 //(enemy death handles going to InbetweenSubwave - the usual system is skipped here.)
                 m_iTickerCurrentPhase = 99999;
@@ -279,6 +284,9 @@ public class GameLogic : MonoBehaviour
                 //wave beaten, player's resting before the next wave starts.
                 //turn off WAVE timer
                 m_bWaveTimerActive = false;
+
+                //inform the generator
+                oGenerator.GetComponent<GameGenerator>().GoInert();
 
                 //set PHASE timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
