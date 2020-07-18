@@ -497,6 +497,8 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath() 
     {
         m_health = 0;
+        m_primaryGun.StopHolding();
+        m_secondaryGun.StopHolding();
     }
     #endregion
 }
