@@ -8,22 +8,57 @@ using UnityEngine;
 
 public class GameGenerator : MonoBehaviour
 {
-    //generator object. controlled from GameLogic
-    //this is probably just animation controls?
+    //generator object
+    /*
+    responsible for:
+    - visual in-level indicator for wave element
+    */
 
+    public GameObject oCrystal;
+
+    //material references
+    //TODO: cleanup / auto references (is that needed?)
+    public Material matFire;                
+    public Material matWater;
+    public Material matElectricity;
+    public Material matDarkness;
+    public Material matInert;
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.LogWarning("bug Ase about programming GameGenerator.SetElement()!");
 
     }
 
-    void SetElement(GameLogic.StarstoneElement input_starstoneElement)
+    /// <summary>
+    /// set crystal material based on element
+    /// //todo: move me to GenericFunctions? how would genericfunctions get the mat refs?
+    /// </summary>
+    /// <param name="input_starstoneElement"></param>
+    public void SetElement(GameLogic.StarstoneElement input_starstoneElement)
     {
-        //change material based on element!
-        //TODO
-        //generic functions starstone enum --> material reference function?
-        Debug.LogWarning("bug Ase about programming GameGenerator.SetElement()!");
+
+        switch (input_starstoneElement)
+        {
+            case GameLogic.StarstoneElement.Fire:
+                oCrystal.GetComponent<MeshRenderer>().material = matFire;
+                break;
+            case GameLogic.StarstoneElement.Water:
+                oCrystal.GetComponent<MeshRenderer>().material = matWater;
+                break;
+            case GameLogic.StarstoneElement.Electricity:
+                oCrystal.GetComponent<MeshRenderer>().material = matElectricity;
+                break;
+            case GameLogic.StarstoneElement.Darkness:
+                oCrystal.GetComponent<MeshRenderer>().material = matDarkness;
+                break;
+        }
+    }
+    /// <summary>
+    /// go to inert material
+    /// </summary>
+    public void GoInert()
+    {
+        oCrystal.GetComponent<MeshRenderer>().material = matInert;
     }
 }
