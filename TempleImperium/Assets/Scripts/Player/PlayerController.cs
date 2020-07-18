@@ -8,14 +8,14 @@ public class PlayerController : MonoBehaviour
     //Player controller script - there should be only one player object with an instance of me!
     //What this script does:
     /*
-        - handles keyboard and mouse inputs
-        - handles bespoke player phyics
-        - manages weapon switching
-        - manages abilities
+        - Handles keyboard and mouse inputs
+        - Handles bespoke player physics
+        - Manages weapon switching
+        - Manages abilities
     */
 
     #region Declarations
-    [Header("Player configuration")]
+    [Header("Player Configuration")]
     [Tooltip("Maximum health the player can have")]
     public float m_maximumHealth;
     [Tooltip("Maximum angle that the player is able to look up at")]
@@ -30,12 +30,12 @@ public class PlayerController : MonoBehaviour
     public GameObject grenade;
     [Space]
 
-    [Header("Sound effects")]
+    [Header("Sound Effects")]
     [Tooltip("Effect played when the player jumps")]
     public AudioClip jumpClip;
     [Space]
 
-    [Header("Player physics")]
+    [Header("Player Physics")]
     [Tooltip("Downward force the player experiences")]
     public float m_gravity;
     [Tooltip("Acceleration the player's ground inputs apply")]
@@ -69,21 +69,21 @@ public class PlayerController : MonoBehaviour
     //Movement
     string m_zDirection;    //Holds "Forward" or "Back"
     string m_xDirection;    //Holds "Left" or "Right"
-    string m_lastKeyDownZ;  //Used to determine the value of m_zDirection
-    string m_lastKeyDownX;  //Used to determine the value of m_xDirection
+    string m_lastKeyDownZ;  //Determines value of m_zDirection
+    string m_lastKeyDownX;  //Determines value of m_xDirection
 
-    float m_sinceLastJump;  //Tracks the jump buffer in seconds
+    float m_sinceLastJump;  //Tracks jump buffer in seconds
 
     //Player States
-    bool m_isGrounded;      //Is true when on a surface
-    bool m_onSlope;         //Is true when on a slope
-    bool m_isJumping;       //Is true whilst in the air
-    bool m_applyGravity;    //Changes state dependent on the above three (stops slope momentum issues)
+    bool m_isGrounded;      //True when on a surface
+    bool m_onSlope;         //True when on a slope
+    bool m_isJumping;       //True whilst in the air after a jump
+    bool m_applyGravity;    //Changes state depending on the above three (stops slope momentum issues)
 
-    float m_offensiveCurrentCooldown;   //Tracks the offensive ability cooldown in seconds
-    float m_defensiveCurrentCooldown;   //Tracks the defensive ability cooldown in seconds
+    float m_offensiveCurrentCooldown;   //Offensive ability cooldown in seconds
+    float m_defensiveCurrentCooldown;   //Defensive ability cooldown in seconds
 
-    float m_health; //Players current health
+    float m_health; //Current health
    
     private SettingsObject m_settings;  //Settings object used to determine all input keys
     public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager

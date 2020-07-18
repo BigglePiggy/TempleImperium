@@ -332,19 +332,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe34c8c4e88c58a4b8eca1f644048e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 5
-  viewDistance: 14
-  stopDistance: 3.5
-  shootingDistance: 11
-  gravity: 15
-  acceleration: {x: 0, y: 0, z: 10}
-  verticalLimit: 5
-  horizontalLimit: 9
-  horizontalDrag: {x: 1, y: 0, z: 1}
-  airHorizontalDrag: {x: 0.5, y: 0, z: 0.5}
-  rotateSpeed: {x: 2, y: 2}
-  accuracyOffset: {x: 1, y: 0.35, z: 1}
-  fireRate: 1.7
-  maxShotDistance: 100
-  shotDamage: 1
-  shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
+  m_startingHealth: 5
+  m_viewDistance: 14
+  m_stopDistance: 3.5
+  m_shootingDistance: 11
+  m_maxShotDistance: 100
+  m_fireRate: 1.7
+  m_accuracyOffset: {x: 1, y: 0.5, z: 1}
+  m_shotDamage: 1
+  m_shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
+  m_gravity: 15
+  m_acceleration: {x: 0, y: 0, z: 10}
+  m_verticalLimit: 5
+  m_horizontalLimit: 9
+  m_horizontalDrag: {x: 1, y: 0, z: 1}
+  m_airHorizontalDrag: {x: 0.5, y: 0, z: 0.5}
+  m_bodyRotateSpeed: 2
+  m_headRotateSpeed: 2
