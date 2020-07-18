@@ -11,6 +11,7 @@ public class Menu : MonoBehaviour
         - Handles showing and hiding menu pages
         - Handles options and exiting game
         - Handles scene loading
+        - Handles settings object management
     */
 
 
@@ -33,11 +34,28 @@ public class Menu : MonoBehaviour
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
 
-        m_mainPage.SetActive(true);
-        m_pausePage.SetActive(false);
-        m_optionsPage.SetActive(false);
+        if (m_pauseMode)
+        {
+            m_mainPage.SetActive(false);
+            m_pausePage.SetActive(false);
+            m_optionsPage.SetActive(false);
+        }
 
-        m_pauseMode = false;
+        else
+        {
+            m_mainPage.SetActive(true);
+            m_pausePage.SetActive(false);
+            m_optionsPage.SetActive(false);
+        }
+
+        if(GlobalSettings.m_globalSettings == null) 
+        {
+            SettingsManager m_settingsManager = GameObject.Find("Settings Manager").GetComponent<SettingsManager>();
+            m_settingsManager.BuildSettingsObject();
+            m_settingsManager.SaveObject();
+        }
+
+        m_settings = GlobalSettings.m_globalSettings;
     }
 
     //Called per frame
@@ -47,15 +65,15 @@ public class Menu : MonoBehaviour
         {
             if (Input.GetKeyDown(m_settings.m_kcKeyEscape)) 
             {
-                if (m_pausePage.activeInHierarchy) //Unpause
-                {
+                if (m_pausePage.activeInHierarchy)              //Unpause
+                {   
                     ResumeButton();
-                    Cursor.lockState = CursorLockMode.Locked;   //Locks the mouse
+                    Cursor.lockState = CursorLockMode.Locked;
                 }
 
-                else                               //Pause
+                else if(m_optionsPage.activeInHierarchy == false)   //Pause
                 {
-                    Cursor.lockState = CursorLockMode.None;     //Unlocks the mouse
+                    Cursor.lockState = CursorLockMode.None;
                     m_pausePage.SetActive(true);
                 }
             }
@@ -67,7 +85,7 @@ public class Menu : MonoBehaviour
     //Main Menu 
     public void StartButton()
     {
-        m_mainPage.SetActive(false);
+        GlobalSettings.m_globalSettings = m_settings;
         SceneManager.LoadScene("Ase Expansion");
     }
 
@@ -75,7 +93,6 @@ public class Menu : MonoBehaviour
     {
 
     }
-
 
     //Pause Menu
     public void ResumeButton()
@@ -85,9 +102,7 @@ public class Menu : MonoBehaviour
 
     public void MainMenuButton()
     {
-        m_mainPage.SetActive(true);
-        m_pausePage.SetActive(false);
-
+        GameObject.Find("Settings Manager").GetComponent<SettingsManager>().SaveObject();
         SceneManager.LoadScene("Menu");
     }
 
@@ -98,6 +113,19 @@ public class Menu : MonoBehaviour
         m_mainPage.SetActive(false);
         m_pausePage.SetActive(false);      
         m_optionsPage.SetActive(true);
+    }
+
+    public void IncreaseXSensitivity() 
+    {
+        m_settings.m_fMouseSensitivityX += 0.15f;
+    }
+
+    public void DecreaseXSensitivity()
+    { 
+        if (m_settings.m_fMouseSensitivityX - 0.15f < 0)
+        { m_settings.m_fMouseSensitivityX = 0; }
+        else 
+        { m_settings.m_fMouseSensitivityX -= 0.15f; }
     }
 
     public void BackButton()

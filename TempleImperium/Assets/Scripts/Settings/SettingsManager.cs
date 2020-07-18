@@ -43,13 +43,24 @@ public class SettingsManager : MonoBehaviour
     public float m_fVolumeMusic             = 0.5f;
     public float m_fVolumeUI                = 0.5f;
 
+    [Header("State")]
+    public bool onMenu;
 
     SettingsObject m_SettingsObject;
 
-    /// <summary>
-    /// send all referenced scripts a new SettingsObject
-    /// </summary>
-    /// <param name="RebuildSettingsObject">make a fresh SettingsObject? set true if settingsManager values have changed!</param>
+
+    void Start()
+    {
+        if (onMenu == false)
+        {
+            m_SettingsObject = GlobalSettings.m_globalSettings; //Reads global settings (From the menu)
+            SendToScripts();    //Push to scripts
+        }
+    }
+
+
+    //Send all referenced scripts a new SettingsObject
+    //param name:RebuildSettingsObject. Make a fresh SettingsObject. Set true if settingsManager values have changed!
     public void SendToScripts(bool input_RebuildSettingsObject = false)
     {
         //if no settings object is built yet, or if told to, build new settings object
@@ -59,37 +70,21 @@ public class SettingsManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Settings = m_SettingsObject;
         GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Primary Gun").GetComponent<PlayerGun>().Settings = m_SettingsObject;
         GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Secondary Gun").GetComponent<PlayerGun>().Settings = m_SettingsObject;
+        GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().Settings = m_SettingsObject;
     }
+
     public void BuildSettingsObject()
-    {
+    {   
         m_SettingsObject = new SettingsObject(
-            m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeyFire, m_kcKeyAltFire,
-            m_fMouseSensitivityX, m_fMouseSensitivityY, m_bMouseInvertX, m_bMouseInvertY, m_kcKeyReload, m_kcKeyMelee, m_kcKeyAbility1, m_kcKeyAbility2,
-            m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape,
-            m_fVolumeOverall, m_fVolumeSFX, m_fVolumeMusic, m_fVolumeUI
-            );
+        m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeyFire, m_kcKeyAltFire,
+        m_fMouseSensitivityX, m_fMouseSensitivityY, m_bMouseInvertX, m_bMouseInvertY, m_kcKeyReload, m_kcKeyMelee, m_kcKeyAbility1, m_kcKeyAbility2,
+        m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape,
+        m_fVolumeOverall, m_fVolumeSFX, m_fVolumeMusic, m_fVolumeUI
+        );
     }
 
-
-    #region filesystem IO
-    public void WriteToPrefs()
+    public void SaveObject() 
     {
-        //TODO
-        Debug.LogWarning("SettingsManager.WriteToPrefs() needs to be programmed! bug Ase about it");
-    }
-    public void ReadFromPrefs()
-    {
-        //TODO
-        Debug.LogWarning("SettingsManager.ReadFromPrefs() needs to be programmed! bug Ase about it");
-    }
-    #endregion filesystem IO
-
-    void Start()
-    {
-        ReadFromPrefs();        //read prefs
-        SendToScripts(true);    //push to scripts (with new SettingsObject)
-    }
-    void Update()
-    {
+        GlobalSettings.m_globalSettings = m_SettingsObject; //Writes global settings (For the menu)
     }
 }
