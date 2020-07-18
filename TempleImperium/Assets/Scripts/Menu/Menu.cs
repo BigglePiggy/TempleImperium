@@ -33,19 +33,11 @@ public class Menu : MonoBehaviour
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
 
-        if (m_pauseMode)
-        {
-            m_mainPage.SetActive(false);
-            m_pausePage.SetActive(false);
-            m_optionsPage.SetActive(false);
-        }
+        m_mainPage.SetActive(true);
+        m_pausePage.SetActive(false);
+        m_optionsPage.SetActive(false);
 
-        else 
-        {
-            m_mainPage.SetActive(true);
-            m_pausePage.SetActive(false);
-            m_optionsPage.SetActive(false);
-        }
+        m_pauseMode = false;
     }
 
     //Called per frame
@@ -55,15 +47,15 @@ public class Menu : MonoBehaviour
         {
             if (Input.GetKeyDown(m_settings.m_kcKeyEscape)) 
             {
-                if (m_pausePage.activeInHierarchy) 
+                if (m_pausePage.activeInHierarchy) //Unpause
                 {
                     ResumeButton();
                     Cursor.lockState = CursorLockMode.Locked;   //Locks the mouse
                 }
 
-                else 
+                else                               //Pause
                 {
-                    Cursor.lockState = CursorLockMode.None;   //Unlocks the mouse
+                    Cursor.lockState = CursorLockMode.None;     //Unlocks the mouse
                     m_pausePage.SetActive(true);
                 }
             }
@@ -75,6 +67,7 @@ public class Menu : MonoBehaviour
     //Main Menu 
     public void StartButton()
     {
+        m_mainPage.SetActive(false);
         SceneManager.LoadScene("Ase Expansion");
     }
 
@@ -92,6 +85,9 @@ public class Menu : MonoBehaviour
 
     public void MainMenuButton()
     {
+        m_mainPage.SetActive(true);
+        m_pausePage.SetActive(false);
+
         SceneManager.LoadScene("Menu");
     }
 

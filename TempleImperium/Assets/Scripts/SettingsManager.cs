@@ -59,7 +59,6 @@ public class SettingsManager : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().Settings = m_SettingsObject;
         GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Primary Gun").GetComponent<PlayerGun>().Settings = m_SettingsObject;
         GameObject.FindGameObjectWithTag("Player").transform.Find("Player Camera").Find("Secondary Gun").GetComponent<PlayerGun>().Settings = m_SettingsObject;
-        GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().Settings = m_SettingsObject;
     }
     public void BuildSettingsObject()
     {
