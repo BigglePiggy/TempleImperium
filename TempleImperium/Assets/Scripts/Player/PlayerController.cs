@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
-        m_primaryGun._startHolding();   //Primary gun configured to be held
+        m_primaryGun.StartHolding();   //Primary gun configured to be held
 
         Cursor.lockState = CursorLockMode.Locked;   //Locks the mouse
     }
@@ -182,17 +182,17 @@ public class PlayerController : MonoBehaviour
     private void WeaponSwitching()
     {
         //Switch to primary
-        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot1) && m_primaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot1) && m_primaryGun.GetIsHeld() == false)
         {
-            m_secondaryGun._stopHolding();
-            m_primaryGun._startHolding();
+            m_secondaryGun.StopHolding();
+            m_primaryGun.StartHolding();
         }
 
         //Switch to secondary
-        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot2) && m_secondaryGun._getIsHeld() == false)
+        if (Input.GetKeyDown(m_settings.m_kcKeyWeaponSlot2) && m_secondaryGun.GetIsHeld() == false)
         {
-            m_primaryGun._stopHolding();
-            m_secondaryGun._startHolding();
+            m_primaryGun.StopHolding();
+            m_secondaryGun.StartHolding();
         }
     }
 

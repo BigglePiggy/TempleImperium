@@ -117,14 +117,14 @@ public class PlayerGun : MonoBehaviour
     {
         if (m_isHeld)
         {
-            _inputs();
-            _hudValues();
+            Inputs();
+            HudValues();
         }
     }
 
 
     #region Whilst held
-    private void _inputs()
+    private void Inputs()
     {
         ////Shooting
         //Since last shot update
@@ -164,11 +164,11 @@ public class PlayerGun : MonoBehaviour
                     {
                         if (hit.transform.CompareTag("Enemy"))
                         { 
-                            hit.transform.GetComponent<EnemyController>()._raycastHit(m_shotDamage); 
+                            hit.transform.GetComponent<EnemyController>().RaycastHit(m_shotDamage); 
                         }
                         else if (hit.transform.root.CompareTag("Enemy"))
                         {
-                            hit.transform.root.GetComponent<EnemyController>()._raycastHit(m_shotDamage);
+                            hit.transform.root.GetComponent<EnemyController>().RaycastHit(m_shotDamage);
                         }
                     }
                 }
@@ -226,7 +226,7 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-    private void _hudValues()
+    private void HudValues()
     {
         m_hudController.CurrentWeaponAmmoMagazine = m_currentMagCapacity;
         m_hudController.CurrentWeaponAmmoReserve = m_ammoCount;
@@ -237,7 +237,7 @@ public class PlayerGun : MonoBehaviour
 
 
     #region Is Held State Management
-    public void _startHolding()
+    public void StartHolding()
     {
         m_isHeld = true;
 
@@ -253,7 +253,7 @@ public class PlayerGun : MonoBehaviour
         m_playerController.NewRecoilValues(m_recoil, m_recoilDampening, m_recoilControl);
     }
 
-    public void _stopHolding()
+    public void StopHolding()
     {
         m_isHeld = false;
         m_meshRenderer.enabled = false;
@@ -263,7 +263,7 @@ public class PlayerGun : MonoBehaviour
         { m_reloadProgress = 0; }
     }
 
-    public bool _getIsHeld()
+    public bool GetIsHeld()
     {
         return m_isHeld;
     }
