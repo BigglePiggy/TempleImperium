@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Spawnpoints
   - Nodes
+  - Menu
   layers:
   - Default
   - TransparentFX
