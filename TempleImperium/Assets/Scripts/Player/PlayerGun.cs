@@ -18,8 +18,6 @@ public class PlayerGun : MonoBehaviour
 
     #region Declarations
     [Header("Gun Configuration")]
-    [Tooltip("If true shots will emit particles instead of using raycast")]
-    public bool m_particleBased;
     [Tooltip("Toggles between the gun being automatic or semi-automatic")]
     public bool m_automatic;
     [Tooltip("Minimum time between shots in seconds")]
@@ -84,7 +82,7 @@ public class PlayerGun : MonoBehaviour
     AudioSource m_audioOrigin;              //Audio origin component
     MeshRenderer m_meshRenderer;            //Mesh renderer component - used to make gun invisible when not in use
     Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
-    ParticleSystem m_bulletParticleSystem;  //Used when gun m_particleBased is true - emits when gun is shot
+    ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
     #endregion
 
 
@@ -107,9 +105,7 @@ public class PlayerGun : MonoBehaviour
         m_bulletOrigin = transform.Find("Bullet Origin");
         m_meshRenderer = GetComponent<MeshRenderer>();
         m_audioOrigin = GetComponent<AudioSource>();
-
-        if (m_particleBased)
-        { m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>(); }
+        m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>(); 
     }
 
     //Called per frame
@@ -152,27 +148,20 @@ public class PlayerGun : MonoBehaviour
                 m_timeSinceLastShot = 0;
                 m_audioOrigin.PlayOneShot(shotEffect);
 
-                if (m_particleBased)
+                RaycastHit hit;
+                if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
                 {
-                    m_bulletParticleSystem.Emit(1);
-                }
-
-                else
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
+                    if (hit.transform.CompareTag("Enemy"))
+                    { 
+                        hit.transform.GetComponent<EnemyController>().RaycastHit(m_shotDamage);
+                    }
+                    else if (hit.transform.root.CompareTag("Enemy"))
                     {
-                        if (hit.transform.CompareTag("Enemy"))
-                        { 
-                            hit.transform.GetComponent<EnemyController>().RaycastHit(m_shotDamage); 
-                        }
-                        else if (hit.transform.root.CompareTag("Enemy"))
-                        {
-                            hit.transform.root.GetComponent<EnemyController>().RaycastHit(m_shotDamage);
-                        }
+                        hit.transform.root.GetComponent<EnemyController>().RaycastHit(m_shotDamage);                   
                     }
                 }
 
+                m_bulletParticleSystem.Emit(1);
                 m_playerController.ShotFired();
             }
         }

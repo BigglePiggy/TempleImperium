@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [Header("Sound Effects")]
     [Tooltip("Effect played when the player jumps")]
     public AudioClip jumpClip;
+    [Tooltip("Effect played when the player is hit by an enemy")]
+    public AudioClip hitClip;
     [Space]
 
     [Header("Player Physics")]
@@ -488,10 +490,17 @@ public class PlayerController : MonoBehaviour
     #region Health & Player state
     public void TakeDamage(float damage)
     {
-        m_health -= damage;
+        if (m_health > 0)
+        { 
+            m_health -= damage;
+            m_audioOrigin.PlayOneShot(hitClip);
+        }
 
-        if(m_health <= 0) 
-        { PlayerDeath(); }
+        if (m_health <= 0)
+        { 
+            PlayerDeath();
+            m_audioOrigin.PlayOneShot(hitClip);
+        }
     }
 
     public void PlayerDeath() 

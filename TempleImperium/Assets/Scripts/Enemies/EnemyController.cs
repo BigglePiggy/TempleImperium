@@ -83,6 +83,8 @@ public class EnemyController : MonoBehaviour
     Transform m_enemyHead;      //Enemy head reference - Head is rotated
     Rigidbody m_enemyRb;        //Rigidbody component
     AudioSource m_audioSource;  //Audio source component
+    Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
+    ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
     #endregion
 
 
@@ -95,6 +97,8 @@ public class EnemyController : MonoBehaviour
         m_enemyHead = transform.Find("Enemy Head");
         m_player = GameObject.FindGameObjectWithTag("Player").transform;
         m_audioSource = GetComponent<AudioSource>();
+        m_bulletOrigin = m_enemyHead.Find("Bullet Origin");
+        m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -153,8 +157,8 @@ public class EnemyController : MonoBehaviour
         if (m_timeSinceLastShot >= m_fireRate && m_playerInSight && Vector3.Distance(transform.position, m_player.position) < m_shootingDistance)
         {
             Vector3 offset = new Vector3(Random.Range(-m_accuracyOffset.x, m_accuracyOffset.x), Random.Range(-m_accuracyOffset.y, m_accuracyOffset.y), Random.Range(-m_accuracyOffset.z, m_accuracyOffset.z));
-            RaycastHit[] bulletCollisions = Physics.RaycastAll(m_enemyHead.position, (m_player.position + offset) - m_enemyHead.position, m_viewDistance);
-            Debug.DrawRay(m_enemyHead.position, (m_player.position + offset) - m_enemyHead.position, Color.green, 100);
+            RaycastHit[] bulletCollisions = Physics.RaycastAll(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, m_viewDistance);
+            Debug.DrawRay(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, Color.green, 100);
 
             if (bulletCollisions.Length > 0)
             {
@@ -166,6 +170,8 @@ public class EnemyController : MonoBehaviour
 
             m_timeSinceLastShot = 0;
             m_audioSource.PlayOneShot(m_shotEffect);
+            m_bulletOrigin.LookAt(m_player.position + offset);
+            m_bulletParticleSystem.Emit(1);
         }
     }
     #endregion
@@ -381,11 +387,6 @@ public class EnemyController : MonoBehaviour
         }
         else
         { m_currentHealth -= change; }
-    }
-
-    private void OnParticleCollision(GameObject other)
-    {
-        TakeDamage(other.transform.parent.GetComponent<PlayerGun>().m_shotDamage);
     }
 
     public void RaycastHit(float damage)

@@ -3316,7 +3316,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.08751933, y: 0.8883234, z: 0.19022612, w: 0.40870023}
+  m_LocalRotation: {x: 0.063726895, y: -0.2279861, z: 0.014955653, w: 0.9714616}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3694,7 +3694,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.08768276, y: 0.88866264, z: 0.19123729, w: 0.407454}
+  m_LocalRotation: {x: 0.034054145, y: -0.24336313, z: 0.0085500125, w: 0.96929955}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -7325,20 +7325,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ba8c2ed50aaf443bf65d7b34b5fda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_particleBased: 0
   m_automatic: 1
-  m_fireRate: 0.05
+  m_fireRate: 0.07
   m_maxAmmoCount: 120
   m_startingAmmoCount: 120
   m_maxMagCapacity: 20
   m_reloadTime: 1
   m_bulletRange: 100
-  m_shotDamage: 0.25
+  m_shotDamage: 1.4
   m_adsSpeed: 2
   m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
   m_adsPos: {x: 0, y: -0.17, z: 0.5}
-  m_recoil: -0.65
-  m_recoilDampening: 0.03
+  m_recoil: -0.4
+  m_recoilDampening: 0.02
   m_recoilControl: 1
   shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   reloadEffect: {fileID: 8300000, guid: b5ee368715e6bf94b9fdc0a7b33db68b, type: 3}
@@ -8458,6 +8457,7 @@ MonoBehaviour:
   m_defensiveCooldown: 5.5
   grenade: {fileID: 4247020981666605293, guid: 6f0781a07f18a0448897b10cf3751278, type: 3}
   jumpClip: {fileID: 8300000, guid: 3ba01f88c7113ec41a914149f6ecff35, type: 3}
+  hitClip: {fileID: 8300000, guid: 2102ff4110c42d0449189223557f8985, type: 3}
   m_gravity: 15
   m_acceleration: {x: 12, y: 0, z: 12}
   m_airAcceleration: {x: 4, y: 0, z: 4}
@@ -10305,7 +10305,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 40
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -10743,7 +10743,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11625,7 +11625,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11678,7 +11678,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -11731,7 +11731,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -12207,12 +12207,12 @@ ParticleSystem:
         m_RotationOrder: 4
     inWorldSpace: 0
   InheritVelocityModule:
-    enabled: 1
+    enabled: 0
     m_Mode: 0
     m_Curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -13695,10 +13695,10 @@ ParticleSystem:
     serializedVersion: 3
     type: 1
     collisionMode: 0
-    colliderForce: 5
-    multiplyColliderForceByParticleSize: 1
+    colliderForce: 0
+    multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     plane0: {fileID: 0}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
@@ -13708,7 +13708,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -13873,7 +13873,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 1
+    collisionMessages: 0
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -14946,7 +14946,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.088103496, y: 0.8880506, z: 0.19149584, w: 0.40857476}
+  m_LocalRotation: {x: 0.032199062, y: -0.2283511, z: 0.007556591, w: 0.9730169}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -17492,7 +17492,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 30
+      scalar: 40
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -17930,7 +17930,7 @@ ParticleSystem:
     gravityModifier:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.4
+      scalar: 0.3
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -18812,7 +18812,7 @@ ParticleSystem:
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -18865,7 +18865,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -18918,7 +18918,7 @@ ParticleSystem:
     z:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -19394,12 +19394,12 @@ ParticleSystem:
         m_RotationOrder: 4
     inWorldSpace: 0
   InheritVelocityModule:
-    enabled: 1
+    enabled: 0
     m_Mode: 0
     m_Curve:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -20882,10 +20882,10 @@ ParticleSystem:
     serializedVersion: 3
     type: 1
     collisionMode: 0
-    colliderForce: 5
-    multiplyColliderForceByParticleSize: 1
+    colliderForce: 0
+    multiplyColliderForceByParticleSize: 0
     multiplyColliderForceByParticleSpeed: 0
-    multiplyColliderForceByCollisionAngle: 1
+    multiplyColliderForceByCollisionAngle: 0
     plane0: {fileID: 0}
     plane1: {fileID: 0}
     plane2: {fileID: 0}
@@ -20895,7 +20895,7 @@ ParticleSystem:
     m_Dampen:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -21060,7 +21060,7 @@ ParticleSystem:
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 1
+    collisionMessages: 0
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
@@ -23087,7 +23087,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.08710107, y: 0.88893473, z: 0.1899686, w: 0.4075788}
+  m_LocalRotation: {x: 0.06735747, y: -0.24292535, z: 0.016911518, w: 0.9675558}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -24907,7 +24907,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ba8c2ed50aaf443bf65d7b34b5fda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_particleBased: 0
   m_automatic: 0
   m_fireRate: 0.2
   m_maxAmmoCount: 50
