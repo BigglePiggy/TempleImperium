@@ -38,7 +38,10 @@ public class SettingsManager : MonoBehaviour
     public KeyCode m_kcKeyEscape            = KeyCode.Escape;
 
     [Header("Default Configs")]
-    public float m_fVolumeOverall           = 0.5f;
+    public float m_fVolumeOverall           = 0.5f;         //unity uses 0-1 for vol control. careful with float rounding errors if doing +-0.1.
+    public float m_fVolumeSFX               = 0.5f;         //(briefly multiplying by 10 to work in integer space instead works around this)
+    public float m_fVolumeMusic             = 0.5f;
+    public float m_fVolumeUI                = 0.5f;
 
 
     SettingsObject m_SettingsObject;
@@ -62,7 +65,8 @@ public class SettingsManager : MonoBehaviour
         m_SettingsObject = new SettingsObject(
             m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeyFire, m_kcKeyAltFire,
             m_fMouseSensitivityX, m_fMouseSensitivityY, m_bMouseInvertX, m_bMouseInvertY, m_kcKeyReload, m_kcKeyMelee, m_kcKeyAbility1, m_kcKeyAbility2,
-            m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape, m_fVolumeOverall
+            m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape,
+            m_fVolumeOverall, m_fVolumeSFX, m_fVolumeMusic, m_fVolumeUI
             );
     }
 
