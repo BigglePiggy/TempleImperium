@@ -15,7 +15,7 @@ public class Pathfinder : MonoBehaviour
         - Uses A* to generate a path (Vector3 Stack) between two points on the attached node map
     */
 
-    private Node _findClosestNode(Vector3 target)
+    private Node FindClosestNode(Vector3 target)
     {
         Node closestNode = null;
         float smallestDistance = Mathf.Infinity;
@@ -37,7 +37,7 @@ public class Pathfinder : MonoBehaviour
         return closestNode;
     }
 
-    public Stack<Vector3> _findPathBetween(Vector3 startPosition, Vector3 endPosition)
+    public Stack<Vector3> FindPathBetween(Vector3 startPosition, Vector3 endPosition)
     {
         //Initalization
         Stack<Vector3> currentPath = new Stack<Vector3>();
@@ -45,8 +45,8 @@ public class Pathfinder : MonoBehaviour
         var closedList = new List<Node>();
 
         //Finds closest nodes to start and end
-        var currentNode = _findClosestNode(startPosition);
-        var endNode = _findClosestNode(endPosition);
+        var currentNode = FindClosestNode(startPosition);
+        var endNode = FindClosestNode(endPosition);
 
         //Stops execution if at destination
         if (currentNode == null || endNode == null || currentNode == endNode)

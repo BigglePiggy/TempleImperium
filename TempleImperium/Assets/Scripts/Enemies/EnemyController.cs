@@ -110,27 +110,27 @@ public class EnemyController : MonoBehaviour
     //Called per frame
     void Update()
     {
-        _playerInSight();
-        _turning();
-        _shooting();
-        _pathUpdate();
-        _pathRead();
+        PlayerInSight();
+        Turning();
+        Shooting();
+        PathUpdate();
+        PathRead();
     }
 
     //Fixed update
     private void FixedUpdate()
     {
-        _extremityCheck();
-        _movement();
-        _gravity();
-        _linearDrag();
-        _velocityLimits();
-        _exceptions();
+        ExtremityCheck();
+        Movement();
+        Gravity();
+        LinearDrag();
+        VelocityLimits();
+        Exceptions();
     }
 
 
     #region Weapon
-    private void _playerInSight()
+    private void PlayerInSight()
     {
         RaycastHit[] inLineOfSight = Physics.RaycastAll(m_enemyHead.position, m_player.position - m_enemyHead.position, m_viewDistance);
 
@@ -145,7 +145,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void _shooting()
+    private void Shooting()
     {
         if (m_timeSinceLastShot < m_fireRate)
         { m_timeSinceLastShot += Time.deltaTime; }
@@ -171,13 +171,13 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     #region Pathfinding
-    public void _pathUpdate()
+    public void PathUpdate()
     {
         m_path = new Stack<Vector3>();
-        m_path = m_pathfinder._findPathBetween(transform.position, m_player.position);
+        m_path = m_pathfinder.FindPathBetween(transform.position, m_player.position);
     }
 
-    public void _pathRead()
+    public void PathRead()
     {
         if (m_path != null)
         {
@@ -198,7 +198,7 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     #region Physics & Movement
-    private void _extremityCheck()
+    private void ExtremityCheck()
     {
         float startHeight = -0.88f;
         float spacing = 0.1f;
@@ -244,7 +244,7 @@ public class EnemyController : MonoBehaviour
         { m_isGrounded = false; }
     }
     
-    private void _turning()
+    private void Turning()
     {
         Vector3 headPoint;
         Vector3 bodyPoint;
@@ -272,7 +272,7 @@ public class EnemyController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
-    private void _movement()
+    private void Movement()
     {
         //Stopping distance
         if (Vector3.Distance(transform.position, m_player.position) < m_stopDistance)
@@ -285,7 +285,7 @@ public class EnemyController : MonoBehaviour
         { m_enemyRb.AddForce((m_nextNode - transform.position).normalized * m_acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
     }
 
-    private void _velocityLimits()
+    private void VelocityLimits()
     {
         //Velocity relative to view
         Vector3 relativeVelocity = new Vector3();
@@ -311,7 +311,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void _linearDrag()
+    private void LinearDrag()
     {
         //Velocity relative to view
         Vector3 relativeVelocity = new Vector3();
@@ -344,13 +344,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private void _gravity()
+    private void Gravity()
     {
         if (m_applyGravity)
         { m_enemyRb.AddForce(Vector3.down * m_gravity, ForceMode.Acceleration); }
     }
 
-    private void _exceptions()
+    private void Exceptions()
     {
         //Slope stop Y velocity Avoidance
         if (m_moving == false && m_onSlope && m_enemyRb.velocity.y > 0)
@@ -369,7 +369,7 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     #region Health & Enemy State
-    private void _takeDamage(float change)
+    private void TakeDamage(float change)
     {
         if (m_currentHealth - change <= 0)
         {
@@ -382,12 +382,12 @@ public class EnemyController : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        _takeDamage(other.transform.parent.GetComponent<PlayerGun>().m_shotDamage);
+        TakeDamage(other.transform.parent.GetComponent<PlayerGun>().m_shotDamage);
     }
 
-    public void _raycastHit(float damage)
+    public void RaycastHit(float damage)
     {
-        _takeDamage(damage);
+        TakeDamage(damage);
     }
     #endregion
 }
