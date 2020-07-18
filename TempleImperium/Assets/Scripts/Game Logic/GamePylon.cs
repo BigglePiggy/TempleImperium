@@ -49,10 +49,13 @@ public class GamePylon : MonoBehaviour
         if (anim.GetBool("Raise"))
         {
             //if foreign collider is the player, this pylon goes down
-            if (ForeignCollider.tag == "Player") { GoDown(); }
+            if (ForeignCollider.tag == "Player")
+            {
+                GoDown();
 
-            //tell gamelogic to run pylon down func
-            oGameLogic.GetComponent<GameLogic>().WaveEventPylonLoweredByPlayer();
+                //tell gamelogic to run pylon down function
+                oGameLogic.GetComponent<GameLogic>().WaveEventPylonLoweredByPlayer();
+            }
         }
     }
 }

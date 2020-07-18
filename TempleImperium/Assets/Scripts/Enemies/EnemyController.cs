@@ -170,6 +170,7 @@ public class EnemyController : MonoBehaviour
     }
     #endregion
 
+
     #region Pathfinding
     public void PathUpdate()
     {
@@ -196,6 +197,7 @@ public class EnemyController : MonoBehaviour
         }
     }
     #endregion
+
 
     #region Physics & Movement
     private void ExtremityCheck()
@@ -367,6 +369,7 @@ public class EnemyController : MonoBehaviour
         else { m_applyGravity = true; }
     }
     #endregion
+
 
     #region Health & Enemy State
     private void TakeDamage(float change)

@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
 
     float m_sinceLastJump;      //Tracks jump buffer in seconds
 
-    //Player States
+    //Player States           
     bool m_isGrounded;          //True when on a surface
     bool m_onSlope;             //True when on a slope
     bool m_isJumping;           //True whilst in the air after a jump
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
     float m_defensiveCurrentCooldown;   //Defensive ability cooldown in seconds
 
     float m_health; //Current health
-   
+
     private SettingsObject m_settings;  //Settings object used to determine all input keys
     public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
 
@@ -126,18 +126,25 @@ public class PlayerController : MonoBehaviour
     //Called per frame
     private void Update()
     {
-        KeyboardInput();
-        MouseInputRecoil();
-        WeaponSwitching();
+        if (m_health > 0)
+        {
+            KeyboardInput();
+            MouseInputRecoil();
+            WeaponSwitching();
+        }
     }
 
     //Fixed update
     private void FixedUpdate()
     {
+        if (m_health > 0)
+        {
+            Movement();
+        }
+
         ExtremityCheck();
         Exceptions();
         Gravity();
-        Movement();
         LinearDrag();
         VelocityLimits();
     }
@@ -164,7 +171,7 @@ public class PlayerController : MonoBehaviour
         //Normal control
         else
         {
-            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))   
+            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))
             {
                 if (rotateVertical > 0)
                 { m_playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
@@ -482,6 +489,14 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         m_health -= damage;
+
+        if(m_health <= 0) 
+        { PlayerDeath(); }
+    }
+
+    public void PlayerDeath() 
+    {
+        m_health = 0;
     }
     #endregion
 }

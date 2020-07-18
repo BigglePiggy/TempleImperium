@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-
+    
     //Pathfinder  script 
     //What this script does:
     /*
