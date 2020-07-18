@@ -1,43 +1,49 @@
-﻿//////////////////////////////////////////////////                                              
-//                                              //
-//  Node                                        //
-//  Backbone of pathfinding algorithm           //
-//                                              //
-//  Contributors : Eddie                        //
-//                                              //
-//////////////////////////////////////////////////   
-
-using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by Eddie
+
 public class Node : MonoBehaviour
 {
-    ////Declarations
-    //Public
+    //Node script 
+    //What this script does:
+    /*
+        - Contains properties that Pathfinder utilizes
+        - Stores a list of relationships to neighbour nodes
+        - Displays visual aid for each node 
+    */
+
+    #region Declarations
+    [Header("Node Configuration")]
+    [Tooltip("Nodes withtin this will be connected by Node Connector")]
     public float maxConnectionDistance;
+    [Space]
+
+    [Tooltip("List of all nodes that have a reloations with this node")]
     public List<Node> neighbourNodes;
 
     //Properties
-    public Node previousNode
+    public Node previousNode    //Node previously visited by Pathfinder's a* algorithm
     {
         get;
         set;
     }
 
-    public float distanceFromPrevious
+    public float distanceFromPrevious   //Distance from previousNode
     {
         get;
         set;
     }
 
-    public float distanceFromEnd
+    public float distanceFromEnd    //Distance from end of path that Pathfinder is calculating
     {
         get;
         set;
     }
+    #endregion
 
-    //Gizmo link display
+    #region Visual Display
     private void OnDrawGizmos()
     {
         if (neighbourNodes.Count > 0)
@@ -58,4 +64,5 @@ public class Node : MonoBehaviour
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position, 0.1f);
     }
+    #endregion
 }

@@ -1,38 +1,29 @@
-﻿//////////////////////////////////////////////////                                              
-//                                              //
-//  NodeConnector                               //
-//  Connects associated nodes                   //
-//                                              //
-//  Contributors : Eddie                        //
-//                                              //
-//////////////////////////////////////////////////    
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by Eddie
+
 public class NodeConnector : MonoBehaviour
 {
-    ////Declarations
-    //Private
-    private List<Transform> nodes;
+    //Node Connector script 
+    //What this script does:
+    /*
+        - Is attached to root of unbuilt node map
+        - Links nodes that have direct line of sight to each other
+          & are withtin each others minimum link range
+    */
 
     //Initalization
     void Start()
     {
-        nodes = new List<Transform>();
+        List<Transform> nodes = new List<Transform>();
 
-        //Variables
+        //Gets all nodes
         for (int i = 0; i < transform.childCount; i++)
         { nodes.Add(transform.GetChild(i)); }
 
-        _connectNodes();
-    }
-
-    ////Bespoke Fucntions
-    //Private
-    private void _connectNodes()
-    {
+        //Connects nodes
         for (int i = 0; i < nodes.Count;)
         {
             for (int e = 1; e < nodes.Count; e++)

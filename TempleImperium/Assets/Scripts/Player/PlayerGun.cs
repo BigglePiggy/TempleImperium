@@ -1,89 +1,121 @@
-﻿//////////////////////////////////////////////////                                              
-//                                              //
-//  PlayerGun                                   //
-//  Creates and allows use of bespoke guns      //
-//                                              //
-//  Contributors : Eddie                        //
-//                                              //
-//////////////////////////////////////////////////  
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by Eddie
+
 public class PlayerGun : MonoBehaviour
 {
-    ////Declarations
-    //Public
-    public bool particleBased;
-    public bool automatic;
-    public float adsSpeed;
-    public float recoil;
-    public float recoilDampening;
-    public float recoilControl;
-    public int startingAmmoCount;
-    public int maxMagCapacity;
-    public float reloadTime;
-    public float fireRate;
-    public float bulletRange;
-    public float shotDamage;
-    public Vector3 adsPos;
-    public Vector3 hipPos;
+    //Player Gun script 
+    //What this script does:
+    /*
+        - Handles player shooting inputs
+        - Handles ADS functionality
+        - Passes ammo infomation to the HUD
+        - Passes recoil infomation to Player Controller
+        - Manages held state
+    */
 
-    //Private
-    private bool isHeld;
-    private int ammoCount;
-    private int currentMagCapacity;
-    private float timeSinceLastShot;
-    private float reloadProgress;
+    #region Declarations
+    [Header("Gun Configuration")]
+    [Tooltip("If true shots will emit particles instead of using raycast")]
+    public bool m_particleBased;
+    [Tooltip("Toggles between the gun being automatic or semi-automatic")]
+    public bool m_automatic;
+    [Tooltip("Minimum time between shots in seconds")]
+    public float m_fireRate;
+    [Tooltip("Maximum amount of ammo that can be stored for this gun")]
+    public int m_maxAmmoCount;
+    [Tooltip("Amount of ammo this gun contains on start")]
+    public int m_startingAmmoCount;
+    [Tooltip("Number of rounds contained withtin one magazine")]
+    public int m_maxMagCapacity;
+    [Tooltip("Time it takes to reload in seconds")]
+    public float m_reloadTime;
+    [Tooltip("Maximum range of raycast shots")]
+    public float m_bulletRange;
+    [Tooltip("Damage applied by bullets that hit the player")]
+    public float m_shotDamage;
+    [Space]
 
-    private bool left;
-    private bool right;
-    private float startTime;
-    private float journeyLength;
-    private Vector3 objectPosition;
+    [Tooltip("Speed at which the gun moves between hip-fire and ADS")]
+    public float m_adsSpeed;
+    [Tooltip("Gun posiiton at hip")]
+    public Vector3 m_hipPos;
+    [Tooltip("Gun posiiton when aiming down sight")]
+    public Vector3 m_adsPos;
+    [Space]
 
-    //Components
-    private SettingsObject playerSettings;
-    public SettingsObject Settings { set { playerSettings = value; } }
+    [Header("Recoil")]
+    [Tooltip("Amount of recoil applied per shot")]
+    public float m_recoil;
+    [Tooltip("Rate at which the recoil reduces over time")]
+    public float m_recoilDampening;
+    [Tooltip("Amount of weight the player's mouse inputs have over the recoil")]
+    public float m_recoilControl;
+    [Space]
 
-    private Transform bulletOrigin;
-    private AudioSource audioOrigin;
-    private PlayerController playerController;
-    private ParticleSystem bulletParticleSystem;
-    private MeshRenderer meshRenderer;
-    private HUDController hudController;
-
-    //Sound effects
+    [Header("Sound Effects")]
+    [Tooltip("Effect played when a shot is fired")]
     public AudioClip shotEffect;
+    [Tooltip("Effect played reloading")]
     public AudioClip reloadEffect;
+
+
+    //ADS variables
+    bool m_left;                //True when gun moving towards ADS position 
+    bool m_right;               //True when gun moving back to hip position 
+    float m_startTime;          //Stores a Lerp journey's start time
+    float m_journeyLength;      //Stores the length of the current proposed journey
+    Vector3 m_gunPosition;      //Lerp gun position
+
+    bool m_isHeld;              //True when gun is selected by player & active   
+    int m_ammoCount;            //Total ammo for this gun
+    int m_currentMagCapacity;   //Ammo in the current magazine
+    float m_timeSinceLastShot;  //Time since last shot in seconds
+    float m_reloadProgress;     //Tracks reload progress 
+
+    private SettingsObject m_settings; //Settings object used to determine all input keys
+    public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
+
+    PlayerController m_playerController;    //Reference to Player Controller script - Recoil values are passed 
+    HUDController m_hudController;          //Reference to Hud Controller script - Display values are passed
+
+    AudioSource m_audioOrigin;              //Audio origin component
+    MeshRenderer m_meshRenderer;            //Mesh renderer component - used to make gun invisible when not in use
+    Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
+    ParticleSystem m_bulletParticleSystem;  //Used when gun m_particleBased is true - emits when gun is shot
+    #endregion
 
 
     //Initalization
     void Start()
     {
-        isHeld = false;
-        left = false;
-        right = false;
-        ammoCount = startingAmmoCount;
-        currentMagCapacity = maxMagCapacity;
-        reloadProgress = reloadTime;
-        timeSinceLastShot = fireRate;
+        m_left = false;
+        m_right = false;
 
-        bulletOrigin = transform.Find("Bullet Origin");
-        audioOrigin = GetComponent<AudioSource>();
-        playerController = transform.root.GetComponent<PlayerController>();
-        meshRenderer = GetComponent<MeshRenderer>();
-        hudController = GameObject.Find("HUD").GetComponent<HUDController>();
+        m_isHeld = false;
 
-        if (particleBased)
-        { bulletParticleSystem = bulletOrigin.GetComponent<ParticleSystem>(); }
+        m_ammoCount = m_startingAmmoCount;
+        m_currentMagCapacity = m_maxMagCapacity;
+        m_timeSinceLastShot = m_fireRate;
+        m_reloadProgress = m_reloadTime;
+
+        m_playerController = transform.root.GetComponent<PlayerController>();
+        m_hudController = GameObject.Find("HUD").GetComponent<HUDController>();
+
+        m_bulletOrigin = transform.Find("Bullet Origin");
+        m_meshRenderer = GetComponent<MeshRenderer>();
+        m_audioOrigin = GetComponent<AudioSource>();
+
+        if (m_particleBased)
+        { m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>(); }
     }
 
     //Called per frame
     void Update()
     {
-        if (isHeld)
+        if (m_isHeld)
         {
             _inputs();
             _hudValues();
@@ -91,162 +123,149 @@ public class PlayerGun : MonoBehaviour
     }
 
 
-    ////Bespoke functions
-    ///Private
+    #region Whilst held
     private void _inputs()
     {
         ////Shooting
         //Since last shot update
-        if (timeSinceLastShot < fireRate)
-        { timeSinceLastShot += Time.deltaTime; }
+        if (m_timeSinceLastShot < m_fireRate)
+        { m_timeSinceLastShot += Time.deltaTime; }
 
         //Reload update
-        if (reloadProgress < reloadTime)
-        { reloadProgress += Time.deltaTime; }
+        if (m_reloadProgress < m_reloadTime)
+        { m_reloadProgress += Time.deltaTime; }
 
         //Stops shooting on an empty magazines or during a reload
-        if (currentMagCapacity != 0 && reloadProgress >= reloadTime)
+        if (m_currentMagCapacity != 0 && m_reloadProgress >= m_reloadTime)
         {
-            //Automatic
-            if (automatic && Input.GetKey(playerSettings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
-            {
-                currentMagCapacity--;
-                timeSinceLastShot = 0;
-                audioOrigin.PlayOneShot(shotEffect);
+            bool shoot = false;
 
-                if (particleBased)
+            if (m_automatic && Input.GetKey(m_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            { shoot = true; }
+
+            if (m_automatic == false && Input.GetKeyDown(m_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            { shoot = true; }
+
+            if (shoot) 
+            {
+                m_currentMagCapacity--;
+                m_timeSinceLastShot = 0;
+                m_audioOrigin.PlayOneShot(shotEffect);
+
+                if (m_particleBased)
                 {
-                    bulletParticleSystem.Emit(1);
+                    m_bulletParticleSystem.Emit(1);
                 }
 
                 else
                 {
                     RaycastHit hit;
-                    if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, bulletRange))
+                    if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
                     {
                         if (hit.transform.CompareTag("Enemy"))
-                        { hit.transform.GetComponent<EnemyController>()._raycastHit(shotDamage); }
+                        { 
+                            hit.transform.GetComponent<EnemyController>()._raycastHit(m_shotDamage); 
+                        }
+                        else if (hit.transform.root.CompareTag("Enemy"))
+                        {
+                            hit.transform.root.GetComponent<EnemyController>()._raycastHit(m_shotDamage);
+                        }
                     }
                 }
 
-                //Apply recoil
-                playerController.ShotFired();
-            }
-
-            //Semi Automatic
-            else if (automatic == false && Input.GetKeyDown(playerSettings.m_kcKeyFire) && timeSinceLastShot >= fireRate)
-            {
-                currentMagCapacity--;
-                timeSinceLastShot = 0;
-                audioOrigin.PlayOneShot(shotEffect);
-
-                if (particleBased)
-                {
-                    bulletParticleSystem.Emit(1);
-                }
-
-                else
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(bulletOrigin.position, bulletOrigin.forward, out hit, bulletRange))
-                    { } //Hit
-                }
-
-                //Apply recoil
-                playerController.ShotFired();
+                m_playerController.ShotFired();
             }
         }
 
-        ////Reload
-        if (Input.GetKeyDown(playerSettings.m_kcKeyReload) && currentMagCapacity != maxMagCapacity && ammoCount > 0)
+        //Reload
+        if (Input.GetKeyDown(m_settings.m_kcKeyReload) && m_currentMagCapacity != m_maxMagCapacity && m_ammoCount > 0)
         {
-            reloadProgress = 0;
+            m_reloadProgress = 0;
 
-            if (ammoCount - (maxMagCapacity - currentMagCapacity) < 0)
-            { ammoCount = 0; }
+            if (m_ammoCount - (m_maxMagCapacity - m_currentMagCapacity) < 0)
+            { m_ammoCount = 0; }
             else
-            { ammoCount -= maxMagCapacity - currentMagCapacity; }
+            { m_ammoCount -= m_maxMagCapacity - m_currentMagCapacity; }
 
-            currentMagCapacity = maxMagCapacity;
+            m_currentMagCapacity = m_maxMagCapacity;
 
-            audioOrigin.PlayOneShot(reloadEffect);
+            m_audioOrigin.PlayOneShot(reloadEffect);
         }
 
-        ////Aim Down Sight
-        if (left || right)
+        //Aim Down Sight
+        if (m_left || m_right)
         {
-            float distCovered = (Time.time - startTime) * adsSpeed;
-            float fractionOfJourney = distCovered / journeyLength;
+            float distCovered = (Time.time - m_startTime) * m_adsSpeed;
+            float fractionOfJourney = distCovered / m_journeyLength;
 
-            if (left)
-            { transform.localPosition = Vector3.Lerp(objectPosition, adsPos, fractionOfJourney); }
+            if (m_left)
+            { transform.localPosition = Vector3.Lerp(m_gunPosition, m_adsPos, fractionOfJourney); }
 
-            if (right)
-            { transform.localPosition = Vector3.Lerp(objectPosition, hipPos, fractionOfJourney); }
+            if (m_right)
+            { transform.localPosition = Vector3.Lerp(m_gunPosition, m_hipPos, fractionOfJourney); }
         }
 
         //Down - Go left
-        if (Input.GetKeyDown(playerSettings.m_kcKeyAltFire))
+        if (Input.GetKeyDown(m_settings.m_kcKeyAltFire))
         {
-            startTime = Time.time;
-            objectPosition = transform.localPosition;
-            journeyLength = Vector3.Distance(objectPosition, adsPos);
-            left = true;
-            right = false;
+            m_startTime = Time.time;
+            m_gunPosition = transform.localPosition;
+            m_journeyLength = Vector3.Distance(m_gunPosition, m_adsPos);
+            m_left = true;
+            m_right = false;
         }
 
         //Up - Go right
-        if (Input.GetKeyUp(playerSettings.m_kcKeyAltFire))
+        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire))
         {
-            startTime = Time.time;
-            objectPosition = transform.localPosition;
-            journeyLength = Vector3.Distance(objectPosition, hipPos);
-            right = true;
-            left = false;
+            m_startTime = Time.time;
+            m_gunPosition = transform.localPosition;
+            m_journeyLength = Vector3.Distance(m_gunPosition, m_hipPos);
+            m_right = true;
+            m_left = false;
         }
     }
 
-    //Hud value writing
     private void _hudValues()
     {
-        hudController.CurrentWeaponAmmoMagazine = currentMagCapacity;
-        hudController.CurrentWeaponAmmoReserve = ammoCount;
-        hudController.CurrentWeaponAmmoMagazineMax = maxMagCapacity;
-        hudController.CurrentWeaponAmmoReserveMax = startingAmmoCount;
+        m_hudController.CurrentWeaponAmmoMagazine = m_currentMagCapacity;
+        m_hudController.CurrentWeaponAmmoReserve = m_ammoCount;
+        m_hudController.CurrentWeaponAmmoMagazineMax = m_maxMagCapacity;
+        m_hudController.CurrentWeaponAmmoReserveMax = m_maxAmmoCount;
     }
+    #endregion
 
-    ///Public
-    //Start holding
+
+    #region Is Held State Management
     public void _startHolding()
     {
-        isHeld = true;
+        m_isHeld = true;
 
         //Makes mesh visable
-        meshRenderer.enabled = true;
+        m_meshRenderer.enabled = true;
 
         //Moves gun to hip 
-        transform.localPosition = hipPos;
-        right = false;
-        left = false;
+        transform.localPosition = m_hipPos;
+        m_right = false;
+        m_left = false;
 
         //Updates recoil values and enables gun
-        playerController.NewRecoilValues(recoil, recoilDampening, recoilControl);
+        m_playerController.NewRecoilValues(m_recoil, m_recoilDampening, m_recoilControl);
     }
 
-    //stop holding
     public void _stopHolding()
     {
-        isHeld = false;
-        meshRenderer.enabled = false;
+        m_isHeld = false;
+        m_meshRenderer.enabled = false;
 
         //Resets reload if mid reload
-        if (reloadProgress < reloadTime)
-        { reloadProgress = 0; }
+        if (m_reloadProgress < m_reloadTime)
+        { m_reloadProgress = 0; }
     }
 
-    //Get isHeld
     public bool _getIsHeld()
     {
-        return isHeld;
+        return m_isHeld;
     }
+    #endregion
 }

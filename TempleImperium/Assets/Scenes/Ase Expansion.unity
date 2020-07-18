@@ -2661,7 +2661,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.02671141, y: 0.70267665, z: 0.026416669, w: 0.7105168}
+  m_LocalRotation: {x: 0.01521538, y: 0.94725823, z: 0.31686187, w: -0.04548637}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3039,7 +3039,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.06880049, y: 0.7462202, z: 0.07808242, w: 0.65751433}
+  m_LocalRotation: {x: 0.013787709, y: 0.94450796, z: 0.3257554, w: -0.03997663}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6274,20 +6274,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ba8c2ed50aaf443bf65d7b34b5fda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleBased: 1
-  automatic: 1
-  adsSpeed: 2
-  recoil: -0.65
-  recoilDampening: 0.03
-  recoilControl: 1
-  startingAmmoCount: 120
-  maxMagCapacity: 20
-  reloadTime: 1
-  fireRate: 0.05
-  bulletRange: 100
-  shotDamage: 0.25
-  adsPos: {x: 0, y: -0.17, z: 0.5}
-  hipPos: {x: 0.38, y: -0.17, z: 0.5}
+  m_particleBased: 0
+  m_automatic: 1
+  m_fireRate: 0.05
+  m_maxAmmoCount: 120
+  m_startingAmmoCount: 120
+  m_maxMagCapacity: 20
+  m_reloadTime: 1
+  m_bulletRange: 100
+  m_shotDamage: 0.25
+  m_adsSpeed: 2
+  m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
+  m_adsPos: {x: 0, y: -0.17, z: 0.5}
+  m_recoil: -0.65
+  m_recoilDampening: 0.03
+  m_recoilControl: 1
   shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   reloadEffect: {fileID: 8300000, guid: b5ee368715e6bf94b9fdc0a7b33db68b, type: 3}
 --- !u!82 &1014786341
@@ -13511,7 +13512,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.07456459, y: 0.6992957, z: 0.073741816, w: 0.7070981}
+  m_LocalRotation: {x: 0.017031487, y: 0.9337558, z: 0.35468242, w: -0.044838}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -20805,7 +20806,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.024640992, y: 0.74977285, z: 0.027965333, w: 0.6606447}
+  m_LocalRotation: {x: 0.012221315, y: 0.9564711, z: 0.28874698, w: -0.04048297}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -22516,20 +22517,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86ba8c2ed50aaf443bf65d7b34b5fda6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particleBased: 1
-  automatic: 0
-  adsSpeed: 2.5
-  recoil: -1
-  recoilDampening: 0.05
-  recoilControl: 1
-  startingAmmoCount: 30
-  maxMagCapacity: 6
-  reloadTime: 0.75
-  fireRate: 0.2
-  bulletRange: 50
-  shotDamage: 5
-  adsPos: {x: 0, y: -0.17, z: 0.5}
-  hipPos: {x: 0.38, y: -0.17, z: 0.5}
+  m_particleBased: 0
+  m_automatic: 0
+  m_fireRate: 0.2
+  m_maxAmmoCount: 50
+  m_startingAmmoCount: 50
+  m_maxMagCapacity: 6
+  m_reloadTime: 0.75
+  m_bulletRange: 100
+  m_shotDamage: 3
+  m_adsSpeed: 2.5
+  m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
+  m_adsPos: {x: 0, y: -0.17, z: 0.5}
+  m_recoil: -1
+  m_recoilDampening: 0.05
+  m_recoilControl: 1
   shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   reloadEffect: {fileID: 8300000, guid: b5ee368715e6bf94b9fdc0a7b33db68b, type: 3}
 --- !u!82 &2123492953

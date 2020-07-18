@@ -1,21 +1,20 @@
-﻿//////////////////////////////////////////////////                                              
-//                                              //
-//  Pathfinder                                  //
-//  Creates a path of nodes between two points  //
-//                                              //
-//  Contributors : Eddie                        //
-//                                              //
-//////////////////////////////////////////////////        
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
 
+//Created by Eddie
+
 public class Pathfinder : MonoBehaviour
 {
-    ////Bespoke functions
-    //Private
+
+    //Pathfinder  script 
+    //What this script does:
+    /*
+        - Locates closest node from a given point 
+        - Uses A* to generate a path (Vector3 Stack) between two points on the attached node map
+    */
+
     private Node _findClosestNode(Vector3 target)
     {
         Node closestNode = null;
@@ -38,7 +37,6 @@ public class Pathfinder : MonoBehaviour
         return closestNode;
     }
 
-    //Find a path between
     public Stack<Vector3> _findPathBetween(Vector3 startPosition, Vector3 endPosition)
     {
         //Initalization

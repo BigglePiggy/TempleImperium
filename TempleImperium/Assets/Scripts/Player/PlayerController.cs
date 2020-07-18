@@ -14,6 +14,10 @@ public class PlayerController : MonoBehaviour
         - Manages abilities
     */
 
+    ////TODO
+    //Make health a property for EnemyController to interact with
+    ////
+
     #region Declarations
     [Header("Player Configuration")]
     [Tooltip("Maximum health the player can have")]
@@ -67,18 +71,18 @@ public class PlayerController : MonoBehaviour
     float m_gunRecoilControl;   //Amount of control the player's Y Mouse input has on m_currentRecoil
 
     //Movement
-    string m_zDirection;    //Holds "Forward" or "Back"
-    string m_xDirection;    //Holds "Left" or "Right"
-    string m_lastKeyDownZ;  //Determines value of m_zDirection
-    string m_lastKeyDownX;  //Determines value of m_xDirection
+    string m_zDirection;        //Holds "Forward" or "Back"
+    string m_xDirection;        //Holds "Left" or "Right"
+    string m_lastKeyDownZ;      //Determines value of m_zDirection
+    string m_lastKeyDownX;      //Determines value of m_xDirection
 
-    float m_sinceLastJump;  //Tracks jump buffer in seconds
+    float m_sinceLastJump;      //Tracks jump buffer in seconds
 
     //Player States
-    bool m_isGrounded;      //True when on a surface
-    bool m_onSlope;         //True when on a slope
-    bool m_isJumping;       //True whilst in the air after a jump
-    bool m_applyGravity;    //Changes state depending on the above three (stops slope momentum issues)
+    bool m_isGrounded;          //True when on a surface
+    bool m_onSlope;             //True when on a slope
+    bool m_isJumping;           //True whilst in the air after a jump
+    bool m_applyGravity;        //Changes state depending on the above three (stops slope momentum issues)
 
     float m_offensiveCurrentCooldown;   //Offensive ability cooldown in seconds
     float m_defensiveCurrentCooldown;   //Defensive ability cooldown in seconds
