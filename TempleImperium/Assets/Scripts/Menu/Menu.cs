@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -58,14 +59,14 @@ public class Menu : MonoBehaviour
             m_optionsPage.SetActive(false);
         }
 
-        if(GlobalSettings.m_globalSettings == null) 
+        if(GlobalValues.g_settings == null) 
         {
             SettingsManager m_settingsManager = GameObject.Find("Settings Manager").GetComponent<SettingsManager>();
             m_settingsManager.BuildSettingsObject();
             m_settingsManager.SaveObject();
         }
 
-        m_settings = GlobalSettings.m_globalSettings;
+        m_settings = GlobalValues.g_settings;
 
         m_ySensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("Y").Find("Y Sensitivity Text").GetComponent<Text>();
         m_xSensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("X").Find("X Sensitivity Text").GetComponent<Text>();
@@ -97,12 +98,30 @@ public class Menu : MonoBehaviour
             }
         }
     }
-    
+
+    //On GUI event - Captures keys for settings
+    private void OnGUI()
+    {
+        if (m_keyCaptureMode)
+        {
+            Event e = Event.current;
+            if (e.isKey)
+            {
+                if (m_keyCaptureTarget == "m_kcKeyFire")
+                {
+                    m_settings.m_kcKeyFire = e.keyCode;
+                }
+
+                m_keyCaptureMode = false;
+                m_weaponFireText.text = m_settings.m_kcKeyFire.ToString();
+            }
+        }
+    }
 
     #region Main Menu Actions
     public void StartButton()
     {
-        GlobalSettings.m_globalSettings = m_settings;
+        GlobalValues.g_settings = m_settings;
         SceneManager.LoadScene("Ase Expansion");
     }
 
@@ -188,23 +207,5 @@ public class Menu : MonoBehaviour
 
         m_optionsPage.SetActive(false);
     }
-    #endregion
-
-    private void OnGUI()
-    {
-        if (m_keyCaptureMode)
-        {
-            Event e = Event.current;
-            if (e.isKey)
-            {
-                if(m_keyCaptureTarget == "m_kcKeyFire") 
-                {
-                    m_settings.m_kcKeyFire = e.keyCode;
-                    m_weaponFireText.text = m_settings.m_kcKeyFire.ToString();
-                }
-
-                m_keyCaptureMode = false;
-            }
-        }
-    }
+    #endregion   
 }

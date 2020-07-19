@@ -53,7 +53,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (onMenu == false)
         {
-            m_SettingsObject = GlobalSettings.m_globalSettings; //Reads global settings (From the menu)
+            m_SettingsObject = GlobalValues.g_settings; //Reads global settings (From the menu)
             SendToScripts();    //Push to scripts
         }
     }
@@ -87,6 +87,6 @@ public class SettingsManager : MonoBehaviour
 
     public void SaveObject() 
     {
-        GlobalSettings.m_globalSettings = m_SettingsObject; //Writes global settings (For the menu)
+        GlobalValues.g_settings = m_SettingsObject; //Writes global settings (For the menu)
     }
 }
