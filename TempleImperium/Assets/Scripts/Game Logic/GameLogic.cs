@@ -56,6 +56,7 @@ public class GameLogic : MonoBehaviour
     int m_iCurrentWave = 0;                     //index of current wave
     int m_iCurrentWaveSub = 0;                  //index of current subwave
     int m_iEnemiesAlive = 0;                    //num of enemies alive
+    int m_iPylonsDown = 0;                    //num of enemies alive
     /// <summary>
     /// gameplay PHASE duration. this is NOT the wave timer!!!
     /// </summary>
@@ -185,6 +186,7 @@ public class GameLogic : MonoBehaviour
         {
             m_iCurrentWave++;           //move to next wave
             m_iCurrentWaveSub = 0;      //reset subwave counter
+            m_iPylonsDown = 0;
             m_eGameplayPhase = GameplayPhase.InbetweenWave;     //we're now between waves!
         }
 
@@ -326,11 +328,18 @@ public class GameLogic : MonoBehaviour
     {
         m_iEnemiesAlive--;      //decrement counter
 
-        if (m_iEnemiesAlive <= m_WaveDataArray[m_iCurrentWave].m_iSubWaveKillLenience)       //if no enemies left (or below kill lenience)...
+        if (m_iEnemiesAlive <= m_WaveDataArray[m_iCurrentWave].m_iSubWaveKillLenience && m_iCurrentWaveSub != m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0) - 1 && m_eGameplayPhase != GameplayPhase.InbetweenSubwave)  //if no enemies left (or below kill lenience)...
         {
             m_iCurrentWaveSub++;                                    //increment subwave counter
             m_eGameplayPhase = GameplayPhase.InbetweenSubwave;      //go to wait period
             EnactPhase();                                           //enact
+        }
+
+        if (m_iEnemiesAlive == 0 && m_iPylonsDown == m_WaveDataArray[m_iCurrentWave].m_iPylonCount && m_iCurrentWaveSub == m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0) - 1)
+        {
+            m_iCurrentWaveSub++;                                    //increment subwave counter
+            m_eGameplayPhase = GameplayPhase.InbetweenSubwave;      //go to wait period
+            EnactPhase();
         }
 
     }
@@ -339,6 +348,14 @@ public class GameLogic : MonoBehaviour
     {
         //add current wave config's pylon bonus time to timer
         WaveEventExtendTimerSeconds(m_WaveDataArray[m_iCurrentWave].m_fPylonBonusTime);
+        m_iPylonsDown++;
+
+        if (m_iEnemiesAlive == 0 && m_iPylonsDown == m_WaveDataArray[m_iCurrentWave].m_iPylonCount && m_iCurrentWaveSub == m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0) - 1)
+        {
+            m_iCurrentWaveSub++;                                    //increment subwave counter
+            m_eGameplayPhase = GameplayPhase.InbetweenSubwave;      //go to wait period
+            EnactPhase();
+        }
     }
 
     public void GameOver(bool input_GeneratorGoesCritical = true)
