@@ -26,11 +26,10 @@ public class GameLogic : MonoBehaviour
         - handling wave logic
         - telling enemy spawner when/what to spawn
         - has important public structs (eg StarstoneElement enum)
+        - handling gameover
+        - basically all central game logic
     */
 
-    //TODO!!!
-    //GENERATOR
-    //PASS ON WAVE STARSTONE ELEMENT TO ENEMIES AND PLAYER
 
     [Header("level configuration")]
     [Tooltip("number of seconds to wait at the start before beginning gameplay")]
