@@ -67,17 +67,17 @@ public class HUDController : MonoBehaviour
     private float m_fPlayerHealthMax;
     public float PlayerHealthMax { set { m_fPlayerHealthMax = value; } }
     //--
-    private float m_iAbilityOffensiveCooldown;
-    public float AbilityOffensiveCooldown { set { m_iAbilityOffensiveCooldown = value; } }
+    private float m_fAbilityOffensiveCooldown;
+    public float AbilityOffensiveCooldown { set { m_fAbilityOffensiveCooldown = value; } }
     //--
-    private float m_iAbilityOffensiveCooldownMax;
-    public float AbilityOffensiveCooldownMax { set { m_iAbilityOffensiveCooldownMax = value; } }
+    private float m_fAbilityOffensiveCooldownMax;
+    public float AbilityOffensiveCooldownMax { set { m_fAbilityOffensiveCooldownMax = value; } }
     //--
-    private float m_iAbilityDefensiveCooldown;
-    public float AbilityDefensiveCooldown { set { m_iAbilityDefensiveCooldown = value; } }
+    private float m_fAbilityDefensiveCooldown;
+    public float AbilityDefensiveCooldown { set { m_fAbilityDefensiveCooldown = value; } }
     //--
-    private float m_iAbilityDefensiveCooldownMax;
-    public float AbilityDefensiveCooldownMax { set { m_iAbilityDefensiveCooldownMax = value; } }
+    private float m_fAbilityDefensiveCooldownMax;
+    public float AbilityDefensiveCooldownMax { set { m_fAbilityDefensiveCooldownMax = value; } }
 
 
     #endregion getset declarations
