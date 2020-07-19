@@ -113,13 +113,17 @@ public class HUDController : MonoBehaviour
     string m_sTextAmmoReserve = "";
     public Text oTextHealth;
     string m_sTextHealth = "";
-    public Image oPanelHealthBar;
+    public Text oTextHealthMax;
+    string m_sTextHealthMax = "";
+    public Image oImageHealthBar;
+    float m_fImageHealthBarBaseWidth;
     public Text oTextAbilityOffensive;
     string m_sTextAbilityOffensive = "";
     public Text oTextAbilityDefensive;
     string m_sTextAbilityDefensive = "";
     #endregion output text obj refs declarations
     //-----------------------------------------------------
+
 
 
     void Start()
@@ -133,6 +137,10 @@ public class HUDController : MonoBehaviour
         oTextAmmoMag.color          = m_cTextColour;
         oTextAmmoMagMax.color       = m_cTextColour;
         oTextAmmoReserve.color      = m_cTextColour;
+
+        //save misc things
+        //health bar width
+        m_fImageHealthBarBaseWidth = oImageHealthBar.rectTransform.rect.width;
 
 
         //reflection attempt
@@ -200,19 +208,25 @@ public class HUDController : MonoBehaviour
         //ammo reserve
         m_sTextAmmoReserve = m_iCurrentWeaponAmmoReserve.ToString();
 
+        //health
+        m_sTextHealth = Mathf.FloorToInt(m_fPlayerHealth).ToString();
+        //health max
+        m_sTextHealthMax = m_fPlayerHealthMax + "/";
 
 
         //WRITE --------------------------------------------------------------
+        //text
+        oTextDebugReadout.text          = m_sTextDebugReadout;
+        oTextWaveCounter.text           = m_sTextWaveCounter;
+        oTextWaveTimer.text             = m_sTextWaveTimer;
+        oTextStarstoneElement.text      = m_sTextStarstoneElement;
+        oTextAmmoMag.text               = m_sTextAmmoMag;
+        oTextAmmoMagMax.text            = m_sTextAmmoMagMax;
+        oTextAmmoReserve.text           = m_sTextAmmoReserve;
+        oTextHealth.text                = m_sTextHealth;
+        oTextHealthMax.text             = m_sTextHealthMax;
 
-        oTextDebugReadout.text = m_sTextDebugReadout;
-        oTextWaveCounter.text = m_sTextWaveCounter;
-        oTextWaveTimer.text = m_sTextWaveTimer;
-        oTextStarstoneElement.text = m_sTextStarstoneElement;
-        oTextAmmoMag.text = m_sTextAmmoMag;
-        oTextAmmoMagMax.text = m_sTextAmmoMagMax;
-        oTextAmmoReserve.text = m_sTextAmmoReserve;
 
-        //colour ------------------------------
         //starstone colour
         oTextStarstoneElement.color = cGenericFunctions.GetStarstoneElementColour(m_eWaveStarstoneElement);
 
@@ -224,5 +238,15 @@ public class HUDController : MonoBehaviour
         //ammo reserve counter colour (lerp <50%, highlight max)
         oTextAmmoReserve.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_iCurrentWeaponAmmoReserve, m_iCurrentWeaponAmmoReserveMax / 2);
         if (m_iCurrentWeaponAmmoReserve == m_iCurrentWeaponAmmoReserveMax) { oTextAmmoReserve.color = m_cTextColourAlertGood; }
+
+        //hp colour (lerp <50%)
+        oTextHealth.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_fPlayerHealth, m_fPlayerHealthMax / 2);
+        //hp bar colour
+        oImageHealthBar.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColourAlertGood, m_fPlayerHealth, m_fPlayerHealthMax);
+        //hp bar width
+        oImageHealthBar.rectTransform.sizeDelta = new Vector2(
+            m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth),
+            oImageHealthBar.rectTransform.rect.height
+            );
     }
 }
