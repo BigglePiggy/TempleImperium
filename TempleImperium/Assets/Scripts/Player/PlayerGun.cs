@@ -111,7 +111,7 @@ public class PlayerGun : MonoBehaviour
     //Called per frame
     void Update()
     {
-        if (m_isHeld)
+        if (m_isHeld && Time.timeScale != 0)
         {
             Inputs();
             HudValues();
@@ -203,9 +203,9 @@ public class PlayerGun : MonoBehaviour
             m_left = true;
             m_right = false;
         }
-
+        
         //Up - Go right
-        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire))
+        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire) || Input.GetKey(m_settings.m_kcKeyAltFire) == false)
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;

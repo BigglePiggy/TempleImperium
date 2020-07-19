@@ -128,7 +128,7 @@ public class PlayerController : MonoBehaviour
     //Called per frame
     private void Update()
     {
-        if (m_health > 0)
+        if (m_health > 0 && Time.timeScale != 0)
         {
             KeyboardInput();
             MouseInputRecoil();

@@ -67,12 +67,12 @@ public class Menu : MonoBehaviour
             {
                 if (m_pausePage.activeInHierarchy)              //Unpause
                 {   
-                    ResumeButton();
-                    Cursor.lockState = CursorLockMode.Locked;
+                    ResumeButton();                 
                 }
 
                 else if(m_optionsPage.activeInHierarchy == false)   //Pause
                 {
+                    Time.timeScale = 0.0f;
                     Cursor.lockState = CursorLockMode.None;
                     m_pausePage.SetActive(true);
                 }
@@ -98,11 +98,14 @@ public class Menu : MonoBehaviour
     public void ResumeButton()
     {
         m_pausePage.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
+        Time.timeScale = 1.0f;
     }
 
     public void MainMenuButton()
     {
         GameObject.Find("Settings Manager").GetComponent<SettingsManager>().SaveObject();
+        Time.timeScale = 1.0f;
         SceneManager.LoadScene("Menu");
     }
 
