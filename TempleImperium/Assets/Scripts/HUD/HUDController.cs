@@ -139,6 +139,8 @@ public class HUDController : MonoBehaviour
         oTextAmmoMag.color          = m_cTextColour;
         oTextAmmoMagMax.color       = m_cTextColour;
         oTextAmmoReserve.color      = m_cTextColour;
+        oTextHealth.color           = m_cTextColour;
+        oTextHealthMax.color        = m_cTextColour;
 
         //save misc things
         //health bar width
@@ -242,7 +244,7 @@ public class HUDController : MonoBehaviour
         if (m_iCurrentWeaponAmmoReserve == m_iCurrentWeaponAmmoReserveMax) { oTextAmmoReserve.color = m_cTextColourAlertGood; }
 
         //hp colour (lerp <50%)
-        oTextHealth.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_fPlayerHealth, m_fPlayerHealthMax / 2);
+        //oTextHealth.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColour, m_fPlayerHealth, m_fPlayerHealthMax / 2);
         //hp bar colour
         oImageHealthBar.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColourAlertGood, m_fPlayerHealth, m_fPlayerHealthMax);
         //hp bar width
