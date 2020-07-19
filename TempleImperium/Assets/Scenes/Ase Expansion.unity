@@ -3435,7 +3435,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.0982266, y: 0.8848054, z: 0.21702792, w: 0.40046203}
+  m_LocalRotation: {x: -0.064380236, y: 0.9340817, z: 0.27451065, w: 0.21906763}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3943,7 +3943,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.09827816, y: 0.88503414, z: 0.21766928, w: 0.39959493}
+  m_LocalRotation: {x: -0.06429778, y: 0.9341035, z: 0.27495927, w: 0.21843517}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6694,6 +6694,7 @@ MonoBehaviour:
   m_cTextColour: {r: 1, g: 1, b: 1, a: 1}
   m_cTextColourAlertBad: {r: 1, g: 0, b: 0, a: 1}
   m_cTextColourAlertGood: {r: 0, g: 1, b: 0, a: 1}
+  m_fHealthBarAdjustWidth: 75
   oTextDebugReadout: {fileID: 572815487}
   oTextWaveCounter: {fileID: 1754752372}
   oTextWaveTimer: {fileID: 1867551824}
@@ -15472,7 +15473,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.098608255, y: 0.88459814, z: 0.21787113, w: 0.4003682}
+  m_LocalRotation: {x: -0.06460599, y: 0.93379825, z: 0.2754732, w: 0.21900114}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -23561,7 +23562,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.09789758, y: 0.88524103, z: 0.21682635, w: 0.39968827}
+  m_LocalRotation: {x: -0.06407286, y: 0.9343861, z: 0.27399746, w: 0.21850127}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -23760,9 +23761,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 160, y: 33}
+  m_AnchoredPosition: {x: 24.889343, y: 33}
   m_SizeDelta: {x: 857, y: 522}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1867551821
 GameObject:
   m_ObjectHideFlags: 0

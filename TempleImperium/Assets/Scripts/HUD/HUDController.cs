@@ -92,6 +92,8 @@ public class HUDController : MonoBehaviour
     public Color m_cTextColour = Color.white;
     public Color m_cTextColourAlertBad = Color.red;
     public Color m_cTextColourAlertGood = Color.green;
+    [Space]
+    public float m_fHealthBarAdjustWidth = 75;
 
     //-----------------------------------------------------
     //text object references (and their private output strings)
@@ -245,8 +247,11 @@ public class HUDController : MonoBehaviour
         oImageHealthBar.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColourAlertGood, m_fPlayerHealth, m_fPlayerHealthMax);
         //hp bar width
         oImageHealthBar.rectTransform.sizeDelta = new Vector2(
-            m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth),
+            m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth) * m_fHealthBarAdjustWidth,
             oImageHealthBar.rectTransform.rect.height
             );
+
+        //Debug.Log(m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth));
+        //Debug.Log("(" + m_fImageHealthBarBaseWidth + ")*(" + (m_fPlayerHealth / m_fImageHealthBarBaseWidth) + ")");
     }
 }
