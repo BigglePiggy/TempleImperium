@@ -73,9 +73,6 @@ public class PlayerGun : MonoBehaviour
     float m_timeSinceLastShot;  //Time since last shot in seconds
     float m_reloadProgress;     //Tracks reload progress 
 
-    private SettingsObject m_settings; //Settings object used to determine all input keys
-    public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
-
     PlayerController m_playerController;    //Reference to Player Controller script - Recoil values are passed 
     HUDController m_hudController;          //Reference to Hud Controller script - Display values are passed
 
@@ -136,10 +133,10 @@ public class PlayerGun : MonoBehaviour
         {
             bool shoot = false;
 
-            if (m_automatic && Input.GetKey(m_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            if (m_automatic && Input.GetKey(GlobalSettings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
-            if (m_automatic == false && Input.GetKeyDown(m_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            if (m_automatic == false && Input.GetKeyDown(GlobalSettings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
             if (shoot) 
@@ -167,7 +164,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Reload
-        if (Input.GetKeyDown(m_settings.m_kcKeyReload) && m_currentMagCapacity != m_maxMagCapacity && m_ammoCount > 0)
+        if (Input.GetKeyDown(GlobalSettings.m_kcKeyReload) && m_currentMagCapacity != m_maxMagCapacity && m_ammoCount > 0)
         {
             m_reloadProgress = 0;
 
@@ -195,7 +192,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Down - Go left
-        if (Input.GetKeyDown(m_settings.m_kcKeyAltFire))
+        if (Input.GetKeyDown(GlobalSettings.m_kcKeyAltFire))
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;
@@ -205,7 +202,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Up - Go right
-        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire) || (Input.GetKey(m_settings.m_kcKeyAltFire) == false && transform.localPosition != m_hipPos)) 
+        if (Input.GetKeyUp(GlobalSettings.m_kcKeyAltFire) || (Input.GetKey(GlobalSettings.m_kcKeyAltFire) == false && transform.localPosition != m_hipPos)) 
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;

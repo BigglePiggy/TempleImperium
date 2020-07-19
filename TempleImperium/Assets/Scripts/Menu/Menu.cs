@@ -24,14 +24,11 @@ public class Menu : MonoBehaviour
     GameObject m_pausePage;
     GameObject m_optionsPage;
 
-    private SettingsObject m_settings;  //Settings object used to determine all input keys
-    public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
-
     //Key change settings
     bool m_keyCaptureMode;
-    PropertyInfo m_keyCaptureProperty;
     Text m_keyCaptureText;
 
+    //Text
     Text m_ySensitivityText;
     Text m_xSensitivityText;
     #endregion
@@ -60,20 +57,11 @@ public class Menu : MonoBehaviour
             m_optionsPage.SetActive(false);
         }
 
-        if(GlobalValues.g_settings == null) 
-        {
-            SettingsManager m_settingsManager = GameObject.Find("Settings Manager").GetComponent<SettingsManager>();
-            m_settingsManager.BuildSettingsObject();
-            m_settingsManager.SaveObject();
-        }
-
-        m_settings = GlobalValues.g_settings;
-
         m_ySensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("Y").Find("Y Sensitivity Text").GetComponent<Text>();
         m_xSensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("X").Find("X Sensitivity Text").GetComponent<Text>();
 
-        m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
-        m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
+        m_ySensitivityText.text = GlobalSettings.m_fMouseSensitivityY.ToString();
+        m_xSensitivityText.text = GlobalSettings.m_fMouseSensitivityX.ToString();
     }
 
     //Called per frame
@@ -81,7 +69,7 @@ public class Menu : MonoBehaviour
     {
         if (m_pauseMode) 
         {
-            if (Input.GetKeyDown(m_settings.m_kcKeyEscape)) 
+            if (Input.GetKeyDown(GlobalSettings.m_kcKeyEscape)) 
             {
                 if (m_pausePage.activeInHierarchy)              //Unpause
                 {   
@@ -102,7 +90,6 @@ public class Menu : MonoBehaviour
     #region Main Menu Actions
     public void StartButton()
     {
-        GlobalValues.g_settings = m_settings;
         SceneManager.LoadScene("Ase Expansion");
     }
 
@@ -122,7 +109,6 @@ public class Menu : MonoBehaviour
 
     public void MainMenuButton()
     {
-        GameObject.Find("Settings Manager").GetComponent<SettingsManager>().SaveObject();
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Menu");
@@ -143,18 +129,18 @@ public class Menu : MonoBehaviour
         {
             if (change >= 0)
             {
-                m_settings.m_fMouseSensitivityY += change;
+                GlobalSettings.m_fMouseSensitivityY += change;
             }
 
             else
             {
-                if (m_settings.m_fMouseSensitivityY + change < 0)
-                { m_settings.m_fMouseSensitivityY = 0; }
+                if (GlobalSettings.m_fMouseSensitivityY + change < 0)
+                { GlobalSettings.m_fMouseSensitivityY = 0; }
                 else
-                { m_settings.m_fMouseSensitivityY += change; }
+                { GlobalSettings.m_fMouseSensitivityY += change; }
             }
 
-            m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
+            m_ySensitivityText.text = GlobalSettings.m_fMouseSensitivityY.ToString();
         }
     }
 
@@ -164,18 +150,18 @@ public class Menu : MonoBehaviour
         {
             if (change >= 0)
             {
-                m_settings.m_fMouseSensitivityX += change;
+                GlobalSettings.m_fMouseSensitivityX += change;
             }
 
             else
             {
-                if (m_settings.m_fMouseSensitivityX + change < 0)
-                { m_settings.m_fMouseSensitivityX = 0; }
+                if (GlobalSettings.m_fMouseSensitivityX + change < 0)
+                { GlobalSettings.m_fMouseSensitivityX = 0; }
                 else
-                { m_settings.m_fMouseSensitivityX += change; }
+                { GlobalSettings.m_fMouseSensitivityX += change; }
             }
 
-            m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
+            m_xSensitivityText.text = GlobalSettings.m_fMouseSensitivityX.ToString();
         }
     }
 
@@ -184,7 +170,6 @@ public class Menu : MonoBehaviour
         if (m_keyCaptureMode == false)
         {
             m_keyCaptureMode = true;
-            m_keyCaptureProperty = GetSettingsProperty(text.gameObject.name);
             m_keyCaptureText = text;
         }
     }
@@ -197,47 +182,35 @@ public class Menu : MonoBehaviour
             
             if (e.isKey)
             {
-                m_keyCaptureProperty.SetValue(m_settings, e.keyCode); 
-                
+                GlobalSettings.ChangeKeySetting(e.keyCode, m_keyCaptureText.gameObject.name);
                 m_keyCaptureMode = false;
-                m_keyCaptureText.text = m_keyCaptureProperty.GetValue(m_settings).ToString();
+                m_keyCaptureText.text = e.keyCode.ToString();
             }
 
             if (e.isMouse)
             {
                 if (e.button == 0)
-                { m_keyCaptureProperty.SetValue(m_settings, KeyCode.Mouse0); }
+                {
+                    GlobalSettings.ChangeKeySetting(KeyCode.Mouse0, m_keyCaptureText.gameObject.name);
+                    m_keyCaptureMode = false;
+                    m_keyCaptureText.text = KeyCode.Mouse0.ToString();
+                }
 
                 if (e.button == 1)
-                { m_keyCaptureProperty.SetValue(m_settings, KeyCode.Mouse1); }
-
-                m_keyCaptureMode = false;
-                m_keyCaptureText.text = m_keyCaptureProperty.GetValue(m_settings).ToString();
+                {
+                    GlobalSettings.ChangeKeySetting(KeyCode.Mouse1, m_keyCaptureText.gameObject.name);
+                    m_keyCaptureMode = false;
+                    m_keyCaptureText.text = KeyCode.Mouse1.ToString();
+                }
             }
 
             if (e.shift == true)
             {
-                m_keyCaptureProperty.SetValue(m_settings, KeyCode.LeftShift);
-
+                GlobalSettings.ChangeKeySetting(KeyCode.LeftShift, m_keyCaptureText.gameObject.name);
                 m_keyCaptureMode = false;
-                m_keyCaptureText.text = m_keyCaptureProperty.GetValue(m_settings).ToString();
+                m_keyCaptureText.text = KeyCode.LeftShift.ToString();
             }
         }
-    }
-
-    private PropertyInfo GetSettingsProperty(string name) 
-    {
-        PropertyInfo[] settingsProperties = m_settings.GetType().GetProperties();
-
-        for (int i = 0; i < settingsProperties.Length; i++)
-        {
-            if(settingsProperties[i].Name == name) 
-            {
-                return settingsProperties[i];
-            }
-        }
-
-        return null;
     }
 
     public void BackButton()
