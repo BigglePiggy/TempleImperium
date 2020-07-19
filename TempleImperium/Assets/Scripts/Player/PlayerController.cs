@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     public float m_defensiveCooldown;
     [Tooltip("Prefab of the defenisve ability greande")]
     public GameObject grenade;
+    [Tooltip("number of seconds between player dying and the main menu being shown")]
+    public float m_deathToMenuDuration;
     [Space]
 
     [Header("Sound Effects")]
@@ -508,6 +510,14 @@ public class PlayerController : MonoBehaviour
         m_health = 0;
         m_primaryGun.StopHolding();
         m_secondaryGun.StopHolding();
+        m_playerRb.constraints = RigidbodyConstraints.None;
+
+        Invoke("LoadMenuScene", m_deathToMenuDuration);
+    }
+
+    private void LoadMenuScene() 
+    {
+        GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().MainMenuButton();
     }
     #endregion
 }

@@ -106,6 +106,7 @@ public class Menu : MonoBehaviour
     {
         GameObject.Find("Settings Manager").GetComponent<SettingsManager>().SaveObject();
         Time.timeScale = 1.0f;
+        Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Menu");
     }
 

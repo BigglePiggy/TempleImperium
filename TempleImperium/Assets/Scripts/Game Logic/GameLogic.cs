@@ -115,9 +115,7 @@ public class GameLogic : MonoBehaviour
             )
         {
             //game over!
-            //TODO! kill player here
-            //waiting for ed to program player death
-            Debug.LogError("Game over! GameLogic.FixedUpdate has no gameover yet. Waiting for player death to be implemented!");
+            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
         }
 
         //check phase ticker

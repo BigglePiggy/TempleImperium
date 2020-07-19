@@ -203,9 +203,9 @@ public class PlayerGun : MonoBehaviour
             m_left = true;
             m_right = false;
         }
-        
+
         //Up - Go right
-        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire) || Input.GetKey(m_settings.m_kcKeyAltFire) == false)
+        if (Input.GetKeyUp(m_settings.m_kcKeyAltFire) || (Input.GetKey(m_settings.m_kcKeyAltFire) == false && transform.localPosition != m_hipPos)) 
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;
