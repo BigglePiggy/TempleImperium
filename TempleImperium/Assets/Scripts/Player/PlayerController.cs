@@ -496,8 +496,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (m_health <= 0)
-        { 
-            PlayerDeath();
+        {
+            GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
             m_audioOrigin.PlayOneShot(hitClip);
         }
     }
