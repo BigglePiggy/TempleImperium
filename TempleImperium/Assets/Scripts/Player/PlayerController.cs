@@ -416,7 +416,7 @@ public class PlayerController : MonoBehaviour
         float totalHorLimit = m_horizontalLimit;
 
         //Sprint modifer
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(m_settings.m_kcKeySprint))
         {
             totalHorLimit += m_sprintLimitIncrease;
             m_verticalLimit = m_verticalLimit + m_sprintLimitIncrease;

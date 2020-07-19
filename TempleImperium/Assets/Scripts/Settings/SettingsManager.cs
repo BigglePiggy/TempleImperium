@@ -18,6 +18,7 @@ public class SettingsManager : MonoBehaviour
     public KeyCode m_kcKeyMoveRight         = KeyCode.D;
     public KeyCode m_kcKeyJump              = KeyCode.Space;
     public KeyCode m_kcKeyCrouch            = KeyCode.LeftControl;
+    public KeyCode m_kcKeySprint            = KeyCode.LeftShift;
     [Space]
     public KeyCode m_kcKeyFire              = KeyCode.Mouse0;
     public KeyCode m_kcKeyAltFire           = KeyCode.Mouse1;
@@ -78,7 +79,7 @@ public class SettingsManager : MonoBehaviour
     public void BuildSettingsObject()
     {   
         m_SettingsObject = new SettingsObject(
-        m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeyFire, m_kcKeyAltFire,
+        m_kcKeyMoveForward, m_kcKeyMoveBackward, m_kcKeyMoveLeft, m_kcKeyMoveRight, m_kcKeyJump, m_kcKeyCrouch, m_kcKeySprint, m_kcKeyFire, m_kcKeyAltFire,
         m_fMouseSensitivityX, m_fMouseSensitivityY, m_bMouseInvertX, m_bMouseInvertY, m_kcKeyReload, m_kcKeyMelee, m_kcKeyAbility1, m_kcKeyAbility2,
         m_kcKeyWeaponSlot1, m_kcKeyWeaponSlot2, m_kcKeyWeaponSlot3, m_kcKeyWeaponQuickSwitch, m_kcKeyEscape,
         m_fVolumeOverall, m_fVolumeSFX, m_fVolumeMusic, m_fVolumeUI

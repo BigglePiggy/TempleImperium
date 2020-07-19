@@ -11,39 +11,40 @@ public class SettingsObject
     //user settings container (C# object, NOT a Unity GameObject)
 
     //--
-    public KeyCode m_kcKeyMoveForward;
-    public KeyCode m_kcKeyMoveBackward;
-    public KeyCode m_kcKeyMoveLeft;
-    public KeyCode m_kcKeyMoveRight;
-    public KeyCode m_kcKeyJump;
-    public KeyCode m_kcKeyCrouch;
-    
-    public KeyCode m_kcKeyFire;
-    public KeyCode m_kcKeyAltFire;
-    public float m_fMouseSensitivityX;
-    public float m_fMouseSensitivityY;
-    public bool m_bMouseInvertX;
-    public bool m_bMouseInvertY;
-    
-    public KeyCode m_kcKeyReload;
-    public KeyCode m_kcKeyMelee;
-    public KeyCode m_kcKeyAbility1;
-    public KeyCode m_kcKeyAbility2;
-    public KeyCode m_kcKeyWeaponSlot1;
-    public KeyCode m_kcKeyWeaponSlot2;
-    public KeyCode m_kcKeyWeaponSlot3;
-    public KeyCode m_kcKeyWeaponQuickSwitch;
-    
-    public KeyCode m_kcKeyEscape;
+    public KeyCode m_kcKeyMoveForward { get; set; }
+    public KeyCode m_kcKeyMoveBackward { get; set; }
+    public KeyCode m_kcKeyMoveLeft { get; set; }
+    public KeyCode m_kcKeyMoveRight { get; set; }
+    public KeyCode m_kcKeyJump { get; set; }
+    public KeyCode m_kcKeyCrouch { get; set; }
+    public KeyCode m_kcKeySprint { get; set; }
+
+    public KeyCode m_kcKeyFire { get; set; }
+    public KeyCode m_kcKeyAltFire { get; set; }
+    public float m_fMouseSensitivityX { get; set; }
+    public float m_fMouseSensitivityY { get; set; }
+    public bool m_bMouseInvertX { get; set; }
+    public bool m_bMouseInvertY { get; set; }
+
+    public KeyCode m_kcKeyReload { get; set; }
+    public KeyCode m_kcKeyMelee { get; set; }
+    public KeyCode m_kcKeyAbility1 { get; set; }
+    public KeyCode m_kcKeyAbility2 { get; set; }
+    public KeyCode m_kcKeyWeaponSlot1 { get; set; }
+    public KeyCode m_kcKeyWeaponSlot2 { get; set; }
+    public KeyCode m_kcKeyWeaponSlot3 { get; set; }
+    public KeyCode m_kcKeyWeaponQuickSwitch { get; set; }
+
+    public KeyCode m_kcKeyEscape { get; set; }
     //--
-    public float m_fVolumeOverall;
-    public float m_fVolumeSFX;
-    public float m_fVolumeMusic;
-    public float m_fVolumeUI;
+    public float m_fVolumeOverall { get; set; }
+    public float m_fVolumeSFX { get; set; }
+    public float m_fVolumeMusic { get; set; }
+    public float m_fVolumeUI { get; set; }
     //--
 
     public SettingsObject(KeyCode input_KeyMoveForward, KeyCode input_KeyMoveBackward, KeyCode input_KeyMoveLeft, KeyCode input_KeyMoveRight,
-        KeyCode input_KeyJump, KeyCode input_KeyCrouch, KeyCode input_KeyFire, KeyCode input_KeyAltFire, float input_MouseSensitivityX, float input_MouseSensitivityY,
+        KeyCode input_KeyJump, KeyCode input_KeyCrouch, KeyCode input_KeySprint, KeyCode input_KeyFire, KeyCode input_KeyAltFire, float input_MouseSensitivityX, float input_MouseSensitivityY,
         bool input_MouseInvertX, bool input_MouseInvertY, KeyCode input_KeyReload, KeyCode input_KeyMelee, KeyCode input_KeyAbility1, KeyCode input_KeyAbility2,
         KeyCode input_KeyWeaponSlot1, KeyCode input_KeyWeaponSlot2, KeyCode input_KeyWeaponSlot3, KeyCode input_KeyWeaponQuickSwitch,
         KeyCode input_KeyEscape, float input_VolumeOverall, float input_VolumeSFX, float input_VolumeMusic, float input_VolumeUI)
@@ -54,6 +55,7 @@ public class SettingsObject
         m_kcKeyMoveRight                = input_KeyMoveRight;
         m_kcKeyJump                     = input_KeyJump;
         m_kcKeyCrouch                   = input_KeyCrouch;
+        m_kcKeySprint                   = input_KeySprint;
         m_kcKeyFire                     = input_KeyFire;
         m_kcKeyAltFire                  = input_KeyAltFire;
         m_fMouseSensitivityX            = input_MouseSensitivityX;
