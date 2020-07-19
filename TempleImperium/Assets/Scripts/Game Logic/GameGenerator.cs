@@ -61,4 +61,11 @@ public class GameGenerator : MonoBehaviour
     {
         oCrystal.GetComponent<MeshRenderer>().material = matInert;
     }
+
+    public void GoCritical()
+    {
+        //TODO
+        //cool generator explosion here
+        Debug.LogWarning("GameGenerator has nothing cool for GoCritical() yet");
+    }
 }

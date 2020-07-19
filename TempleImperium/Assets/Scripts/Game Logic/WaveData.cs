@@ -25,7 +25,7 @@ public class WaveData : MonoBehaviour
     [Tooltip("time to wait, in seconds, between enough subwave enemies killed and spawning in the next subwave")]
     public float m_iSubWaveRestDuration = 3;  //gap between subwaves in seconds
     [Tooltip("subwave tolerance - start next subwave countdown when this number of enemies are left alive")]
-    public int m_iSubWaveKillLenience = 1;  //number of enemies tolerance
+    public int m_iSubWaveKillLenience = 0;  //number of enemies tolerance
     public GameLogic.StarstoneElement m_eStarstoneElement;
     [Tooltip("number of pylons to raise this wave")]
     public int m_iPylonCount = 4;   //number of pylons raised in wave
