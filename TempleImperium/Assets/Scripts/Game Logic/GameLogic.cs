@@ -115,7 +115,7 @@ public class GameLogic : MonoBehaviour
             )
         {
             //game over!
-            GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
+            GameOver();
         }
 
         //check phase ticker
@@ -145,20 +145,6 @@ public class GameLogic : MonoBehaviour
 
                 case GameplayPhase.Subwave: //subwave (doesn't go anywhere)
                     //going to InbetweenSubwave is handled in WaveEventEnemyDeath()
-                    
-                    //gameover if any pylons are up
-                    //iterate through every pylon
-                    for (int i = 0; i < m_oPylonList.Count; i++) 
-                    {
-                        //if a pylon is raised
-                        if(m_oPylonList[i].GetState())
-                        {
-                            //gameover player
-                            Debug.LogError("pylons up at wave end!! program a gameover!");
-                            //break from loop early
-                            break;
-                        }
-                    }
 
                     break;
 
@@ -283,8 +269,32 @@ public class GameLogic : MonoBehaviour
                 //turn off WAVE timer
                 m_bWaveTimerActive = false;
 
-                //inform the generator
-                oGenerator.GetComponent<GameGenerator>().GoInert();
+                //gameover if any pylons are up
+                //iterate through every pylon
+                bool m_bGameOver = false;
+                for (int i = 0; i < m_oPylonList.Count; i++)
+                {
+                    //if a pylon is raised
+                    if (m_oPylonList[i].GetState())
+                    {
+                        //game over!
+                        m_bGameOver = true;
+                        //break from loop early
+                        break;
+                    }
+                }
+
+                //do gameover
+                if (m_bGameOver)
+                {
+                    GameOver();
+                }
+                else
+                {
+                    //inform the generator
+                    oGenerator.GetComponent<GameGenerator>().GoInert();
+                }
+
 
                 //set PHASE timer
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_fInterwaveRestDuration);
@@ -331,6 +341,16 @@ public class GameLogic : MonoBehaviour
     {
         //add current wave config's pylon bonus time to timer
         WaveEventExtendTimerSeconds(m_WaveDataArray[m_iCurrentWave].m_fPylonBonusTime);
+    }
+
+    public void GameOver(bool input_GeneratorGoesCritical = true)
+    {
+        //kill player
+        GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
+
+        //tell generator to explode (if configured to)
+        if (input_GeneratorGoesCritical) { oGenerator.GetComponent<GameGenerator>().GoCritical(); }
+        
     }
     #endregion
 

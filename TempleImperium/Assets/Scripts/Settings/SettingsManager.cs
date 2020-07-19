@@ -59,8 +59,10 @@ public class SettingsManager : MonoBehaviour
     }
 
 
-    //Send all referenced scripts a new SettingsObject
-    //param name:RebuildSettingsObject. Make a fresh SettingsObject. Set true if settingsManager values have changed!
+    /// <summary>
+    /// Send all referenced scripts a new SettingsObject
+    /// </summary>
+    /// <param name="input_RebuildSettingsObject">Make a fresh SettingsObject. Set true if settingsManager values have changed!</param>
     public void SendToScripts(bool input_RebuildSettingsObject = false)
     {
         //if no settings object is built yet, or if told to, build new settings object
