@@ -67,6 +67,18 @@ public class HUDController : MonoBehaviour
     private float m_fPlayerHealthMax;
     public float PlayerHealthMax { set { m_fPlayerHealthMax = value; } }
     //--
+    private float m_iAbilityOffensiveCooldown;
+    public float AbilityOffensiveCooldown { set { m_iAbilityOffensiveCooldown = value; } }
+    //--
+    private float m_iAbilityOffensiveCooldownMax;
+    public float AbilityOffensiveCooldownMax { set { m_iAbilityOffensiveCooldownMax = value; } }
+    //--
+    private float m_iAbilityDefensiveCooldown;
+    public float AbilityDefensiveCooldown { set { m_iAbilityDefensiveCooldown = value; } }
+    //--
+    private float m_iAbilityDefensiveCooldownMax;
+    public float AbilityDefensiveCooldownMax { set { m_iAbilityDefensiveCooldownMax = value; } }
+
 
     #endregion getset declarations
 
@@ -99,6 +111,13 @@ public class HUDController : MonoBehaviour
     string m_sTextAmmoMagMax = "";
     public Text oTextAmmoReserve;
     string m_sTextAmmoReserve = "";
+    public Text oTextHealth;
+    string m_sTextHealth = "";
+    public Image oPanelHealthBar;
+    public Text oTextAbilityOffensive;
+    string m_sTextAbilityOffensive = "";
+    public Text oTextAbilityDefensive;
+    string m_sTextAbilityDefensive = "";
     #endregion output text obj refs declarations
     //-----------------------------------------------------
 
