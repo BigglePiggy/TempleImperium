@@ -27,9 +27,11 @@ public class Menu : MonoBehaviour
     public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
 
     bool m_keyCaptureMode;
+    string m_keyCaptureTarget;
 
     Text m_ySensitivityText;
     Text m_xSensitivityText;
+    Text m_weaponFireText;
     #endregion
 
 
@@ -65,12 +67,13 @@ public class Menu : MonoBehaviour
 
         m_settings = GlobalSettings.m_globalSettings;
 
-
         m_ySensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("Y").Find("Y Sensitivity Text").GetComponent<Text>();
         m_xSensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("X").Find("X Sensitivity Text").GetComponent<Text>();
+        m_weaponFireText = transform.Find("Options Page").Find("Weapon Use").Find("Weapon Fire Text").GetComponent<Text>();
 
         m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
         m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
+        m_weaponFireText.text = m_settings.m_kcKeyFire.ToString();
     }
 
     //Called per frame
@@ -93,23 +96,10 @@ public class Menu : MonoBehaviour
                 }
             }
         }
-
-        if (m_keyCaptureMode) 
-        {
-            foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
-            {
-                if (Input.GetKey(vKey))
-                {
-                    
-
-                }
-            }
-        }
     }
     
 
-    #region Button Actions
-    //Main Menu 
+    #region Main Menu Actions
     public void StartButton()
     {
         GlobalSettings.m_globalSettings = m_settings;
@@ -120,8 +110,9 @@ public class Menu : MonoBehaviour
     {
 
     }
+    #endregion
 
-    //Pause Menu
+    #region Pause Menu Actions
     public void ResumeButton()
     {
         m_pausePage.SetActive(false);
@@ -136,9 +127,9 @@ public class Menu : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Menu");
     }
+    #endregion
 
-
-    //Shared
+    #region Shared Actions
     public void OptionsButton()
     {
         m_mainPage.SetActive(false);
@@ -146,7 +137,7 @@ public class Menu : MonoBehaviour
         m_optionsPage.SetActive(true);
     }
 
-    public void changeYSensitivity(float change)
+    public void ChangeYSensitivity(float change)
     {
         if (change >= 0)
         {
@@ -164,7 +155,7 @@ public class Menu : MonoBehaviour
         m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
     }
 
-    public void changeXSensitivity(float change) 
+    public void ChangeXSensitivity(float change) 
     {
         if (change >= 0)
         {
@@ -182,6 +173,12 @@ public class Menu : MonoBehaviour
         m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
     }
 
+    public void WeaponUseKeyChange() 
+    {
+        m_keyCaptureMode = true;
+        m_keyCaptureTarget = "m_kcKeyFire";
+    }
+
     public void BackButton()
     {
         if (m_pauseMode)
@@ -192,4 +189,22 @@ public class Menu : MonoBehaviour
         m_optionsPage.SetActive(false);
     }
     #endregion
+
+    private void OnGUI()
+    {
+        if (m_keyCaptureMode)
+        {
+            Event e = Event.current;
+            if (e.isKey)
+            {
+                if(m_keyCaptureTarget == "m_kcKeyFire") 
+                {
+                    m_settings.m_kcKeyFire = e.keyCode;
+                    m_weaponFireText.text = m_settings.m_kcKeyFire.ToString();
+                }
+
+                m_keyCaptureMode = false;
+            }
+        }
+    }
 }

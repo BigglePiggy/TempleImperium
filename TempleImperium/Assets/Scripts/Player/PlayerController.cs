@@ -141,11 +141,8 @@ public class PlayerController : MonoBehaviour
     //Fixed update
     private void FixedUpdate()
     {
-        if (m_health > 0)
-        {
-            Movement();
-        }
 
+        Movement();
         ExtremityCheck();
         Exceptions();
         Gravity();
