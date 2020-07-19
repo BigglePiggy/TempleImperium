@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 //Created by Eddie
@@ -24,12 +25,19 @@ public class Menu : MonoBehaviour
 
     private SettingsObject m_settings;  //Settings object used to determine all input keys
     public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
+
+    bool m_keyCaptureMode;
+
+    Text m_ySensitivityText;
+    Text m_xSensitivityText;
     #endregion
 
 
     //Initalization
     void Start()
     {
+        m_keyCaptureMode = false;
+
         m_mainPage = transform.Find("Main Page").gameObject;
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
@@ -56,6 +64,13 @@ public class Menu : MonoBehaviour
         }
 
         m_settings = GlobalSettings.m_globalSettings;
+
+
+        m_ySensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("Y").Find("Y Sensitivity Text").GetComponent<Text>();
+        m_xSensitivityText = transform.Find("Options Page").Find("Sensitivity").Find("X").Find("X Sensitivity Text").GetComponent<Text>();
+
+        m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
+        m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
     }
 
     //Called per frame
@@ -77,7 +92,19 @@ public class Menu : MonoBehaviour
                     m_pausePage.SetActive(true);
                 }
             }
-        }   
+        }
+
+        if (m_keyCaptureMode) 
+        {
+            foreach (KeyCode vKey in System.Enum.GetValues(typeof(KeyCode)))
+            {
+                if (Input.GetKey(vKey))
+                {
+                    
+
+                }
+            }
+        }
     }
     
 
@@ -119,17 +146,40 @@ public class Menu : MonoBehaviour
         m_optionsPage.SetActive(true);
     }
 
-    public void IncreaseXSensitivity() 
+    public void changeYSensitivity(float change)
     {
-        m_settings.m_fMouseSensitivityX += 0.15f;
+        if (change >= 0)
+        {
+            m_settings.m_fMouseSensitivityY += change;
+        }
+
+        else
+        {
+            if (m_settings.m_fMouseSensitivityY + change < 0)
+            { m_settings.m_fMouseSensitivityY = 0; }
+            else
+            { m_settings.m_fMouseSensitivityY += change; }
+        }
+
+        m_ySensitivityText.text = m_settings.m_fMouseSensitivityY.ToString();
     }
 
-    public void DecreaseXSensitivity()
-    { 
-        if (m_settings.m_fMouseSensitivityX - 0.15f < 0)
-        { m_settings.m_fMouseSensitivityX = 0; }
-        else 
-        { m_settings.m_fMouseSensitivityX -= 0.15f; }
+    public void changeXSensitivity(float change) 
+    {
+        if (change >= 0)
+        {
+            m_settings.m_fMouseSensitivityX += change;
+        }
+
+        else
+        {
+            if (m_settings.m_fMouseSensitivityX + change < 0)
+            { m_settings.m_fMouseSensitivityX = 0; }
+            else
+            { m_settings.m_fMouseSensitivityX += change; }
+        }
+
+        m_xSensitivityText.text = m_settings.m_fMouseSensitivityX.ToString();
     }
 
     public void BackButton()
