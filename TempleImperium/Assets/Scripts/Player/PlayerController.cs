@@ -96,10 +96,11 @@ public class PlayerController : MonoBehaviour
     private SettingsObject m_settings;  //Settings object used to determine all input keys
     public SettingsObject Settings { set { m_settings = value; } }  //Setter for m_settings - used by SettingsManager
 
-    Rigidbody m_playerRb;       //Rigidbody component
-    AudioSource m_audioOrigin;  //Audio source component
-    PlayerGun m_primaryGun;     //Primary weapon script
-    PlayerGun m_secondaryGun;   //Secondary weapon script
+    Rigidbody m_playerRb;           //Rigidbody component
+    AudioSource m_audioOrigin;      //Audio source component
+    PlayerGun m_primaryGun;         //Primary weapon script
+    PlayerGun m_secondaryGun;       //Secondary weapon script
+    HUDController m_hudController;  //Reference to Hud Controller script - Display values are passed
 
     Transform m_playerCamera;   //Player's POV camera
     Transform m_grenadeOrigin;  //Defensive ability grenade origin  
@@ -122,6 +123,9 @@ public class PlayerController : MonoBehaviour
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
+
+        m_hudController = GameObject.Find("HUD").GetComponent<HUDController>(); //Hud Controller script reference
+
         m_primaryGun.StartHolding();   //Primary gun configured to be held
 
         Cursor.lockState = CursorLockMode.Locked;   //Locks the mouse
@@ -135,6 +139,7 @@ public class PlayerController : MonoBehaviour
             KeyboardInput();
             MouseInputRecoil();
             WeaponSwitching();
+            UpdateHUD();
         }
     }
 
@@ -496,8 +501,8 @@ public class PlayerController : MonoBehaviour
         }
 
         if (m_health <= 0)
-        { 
-            PlayerDeath();
+        {
+            GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
             m_audioOrigin.PlayOneShot(hitClip);
         }
     }
@@ -515,6 +520,21 @@ public class PlayerController : MonoBehaviour
     private void LoadMenuScene() 
     {
         GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().MainMenuButton();
+    }
+    #endregion
+
+
+    #region HUD 
+    private void UpdateHUD() 
+    {
+        m_hudController.PlayerHealth = m_health;
+        m_hudController.PlayerHealthMax = m_maximumHealth;
+
+        m_hudController.AbilityDefensiveCooldown = m_defensiveCurrentCooldown;
+        m_hudController.AbilityDefensiveCooldownMax = m_defensiveCooldown;
+
+        m_hudController.AbilityOffensiveCooldown = m_offensiveCurrentCooldown;
+        m_hudController.AbilityOffensiveCooldownMax = m_offensiveCooldown;
     }
     #endregion
 }

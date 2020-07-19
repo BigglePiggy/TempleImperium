@@ -347,8 +347,7 @@ public class GameLogic : MonoBehaviour
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
 
         //tell generator to explode (if configured to)
-        if (input_GeneratorGoesCritical) { oGenerator.GetComponent<GameGenerator>().GoCritical(); }
-        
+        if (input_GeneratorGoesCritical) { oGenerator.GetComponent<GameGenerator>().GoCritical(); }        
     }
     #endregion
 
