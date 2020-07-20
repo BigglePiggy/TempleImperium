@@ -44,16 +44,9 @@ public class Grenade : MonoBehaviour
 
         foreach (Collider closeObject in colliders)
         {
-            if (closeObject.transform.root.CompareTag("Enemy")) 
+            if (closeObject.transform.root.CompareTag("Enemy"))
             {
-                Rigidbody rb = closeObject.GetComponent<Rigidbody>();
-                EnemyController enController = closeObject.GetComponent<EnemyController>();
-
-                if (rb != null) 
-                {closeObject.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);}
-
-                if (enController != null) 
-                { }
+                closeObject.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);
             }
         }
 
@@ -66,7 +59,9 @@ public class Grenade : MonoBehaviour
         if (timerRunning == false)
         {
             if (collision.collider.transform.root.CompareTag("Enemy"))
-            { _explode(); }
+            {
+                _explode();
+            }
 
             if (collision.collider.transform.root.CompareTag("Player") == false)
             { timerRunning = true; }

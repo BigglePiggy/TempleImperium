@@ -5,11 +5,11 @@ TagManager:
   serializedVersion: 2
   tags:
   - Slope
-  - Enemy
   - Spawnpoints
   - Nodes
   - Menu
   - SettingsText
+  - Enemy
   layers:
   - Default
   - TransparentFX

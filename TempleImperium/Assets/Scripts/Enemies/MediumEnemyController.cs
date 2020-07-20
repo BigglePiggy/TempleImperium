@@ -4,9 +4,9 @@ using UnityEngine;
 
 //Created by Eddie
 
-public class EnemyController : MonoBehaviour
+public class MediumEnemyController : MonoBehaviour
 {
-    //Enemy controller script
+    //Medium Enemy controller script
     //What this script does:
     /*
         - Manages bespoke enemy physics

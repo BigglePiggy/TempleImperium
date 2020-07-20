@@ -146,15 +146,12 @@ public class PlayerGun : MonoBehaviour
                 m_audioOrigin.PlayOneShot(shotEffect);
 
                 RaycastHit hit;
+
                 if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
                 {
-                    if (hit.transform.CompareTag("Enemy"))
+                    if (hit.transform.root.CompareTag("Enemy"))
                     { 
-                        hit.transform.GetComponent<EnemyController>().RaycastHit(m_shotDamage);
-                    }
-                    else if (hit.transform.root.CompareTag("Enemy"))
-                    {
-                        hit.transform.root.GetComponent<EnemyController>().RaycastHit(m_shotDamage);                   
+                        hit.transform.gameObject.SendMessage("RaycastHit", m_shotDamage);
                     }
                 }
 
