@@ -3824,7 +3824,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.08190626, y: 0.56037986, z: 0.055818494, w: 0.82228345}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4282,7 +4282,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0, y: 0.8112422, z: -0.58471024, w: 0}
+  m_LocalRotation: {x: -0.12554967, y: 0.60087204, z: 0.096281245, w: 0.7835305}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -17348,7 +17348,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.1263312, y: 0.5565332, z: 0.08609376, w: 0.8166389}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18963,15 +18963,14 @@ MonoBehaviour:
   WaveNickname: wave 1
   m_iWaveDuration: 30
   m_iSubWaveRestDuration: 3
-  m_iSubWaveKillLenience: 2
+  m_iSubWaveKillLenience: 0
   m_eStarstoneElement: 3
   m_iPylonCount: 3
   m_fPylonBonusTime: 15
   m_sSubWavesList:
-  - 5,0,0
-  - 4,1,0
-  - 3,2,0
+  - 1,0,0
   - 2,1,0
+  - 3,2,0
 --- !u!1 &1565745938
 GameObject:
   m_ObjectHideFlags: 0
@@ -26240,7 +26239,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0, y: 0.78820544, z: -0.61541224, w: 0}
+  m_LocalRotation: {x: -0.08152324, y: 0.60531706, z: 0.06251835, w: 0.7893267}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

@@ -148,13 +148,19 @@ public class LightEnemyController : MonoBehaviour
     #region Physics & Movement
     private void PlayerInSight()
     {
-        RaycastHit[] inLineOfSight = Physics.RaycastAll(transform.position, m_player.position - transform.position, m_viewDistance);
+        RaycastHit hit;
+        Debug.DrawLine(transform.position, m_player.position);
 
-        if (inLineOfSight.Length > 0)
+        if (Physics.Linecast(transform.position, m_player.position, out hit)) 
         {
-            if (inLineOfSight[0].transform.root.CompareTag("Player"))
-            { m_playerInSight = true; }
-            else { m_playerInSight = false; }
+            if (hit.transform.CompareTag("Player"))
+            {
+                m_playerInSight = true;
+            }
+            else
+            {
+                m_playerInSight = false;
+            }
         }
         else
         {
