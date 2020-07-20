@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //Created by Eddie
@@ -19,7 +18,7 @@ public class MediumEnemyController : MonoBehaviour
     ////
     
     #region Declarations
-    [Header("Enemy Configuration")]
+    [Header("Configuration")]
     [Tooltip("Maximum health the enemy can have")]
     public float m_startingHealth;
     [Tooltip("Distance at which enemy snaps head to player")]
@@ -35,8 +34,10 @@ public class MediumEnemyController : MonoBehaviour
     public float m_maxShotDistance;
     [Tooltip("Rate of fire of enemy's weapon")]
     public float m_fireRate;
-    [Tooltip("Range of accuarcy offset on enemy's weapon")]
-    public Vector3 m_accuracyOffset;
+    [Tooltip("Range of accuarcy offset on enemy's weapon horizontally")]
+    public float m_horizontalAccuracyOffset;
+    [Tooltip("Range of accuarcy offset on enemy's weapon vertically")]
+    public float m_verticalAccuracyOffset;
     [Tooltip("Shot damage applied to player when hit")]
     public float m_shotDamage;
     [Space]
@@ -45,7 +46,7 @@ public class MediumEnemyController : MonoBehaviour
     [Tooltip("Effect played when the enemy shoots")]
     public AudioClip m_shotEffect;
 
-    [Header("Enemy Physics")]
+    [Header("Physics")]
     [Tooltip("Downward force the enemy experiences")]
     public float m_gravity;
     [Tooltip("Acceleration applied to enemy to move")]
@@ -156,9 +157,11 @@ public class MediumEnemyController : MonoBehaviour
 
         if (m_timeSinceLastShot >= m_fireRate && m_playerInSight && Vector3.Distance(transform.position, m_player.position) < m_shootingDistance)
         {
-            Vector3 offset = new Vector3(Random.Range(-m_accuracyOffset.x, m_accuracyOffset.x), Random.Range(-m_accuracyOffset.y, m_accuracyOffset.y), Random.Range(-m_accuracyOffset.z, m_accuracyOffset.z));
-            RaycastHit[] bulletCollisions = Physics.RaycastAll(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, m_viewDistance);
-            Debug.DrawRay(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, Color.green, 100);
+            Vector3 aimPoint = new Vector3(m_player.position.x + Random.Range(-m_horizontalAccuracyOffset, m_horizontalAccuracyOffset), m_player.position.y + Random.Range(-m_verticalAccuracyOffset, m_verticalAccuracyOffset), m_player.position.z + Random.Range(-m_horizontalAccuracyOffset, m_horizontalAccuracyOffset));
+            m_bulletOrigin.LookAt(aimPoint);
+            RaycastHit[] bulletCollisions = Physics.RaycastAll(m_enemyHead.position, aimPoint - m_enemyHead.position, m_viewDistance);
+            Debug.DrawRay(m_enemyHead.position, aimPoint - m_enemyHead.position , Color.green, 100);
+            m_bulletParticleSystem.Emit(1);
 
             if (bulletCollisions.Length > 0)
             {
@@ -170,8 +173,6 @@ public class MediumEnemyController : MonoBehaviour
 
             m_timeSinceLastShot = 0;
             m_audioSource.PlayOneShot(m_shotEffect);
-            m_bulletOrigin.LookAt(m_player.position + offset);
-            m_bulletParticleSystem.Emit(1);
         }
     }
     #endregion

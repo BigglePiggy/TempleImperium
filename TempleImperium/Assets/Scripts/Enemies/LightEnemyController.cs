@@ -19,30 +19,42 @@ public class LightEnemyController : MonoBehaviour
     ////
     
     #region Declarations
-    [Header("Enemy Configuration")]
+    [Header("Configuration")]
     [Tooltip("Maximum health the enemy can have")]
     public float m_startingHealth;
     [Tooltip("Distance at which looks at the player")]
     public float m_viewDistance;
-    [Tooltip("Distance at which enemy stops moving towards the player (to get ready to attack)")]
-    public float m_stopDistance;
-    [Tooltip("Distance at which enemy starts attacking the player")]
-    public float m_attackDistance;
+
     [Space]
 
-    [Header("Enemy Physics")]
+    [Header("Physics")]
     [Tooltip("Downward force the enemy (can )experiences")]
     public float m_gravity;
     [Tooltip("Acceleration applied to enemy to move")]
-    public Vector3 m_acceleration;
+    public float m_normalAcceleration;
+    [Tooltip("Acceleration applied to enemy to attack")]
+    public float m_attackAcceleration;
     [Tooltip("Maximum Y axis velocity the enemy can experience")]
     public float m_verticalLimit;
     [Tooltip("Maximum Z & X axis velocity the player can experience")]
     public float m_horizontalLimit;
     [Tooltip("Z & X axis drag applied to the enemy whilst on the ground")]
-    public Vector3 m_horizontalDrag;
+    public Vector3 m_drag;
     [Tooltip("The speed that enemy turns at")]
     public float m_rotateSpeed;
+    [Space]
+
+    [Header("Movement & Attack")]
+    [Tooltip("The maximum vertical distance that the enemy can go to above any node")]
+    public float m_maximumRelativeHeight;
+    [Tooltip("The minimum vertical distance that the enemy can go to below any node")]
+    public float m_minimumRelativeHeight;
+    [Tooltip("Distance at which enemy starts attacking the player")]
+    public float m_attackDistance;
+    [Tooltip("Rate of enemy attacks (In seconds)")]
+    public float m_attackRate;
+    [Tooltip("Damage that the attack applies to the player")]
+    public float m_attackDamage;
 
 
     //Pathfinding
@@ -51,9 +63,15 @@ public class LightEnemyController : MonoBehaviour
     Vector3 m_nextNode;         //Holds the next node in the path
 
     //Enemy States
-    bool m_moving;              //When true movement is applied
+    bool m_isMoving;            //When true, movement is applied
+    bool m_isAttacking;         //When true, movement is applied
     bool m_playerInSight;       //True when player is in (unobstruced) view
+    bool m_playerHasBeenHit;    //True when enemy hits into the player
 
+    float m_heightTarget;
+    float m_groundYLevel;
+
+    float m_attackTimer;
     float m_currentHealth;      //Current Health
     Transform m_player;         //Player position reference
     Rigidbody m_enemyRb;        //Rigidbody component
@@ -73,8 +91,11 @@ public class LightEnemyController : MonoBehaviour
         //Variable assignment
         m_path = new Stack<Vector3>();
         m_currentHealth = m_startingHealth;
-        m_moving = true;
+        m_isAttacking = true;
         m_playerInSight = false;
+
+        m_heightTarget = Random.Range(m_minimumRelativeHeight, m_maximumRelativeHeight);
+        m_attackTimer = m_attackRate;
     }
 
     //Called per frame
@@ -131,8 +152,9 @@ public class LightEnemyController : MonoBehaviour
 
         if (inLineOfSight.Length > 0)
         {
-            if (inLineOfSight[0].collider.CompareTag("Player"))
+            if (inLineOfSight[0].transform.root.CompareTag("Player"))
             { m_playerInSight = true; }
+            else { m_playerInSight = false; }
         }
         else
         {
@@ -161,15 +183,67 @@ public class LightEnemyController : MonoBehaviour
 
     private void Movement()
     {
-        //Stopping distance
-        //if (Vector3.Distance(transform.position, m_player.position) < m_stopDistance)
-        //{ m_moving = false; }
-        //else
-        //{ m_moving = true; }
+        Debug.Log(m_playerInSight);
+        RaycastHit[] downRay = Physics.RaycastAll(transform.position, -transform.up, 100);
+        m_groundYLevel = downRay[0].point.y;
+        
+        //Target y position
+        float targetSwitchDistance = 0.1f;
+        if (Mathf.Abs(m_groundYLevel + m_heightTarget - transform.position.y) < targetSwitchDistance)
+        {
+            m_heightTarget = Random.Range(m_minimumRelativeHeight, m_maximumRelativeHeight);
+        }
 
-        //Movement applciation
-        if (m_moving)
-        { m_enemyRb.AddForce((m_nextNode - transform.position).normalized * m_acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
+        //Attack rate tracker
+        if (m_attackTimer < m_attackRate) 
+        { m_attackTimer += Time.deltaTime; }
+
+        //Stops moving towards player if withtin attack range but not ready to attack
+        if(Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) < m_attackDistance) 
+        { m_isMoving = false; }
+        else 
+        { m_isMoving = true;  }
+
+        //If retreating from attack and out of attack range
+        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) > m_attackDistance && m_isAttacking)
+        {
+            m_isAttacking = false;
+            m_attackTimer = 0;
+        }
+
+        //If in attack range and ready to attack
+        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) <= m_attackDistance && m_isAttacking == false && m_attackTimer >= m_attackRate)
+        { 
+            m_isAttacking = true;
+            m_playerHasBeenHit = false;
+        }
+
+        //Normal navigation 
+        if (m_isAttacking == false || m_playerInSight == false)
+        {
+            if (m_isMoving)
+            {
+                Vector3 target = new Vector3(m_nextNode.x, m_groundYLevel + m_heightTarget, m_nextNode.z);
+                m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+            }
+
+            else 
+            {
+                m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+            }
+        }
+
+        //Attack
+        if (m_isAttacking && m_playerHasBeenHit == false && m_playerInSight) 
+        {
+            m_enemyRb.AddForce((m_player.position - transform.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+        }
+
+        //Back up and reset
+        if (m_isAttacking && m_playerHasBeenHit && m_playerInSight)
+        {
+            m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+        }
     }
 
     private void VelocityLimits()
@@ -203,27 +277,37 @@ public class LightEnemyController : MonoBehaviour
         //Velocity relative to view
         Vector3 relativeVelocity = new Vector3();
         relativeVelocity.x = (Vector3.right * Vector3.Dot(m_enemyRb.velocity, transform.right)).x;
+        relativeVelocity.y = (Vector3.up * Vector3.Dot(m_enemyRb.velocity, transform.up)).y;
+
         relativeVelocity.z = (Vector3.forward * Vector3.Dot(m_enemyRb.velocity, transform.forward)).z;
-        Vector3 drag = m_horizontalDrag;
+        Vector3 drag = m_drag;
 
         //Drag application
         if (relativeVelocity.x != 0 || relativeVelocity.z != 0)
         {
             //Left 
             if (relativeVelocity.x > 0)
-            { m_enemyRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            { m_enemyRb.AddRelativeForce(Vector3.left * (relativeVelocity.x * m_drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Right 
             if (relativeVelocity.x < 0)
-            { m_enemyRb.AddRelativeForce(Vector3.right * (relativeVelocity.x * -drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            { m_enemyRb.AddRelativeForce(Vector3.right * (relativeVelocity.x * -m_drag.x) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Forward 
             if (relativeVelocity.z > 0)
-            { m_enemyRb.AddRelativeForce(Vector3.back * (relativeVelocity.z * drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            { m_enemyRb.AddRelativeForce(Vector3.back * (relativeVelocity.z * m_drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
 
             //Back
             if (relativeVelocity.z < 0)
-            { m_enemyRb.AddRelativeForce(Vector3.forward * (relativeVelocity.z * -drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+            { m_enemyRb.AddRelativeForce(Vector3.forward * (relativeVelocity.z * -m_drag.z) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+
+            //Down
+            if (m_enemyRb.velocity.y > 0)
+            { m_enemyRb.AddRelativeForce(Vector3.down * (relativeVelocity.y * m_drag.y) * (Time.deltaTime * 100), ForceMode.Acceleration); }
+
+            //Up
+            if (m_enemyRb.velocity.y < 0)
+            { m_enemyRb.AddRelativeForce(Vector3.up * (relativeVelocity.y * -m_drag.y) * (Time.deltaTime * 100), ForceMode.Acceleration); }
         }
     }
 
@@ -249,6 +333,18 @@ public class LightEnemyController : MonoBehaviour
     public void RaycastHit(float damage)
     {
         TakeDamage(damage);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.root.CompareTag("Player")) 
+        {
+            if(m_isAttacking && m_playerHasBeenHit == false) 
+            {
+                m_playerHasBeenHit = true;
+                collision.transform.root.GetComponent<PlayerController>().TakeDamage(m_attackDamage);
+            }
+        }
     }
     #endregion
 }
