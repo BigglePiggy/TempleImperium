@@ -8,21 +8,26 @@ using UnityEngine;
 
 public class SettingsObject
 {
-    public KeyCode m_kcKeyMoveForward = KeyCode.W;
-    public KeyCode m_kcKeyMoveBackward = KeyCode.S;
-    public KeyCode m_kcKeyMoveLeft = KeyCode.A;
-    public KeyCode m_kcKeyMoveRight = KeyCode.D;
-    public KeyCode m_kcKeyJump = KeyCode.Space;
-    public KeyCode m_kcKeyCrouch = KeyCode.LeftControl;
-    public KeyCode m_kcKeySprint = KeyCode.LeftShift;
+    //C# object to package player config into one place
 
-    public KeyCode m_kcKeyFire = KeyCode.Mouse0;
-    public KeyCode m_kcKeyAltFire = KeyCode.Mouse1;
-    public float m_fMouseSensitivityX = 2.5f;
-    public float m_fMouseSensitivityY = 2.5f;
-    public bool m_bMouseInvertX = false;
-    public bool m_bMouseInvertY = false;
+    //movement
+    public KeyCode m_kcKeyMoveForward           = KeyCode.W;
+    public KeyCode m_kcKeyMoveBackward          = KeyCode.S;
+    public KeyCode m_kcKeyMoveLeft              = KeyCode.A;
+    public KeyCode m_kcKeyMoveRight             = KeyCode.D;
+    public KeyCode m_kcKeyJump                  = KeyCode.Space;
+    public KeyCode m_kcKeyCrouch                = KeyCode.LeftControl;
+    public KeyCode m_kcKeySprint                = KeyCode.LeftShift;
 
+    //camera
+    public KeyCode m_kcKeyFire                  = KeyCode.Mouse0;
+    public KeyCode m_kcKeyAltFire               = KeyCode.Mouse1;
+    public float m_fMouseSensitivityX           = 2.5f;
+    public float m_fMouseSensitivityY           = 2.5f;
+    public bool m_bMouseInvertX                 = false;
+    public bool m_bMouseInvertY                 = false;
+
+    //gameplay
     public KeyCode m_kcKeyReload = KeyCode.R;
     public KeyCode m_kcKeyMelee = KeyCode.V;
     public KeyCode m_kcKeyAbility1 = KeyCode.E;
@@ -32,8 +37,10 @@ public class SettingsObject
     public KeyCode m_kcKeyWeaponSlot3 = KeyCode.Alpha3;
     public KeyCode m_kcKeyWeaponQuickSwitch = KeyCode.Q;
 
+    //meta
     public KeyCode m_kcKeyEscape = KeyCode.Escape;
 
+    //game config
     public float m_fVolumeOverall = 0.5f;       //unity uses 0-1 for vol control. careful with float rounding errors if doing +-0.1.
     public float m_fVolumeSFX = 0.5f;           //(briefly multiplying by 10 to work in integer space instead works around this)
     public float m_fVolumeMusic = 0.5f;
