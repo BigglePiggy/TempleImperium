@@ -510,6 +510,10 @@ public class PlayerController : MonoBehaviour
         m_primaryGun.StopHolding();
         m_secondaryGun.StopHolding();
         m_playerRb.constraints = RigidbodyConstraints.None;
+        m_xDirection = "None";
+        m_zDirection = "None";
+        m_playerRb.AddForce(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+        m_playerRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
 
         Invoke("LoadMenuScene", m_deathToMenuDuration);
     }
