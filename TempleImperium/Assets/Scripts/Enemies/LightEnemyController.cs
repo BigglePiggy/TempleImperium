@@ -194,7 +194,7 @@ public class LightEnemyController : MonoBehaviour
         m_groundYLevel = downRay[0].point.y;
         
         //Target y position
-        float targetSwitchDistance = 0.1f;
+        float targetSwitchDistance = 0.4f;
         if (Mathf.Abs(m_groundYLevel + m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
             m_heightTarget = Random.Range(m_minimumRelativeHeight, m_maximumRelativeHeight);
@@ -205,7 +205,7 @@ public class LightEnemyController : MonoBehaviour
         { m_attackTimer += Time.deltaTime; }
 
         //Stops moving towards player if withtin attack range but not ready to attack
-        if(Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) < m_attackDistance) 
+        if(Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) < m_attackDistance && m_playerInSight ) 
         { m_isMoving = false; }
         else 
         { m_isMoving = true;  }
@@ -218,7 +218,7 @@ public class LightEnemyController : MonoBehaviour
         }
 
         //If in attack range and ready to attack
-        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) <= m_attackDistance && m_isAttacking == false && m_attackTimer >= m_attackRate)
+        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) <= m_attackDistance && m_isAttacking == false && m_attackTimer >= m_attackRate && m_playerInSight == false)
         { 
             m_isAttacking = true;
             m_playerHasBeenHit = false;
@@ -249,6 +249,11 @@ public class LightEnemyController : MonoBehaviour
         if (m_isAttacking && m_playerHasBeenHit && m_playerInSight)
         {
             m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+        }
+
+        if (m_isAttacking && m_playerHasBeenHit && m_playerInSight == false) 
+        {
+            m_isAttacking = false;
         }
     }
 
