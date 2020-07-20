@@ -133,10 +133,10 @@ public class PlayerGun : MonoBehaviour
         {
             bool shoot = false;
 
-            if (m_automatic && Input.GetKey(GlobalSettings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            if (m_automatic && Input.GetKey(GlobalValues.g_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
-            if (m_automatic == false && Input.GetKeyDown(GlobalSettings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
+            if (m_automatic == false && Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
             if (shoot) 
@@ -164,7 +164,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Reload
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyReload) && m_currentMagCapacity != m_maxMagCapacity && m_ammoCount > 0)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyReload) && m_currentMagCapacity != m_maxMagCapacity && m_ammoCount > 0)
         {
             m_reloadProgress = 0;
 
@@ -192,7 +192,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Down - Go left
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyAltFire))
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyAltFire))
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;
@@ -202,7 +202,7 @@ public class PlayerGun : MonoBehaviour
         }
 
         //Up - Go right
-        if (Input.GetKeyUp(GlobalSettings.m_kcKeyAltFire) || (Input.GetKey(GlobalSettings.m_kcKeyAltFire) == false && transform.localPosition != m_hipPos)) 
+        if (Input.GetKeyUp(GlobalValues.g_settings.m_kcKeyAltFire) || (Input.GetKey(GlobalValues.g_settings.m_kcKeyAltFire) == false && transform.localPosition != m_hipPos)) 
         {
             m_startTime = Time.time;
             m_gunPosition = transform.localPosition;

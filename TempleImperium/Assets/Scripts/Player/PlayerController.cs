@@ -156,8 +156,8 @@ public class PlayerController : MonoBehaviour
     #region Mouse & Weapons
     private void MouseInputRecoil()
     {
-        float rotateVertical = Input.GetAxis("Mouse Y") * GlobalSettings.m_fMouseSensitivityY * (Time.deltaTime * 100);     //Frame rate indenpentdent Y rotation value
-        float rotateHorizontal = Input.GetAxis("Mouse X") * GlobalSettings.m_fMouseSensitivityX * (Time.deltaTime * 100);   //Frame rate indenpentdent X rotation value
+        float rotateVertical = Input.GetAxis("Mouse Y") * GlobalValues.g_settings.m_fMouseSensitivityY * (Time.deltaTime * 100);     //Frame rate indenpentdent Y rotation value
+        float rotateHorizontal = Input.GetAxis("Mouse X") * GlobalValues.g_settings.m_fMouseSensitivityX * (Time.deltaTime * 100);   //Frame rate indenpentdent X rotation value
 
         transform.Rotate(transform.up * rotateHorizontal);  //Rotates the X Axis
 
@@ -192,14 +192,14 @@ public class PlayerController : MonoBehaviour
     private void WeaponSwitching()
     {
         //Switch to primary
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyWeaponSlot1) && m_primaryGun.GetIsHeld() == false)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyWeaponSlot1) && m_primaryGun.GetIsHeld() == false)
         {
             m_secondaryGun.StopHolding();
             m_primaryGun.StartHolding();
         }
 
         //Switch to secondary
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyWeaponSlot2) && m_secondaryGun.GetIsHeld() == false)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyWeaponSlot2) && m_secondaryGun.GetIsHeld() == false)
         {
             m_primaryGun.StopHolding();
             m_secondaryGun.StartHolding();
@@ -225,48 +225,48 @@ public class PlayerController : MonoBehaviour
     {
         ////Left & Right
         //Records the last direction pressed
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyMoveLeft))
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyMoveLeft))
         { m_lastKeyDownX = "Left"; }
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyMoveRight))
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyMoveRight))
         { m_lastKeyDownX = "Right"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(GlobalSettings.m_kcKeyMoveLeft) && Input.GetKey(GlobalSettings.m_kcKeyMoveRight))
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveLeft) && Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveRight))
         { m_xDirection = m_lastKeyDownX; }
         else
         {
-            if (Input.GetKey(GlobalSettings.m_kcKeyMoveLeft))
+            if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveLeft))
             { m_xDirection = "Left"; }
-            if (Input.GetKey(GlobalSettings.m_kcKeyMoveRight))
+            if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveRight))
             { m_xDirection = "Right"; }
         }
         //No input setting
-        if (Input.GetKey(GlobalSettings.m_kcKeyMoveLeft) == false && Input.GetKey(GlobalSettings.m_kcKeyMoveRight) == false)
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveLeft) == false && Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveRight) == false)
         { m_xDirection = "None"; }
 
 
         ////Forward & Back
         //Records the last direction pressed
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyMoveForward))
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyMoveForward))
         { m_lastKeyDownZ = "Forward"; }
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyMoveBackward))
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyMoveBackward))
         { m_lastKeyDownZ = "Back"; }
         //Sets direction to last key pressed if both are down
-        if (Input.GetKey(GlobalSettings.m_kcKeyMoveForward) && Input.GetKey(GlobalSettings.m_kcKeyMoveBackward))
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveForward) && Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveBackward))
         { m_zDirection = m_lastKeyDownZ; }
         else
         {
-            if (Input.GetKey(GlobalSettings.m_kcKeyMoveForward))
+            if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveForward))
             { m_zDirection = "Forward"; }
-            if (Input.GetKey(GlobalSettings.m_kcKeyMoveBackward))
+            if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveBackward))
             { m_zDirection = "Back"; }
         }
         //No input setting
-        if (Input.GetKey(GlobalSettings.m_kcKeyMoveForward) == false && Input.GetKey(GlobalSettings.m_kcKeyMoveBackward) == false)
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveForward) == false && Input.GetKey(GlobalValues.g_settings.m_kcKeyMoveBackward) == false)
         { m_zDirection = "None"; }
 
 
         //Jump
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyJump) && m_sinceLastJump >= m_jumpBuffer && m_isGrounded)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyJump) && m_sinceLastJump >= m_jumpBuffer && m_isGrounded)
         {
             m_isJumping = true;
 
@@ -286,14 +286,14 @@ public class PlayerController : MonoBehaviour
 
 
         //Offensive ability
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyAbility1) && m_offensiveCurrentCooldown >= m_offensiveCooldown)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyAbility1) && m_offensiveCurrentCooldown >= m_offensiveCooldown)
         {
             OffensiveAbility();
             m_offensiveCurrentCooldown = 0;
         }
 
         //Defensive ability
-        if (Input.GetKeyDown(GlobalSettings.m_kcKeyAbility2) && m_defensiveCurrentCooldown >= m_defensiveCooldown)
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyAbility2) && m_defensiveCurrentCooldown >= m_defensiveCooldown)
         {
             DefensiveAbility();
             m_defensiveCurrentCooldown = 0;
@@ -413,7 +413,7 @@ public class PlayerController : MonoBehaviour
         float totalHorLimit = m_horizontalLimit;
 
         //Sprint modifer
-        if (Input.GetKey(GlobalSettings.m_kcKeySprint))
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeySprint))
         {
             totalHorLimit += m_sprintLimitIncrease;
             m_verticalLimit = m_verticalLimit + m_sprintLimitIncrease;

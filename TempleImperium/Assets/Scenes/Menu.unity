@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 21632216}
   m_Layer: 5
   m_Name: m_kcKeyMelee
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1225,7 +1225,7 @@ GameObject:
   - component: {fileID: 349425058}
   m_Layer: 5
   m_Name: m_kcKeyAbility2
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1369,7 +1369,7 @@ GameObject:
   - component: {fileID: 382014987}
   m_Layer: 5
   m_Name: m_kcKeySprint
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1600,7 +1600,7 @@ GameObject:
   - component: {fileID: 594772862}
   m_Layer: 5
   m_Name: m_kcKeyFire
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3152,7 +3152,7 @@ GameObject:
   - component: {fileID: 1069833617}
   m_Layer: 5
   m_Name: m_kcKeyCrouch
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3831,7 +3831,7 @@ GameObject:
   - component: {fileID: 1377157753}
   m_Layer: 5
   m_Name: m_kcKeyJump
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3909,7 +3909,7 @@ GameObject:
   - component: {fileID: 1388748196}
   m_Layer: 5
   m_Name: m_kcKeyAltFire
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4275,7 +4275,7 @@ GameObject:
   - component: {fileID: 1518434624}
   m_Layer: 5
   m_Name: m_kcKeyMoveForward
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4522,7 +4522,7 @@ GameObject:
   - component: {fileID: 1608274837}
   m_Layer: 5
   m_Name: m_kcKeyAbility1
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5072,7 +5072,7 @@ GameObject:
   - component: {fileID: 1692457884}
   m_Layer: 5
   m_Name: m_kcKeyMoveLeft
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5743,7 +5743,7 @@ GameObject:
   - component: {fileID: 1955853209}
   m_Layer: 5
   m_Name: m_kcKeyMoveBackward
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6367,7 +6367,7 @@ GameObject:
   - component: {fileID: 2036165466}
   m_Layer: 5
   m_Name: m_kcKeyReload
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6656,7 +6656,7 @@ GameObject:
   - component: {fileID: 2140297473}
   m_Layer: 5
   m_Name: m_kcKeyMoveRight
-  m_TagString: Untagged
+  m_TagString: SettingsText
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
