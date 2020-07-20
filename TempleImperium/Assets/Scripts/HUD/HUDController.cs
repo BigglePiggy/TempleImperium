@@ -225,9 +225,9 @@ public class HUDController : MonoBehaviour
         m_sTextHealthMax = m_fPlayerHealthMax + "/";
 
         //ability offensive
-        m_sTextAbilityOffensive = Mathf.FloorToInt(m_fAbilityOffensiveCooldown).ToString();
+        m_sTextAbilityOffensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityOffensiveCooldownMax - m_fAbilityOffensiveCooldown)).ToString();
         //ability defensive
-        m_sTextAbilityDefensive = Mathf.FloorToInt(m_fAbilityDefensiveCooldown).ToString();
+        m_sTextAbilityDefensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityDefensiveCooldownMax - m_fAbilityDefensiveCooldown)).ToString();
 
 
         //WRITE --------------------------------------------------------------
