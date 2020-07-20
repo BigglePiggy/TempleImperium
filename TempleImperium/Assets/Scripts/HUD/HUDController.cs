@@ -17,6 +17,8 @@ public class HUDController : MonoBehaviour
     //script and having each data readout be a public list instead could accomplish high flexibility?
     //this probably isn't needed unless design specify they want complete control over things
 
+        //todo: possibly rearrange me? group everything by HUD element instead of 'build strings-->write-->colour' sections
+
 
     //-----------------------------------------------------
     //generic declares
@@ -24,11 +26,6 @@ public class HUDController : MonoBehaviour
 
     //declarations w/ setter funcs, since this script will be sent information constantly
     #region getset declarations
-    /*      template
-        private string m_sPrivateVar;
-        public string PublicVar { set { m_sPrivateVar = value; } }
-        public Text oTextObject;
-    */
 
     //private string m_sDebugReadout;                                   //DEPRECATED!
     //public string DebugReadout { set { m_sDebugReadout = value; } }   //DEPRECATED! build string in HUDController.Update();
@@ -83,7 +80,7 @@ public class HUDController : MonoBehaviour
     #endregion getset declarations
 
     //-----------------------------------------------------
-    //settings vars
+    //public vars
     public bool m_bShowDebug = false;
     [Tooltip("Start fading timer colour from default to AlertBad at this number of seconds")]
     public int m_iTimerAlertThreshold = 30;
@@ -92,11 +89,12 @@ public class HUDController : MonoBehaviour
     public Color m_cTextColour = Color.white;
     public Color m_cTextColourAlertBad = Color.red;
     public Color m_cTextColourAlertGood = Color.green;
+    public Color m_cColourAbilityCharge = new Color(152, 107, 41);
     [Space]
     public float m_fHealthBarAdjustWidth = 75;
 
     //-----------------------------------------------------
-    //text object references (and their private output strings)
+    //text object references (and their related private vars)
     #region output text obj refs declarations   
     [Header("HUD Elements")]
     public Text oTextDebugReadout;
@@ -121,8 +119,12 @@ public class HUDController : MonoBehaviour
     float m_fImageHealthBarBaseWidth;
     public Text oTextAbilityOffensive;
     string m_sTextAbilityOffensive = "";
+    public Image oImageAbilityOffensiveBar;
+    float m_fImageAbilityOffensiveBarBaseHeight;
     public Text oTextAbilityDefensive;
     string m_sTextAbilityDefensive = "";
+    public Image oImageAbilityDefensiveBar;
+    float m_fImageAbilityDefensiveBarBaseHeight;
     #endregion output text obj refs declarations
     //-----------------------------------------------------
 
@@ -130,8 +132,7 @@ public class HUDController : MonoBehaviour
 
     void Start()
     {
-        //set colour of every element
-
+        //set colour of every text element
         oTextDebugReadout.color     = m_cTextColour;
         oTextWaveCounter.color      = m_cTextColour;
         oTextWaveTimer.color        = m_cTextColour;
@@ -141,10 +142,14 @@ public class HUDController : MonoBehaviour
         oTextAmmoReserve.color      = m_cTextColour;
         oTextHealth.color           = m_cTextColour;
         oTextHealthMax.color        = m_cTextColour;
+        oTextAbilityOffensive.color = m_cTextColour;
+        //oTextAbilityDefensive.color = m_cTextColour;
 
         //save misc things
         //health bar width
         m_fImageHealthBarBaseWidth = oImageHealthBar.rectTransform.rect.width;
+        //ability offensive bar height
+        m_fImageAbilityOffensiveBarBaseHeight = oImageAbilityOffensiveBar.rectTransform.rect.height;
 
 
         //reflection attempt
@@ -217,6 +222,9 @@ public class HUDController : MonoBehaviour
         //health max
         m_sTextHealthMax = m_fPlayerHealthMax + "/";
 
+        //ability offensive
+        m_sTextAbilityOffensive = m_fAbilityOffensiveCooldown.ToString();
+
 
         //WRITE --------------------------------------------------------------
         //text
@@ -229,6 +237,7 @@ public class HUDController : MonoBehaviour
         oTextAmmoReserve.text           = m_sTextAmmoReserve;
         oTextHealth.text                = m_sTextHealth;
         oTextHealthMax.text             = m_sTextHealthMax;
+        oTextAbilityOffensive.text      = m_sTextAbilityOffensive;
 
 
         //starstone colour
@@ -255,5 +264,11 @@ public class HUDController : MonoBehaviour
 
         //Debug.Log(m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth));
         //Debug.Log("(" + m_fImageHealthBarBaseWidth + ")*(" + (m_fPlayerHealth / m_fImageHealthBarBaseWidth) + ")");
+
+        //ability offensive bar height
+        oImageAbilityOffensiveBar.rectTransform.sizeDelta = new Vector2(
+            oImageAbilityOffensiveBar.rectTransform.rect.width,
+            m_fImageAbilityOffensiveBarBaseHeight * (m_fAbilityOffensiveCooldown / m_fImageAbilityOffensiveBarBaseHeight)
+            );
     }
 }
