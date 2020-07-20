@@ -143,13 +143,15 @@ public class HUDController : MonoBehaviour
         oTextHealth.color           = m_cTextColour;
         oTextHealthMax.color        = m_cTextColour;
         oTextAbilityOffensive.color = m_cTextColour;
-        //oTextAbilityDefensive.color = m_cTextColour;
+        oTextAbilityDefensive.color = m_cTextColour;
 
         //save misc things
         //health bar width
         m_fImageHealthBarBaseWidth = oImageHealthBar.rectTransform.rect.width;
         //ability offensive bar height
         m_fImageAbilityOffensiveBarBaseHeight = oImageAbilityOffensiveBar.rectTransform.rect.height;
+        //ability defensive bar height
+        m_fImageAbilityDefensiveBarBaseHeight = oImageAbilityDefensiveBar.rectTransform.rect.height;
 
 
         //reflection attempt
@@ -223,7 +225,9 @@ public class HUDController : MonoBehaviour
         m_sTextHealthMax = m_fPlayerHealthMax + "/";
 
         //ability offensive
-        m_sTextAbilityOffensive = m_fAbilityOffensiveCooldown.ToString();
+        m_sTextAbilityOffensive = Mathf.FloorToInt(m_fAbilityOffensiveCooldown).ToString();
+        //ability defensive
+        m_sTextAbilityDefensive = Mathf.FloorToInt(m_fAbilityDefensiveCooldown).ToString();
 
 
         //WRITE --------------------------------------------------------------
@@ -238,6 +242,7 @@ public class HUDController : MonoBehaviour
         oTextHealth.text                = m_sTextHealth;
         oTextHealthMax.text             = m_sTextHealthMax;
         oTextAbilityOffensive.text      = m_sTextAbilityOffensive;
+        oTextAbilityDefensive.text      = m_sTextAbilityDefensive;
 
 
         //starstone colour
@@ -269,6 +274,11 @@ public class HUDController : MonoBehaviour
         oImageAbilityOffensiveBar.rectTransform.sizeDelta = new Vector2(
             oImageAbilityOffensiveBar.rectTransform.rect.width,
             m_fImageAbilityOffensiveBarBaseHeight * (m_fAbilityOffensiveCooldown / m_fImageAbilityOffensiveBarBaseHeight)
+            );
+        //ability defensive bar height
+        oImageAbilityDefensiveBar.rectTransform.sizeDelta = new Vector2(
+            oImageAbilityDefensiveBar.rectTransform.rect.width,
+            m_fImageAbilityDefensiveBarBaseHeight * (m_fAbilityDefensiveCooldown / m_fImageAbilityDefensiveBarBaseHeight)
             );
     }
 }
