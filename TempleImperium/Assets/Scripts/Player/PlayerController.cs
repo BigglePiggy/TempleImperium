@@ -108,8 +108,6 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         m_sinceLastJump = m_jumpBuffer; //Jump buffer setting
-        m_offensiveCurrentCooldown = m_offensiveCooldown;   //Offensive cooldown setting
-        m_defensiveCurrentCooldown = m_defensiveCooldown;   //Defensive cooldown setting
 
         m_health = m_maximumHealth; //Health set to maximum
 
