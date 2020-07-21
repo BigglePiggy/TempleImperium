@@ -47,13 +47,9 @@ public class Grenade : MonoBehaviour
             if (closeObject.transform.root.CompareTag("Enemy")) 
             {
                 Rigidbody rb = closeObject.GetComponent<Rigidbody>();
-                EnemyController enController = closeObject.GetComponent<EnemyController>();
 
                 if (rb != null) 
                 {closeObject.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);}
-
-                if (enController != null) 
-                { }
             }
         }
 

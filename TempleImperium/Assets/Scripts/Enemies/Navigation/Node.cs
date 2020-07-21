@@ -1,6 +1,7 @@
 ﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 //Created by Eddie
 
@@ -58,8 +59,11 @@ public class Node : MonoBehaviour
             }
         }
 
-        Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, maxConnectionDistance);
+        if (Selection.Contains(gameObject) || Selection.Contains(transform.root.gameObject))
+        { 
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, maxConnectionDistance);
+        }
 
         Gizmos.color = Color.black;
         Gizmos.DrawSphere(transform.position, 0.1f);

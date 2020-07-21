@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Created by Eddie
 
-public class EnemyController : MonoBehaviour
+public class MediumEnemyController : MonoBehaviour
 {
     //Enemy controller script
     //What this script does:
@@ -136,12 +136,19 @@ public class EnemyController : MonoBehaviour
     #region Weapon
     private void PlayerInSight()
     {
-        RaycastHit[] inLineOfSight = Physics.RaycastAll(m_enemyHead.position, m_player.position - m_enemyHead.position, m_viewDistance);
+        RaycastHit hit;
+        Debug.DrawLine(transform.position, m_player.position);
 
-        if (inLineOfSight.Length > 0)
+        if (Physics.Linecast(transform.position, m_player.position, out hit))
         {
-            if (inLineOfSight[0].collider.CompareTag("Player"))
-            { m_playerInSight = true; }
+            if (hit.transform.CompareTag("Player"))
+            {
+                m_playerInSight = true;
+            }
+            else
+            {
+                m_playerInSight = false;
+            }
         }
         else
         {
@@ -156,21 +163,27 @@ public class EnemyController : MonoBehaviour
 
         if (m_timeSinceLastShot >= m_fireRate && m_playerInSight && Vector3.Distance(transform.position, m_player.position) < m_shootingDistance)
         {
-            Vector3 offset = new Vector3(Random.Range(-m_accuracyOffset.x, m_accuracyOffset.x), Random.Range(-m_accuracyOffset.y, m_accuracyOffset.y), Random.Range(-m_accuracyOffset.z, m_accuracyOffset.z));
-            RaycastHit[] bulletCollisions = Physics.RaycastAll(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, m_viewDistance);
-            Debug.DrawRay(m_bulletOrigin.position, (m_player.position + offset) - m_bulletOrigin.position, Color.green, 100);
+            Vector3 target = new Vector3(m_player.position.x + Random.Range(-m_accuracyOffset.x, m_accuracyOffset.x), m_player.position.y + Random.Range(-m_accuracyOffset.y, m_accuracyOffset.y), m_player.position.z + Random.Range(-m_accuracyOffset.z, m_accuracyOffset.z));
 
-            if (bulletCollisions.Length > 0)
+            RaycastHit hit;
+            Debug.DrawLine(m_bulletOrigin.position, target);
+
+            if (Physics.Linecast(m_bulletOrigin.position, target, out hit))
             {
-                if (bulletCollisions[0].transform.root.CompareTag("Player"))
+                if (hit.transform.CompareTag("Player")) 
                 {
-                    bulletCollisions[0].transform.root.GetComponent<PlayerController>().TakeDamage(m_shotDamage);
+                    hit.transform.gameObject.SendMessage("TakeDamage", m_shotDamage);
+                }
+
+                else if (hit.transform.root.CompareTag("Player")) 
+                {
+                    hit.transform.root.gameObject.SendMessage("TakeDamage", m_shotDamage);
                 }
             }
 
             m_timeSinceLastShot = 0;
             m_audioSource.PlayOneShot(m_shotEffect);
-            m_bulletOrigin.LookAt(m_player.position + offset);
+            m_bulletOrigin.LookAt(target);
             m_bulletParticleSystem.Emit(1);
         }
     }
@@ -228,7 +241,7 @@ public class EnemyController : MonoBehaviour
         allHits.AddRange(TLDown);
         allHits.AddRange(TRDown);
         allHits.AddRange(BLDown);
-        allHits.AddRange(BLDown);
+        allHits.AddRange(BRDown);
 
         //Slope check
         for (int i = 0; i < allHits.Count; i++)

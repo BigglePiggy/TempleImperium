@@ -222,7 +222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7678433}
   - component: {fileID: 7678432}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -833,7 +833,7 @@ GameObject:
   m_Component:
   - component: {fileID: 71580498}
   - component: {fileID: 71580497}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1003,7 +1003,7 @@ GameObject:
   m_Component:
   - component: {fileID: 98404623}
   - component: {fileID: 98404622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1173,7 +1173,7 @@ GameObject:
   m_Component:
   - component: {fileID: 116359257}
   - component: {fileID: 116359256}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1395,7 +1395,7 @@ GameObject:
   m_Component:
   - component: {fileID: 131286038}
   - component: {fileID: 131286039}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Game Logic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1453,7 +1453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 133800938}
   - component: {fileID: 133800937}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1501,7 +1501,7 @@ GameObject:
   m_Component:
   - component: {fileID: 138397066}
   - component: {fileID: 138397065}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1664,7 +1664,7 @@ GameObject:
   m_Component:
   - component: {fileID: 161399841}
   - component: {fileID: 161399840}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1713,7 +1713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 165188222}
   - component: {fileID: 165188221}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1880,7 +1880,7 @@ GameObject:
   m_Component:
   - component: {fileID: 173498182}
   - component: {fileID: 173498181}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2219,7 +2219,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 190177281}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2674,7 +2674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 225774730}
   - component: {fileID: 225774729}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3159,7 +3159,7 @@ GameObject:
   m_Component:
   - component: {fileID: 328303035}
   - component: {fileID: 328303034}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3340,7 +3340,7 @@ GameObject:
   m_Component:
   - component: {fileID: 369008128}
   - component: {fileID: 369008129}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy Dispatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3374,7 +3374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2bf3d698ea17004eba1ce9de715d988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnemy: {fileID: 7995707737010115624, guid: 01d37af21d004bd4da1843615e5cedaa,
+  lightEnemy: {fileID: 2868906841354794610, guid: a97e7a40f325f124b8a2f4a4468cbc04,
     type: 3}
   mediumEnemy: {fileID: 7995707737010115624, guid: 01d37af21d004bd4da1843615e5cedaa,
     type: 3}
@@ -3476,7 +3476,7 @@ GameObject:
   m_Component:
   - component: {fileID: 370769546}
   - component: {fileID: 370769545}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Nodes
   m_TagString: Nodes
   m_Icon: {fileID: 0}
@@ -3593,7 +3593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 387660349}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3800,7 +3800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 415144498}
   - component: {fileID: 415144497}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3896,7 +3896,7 @@ GameObject:
   - component: {fileID: 458367774}
   - component: {fileID: 458367776}
   - component: {fileID: 458367775}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3910,7 +3910,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.12849307, y: 0.6969761, z: 0.1291239, w: 0.6935711}
+  m_LocalRotation: {x: 0.056120727, y: 0.92551994, z: 0.15168534, w: -0.34242502}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4068,7 +4068,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 479423387}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4099,7 +4099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 482261784}
   - component: {fileID: 482261783}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4181,7 +4181,7 @@ GameObject:
   m_Component:
   - component: {fileID: 491649157}
   - component: {fileID: 491649156}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4322,7 +4322,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 505773186}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4354,7 +4354,7 @@ GameObject:
   - component: {fileID: 508289351}
   - component: {fileID: 508289353}
   - component: {fileID: 508289352}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4368,7 +4368,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.12922287, y: 0.6978729, z: 0.13025928, w: 0.6923203}
+  m_LocalRotation: {x: 0.06308838, y: 0.93689, z: 0.24643019, w: -0.23985237}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4491,7 +4491,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 515376443}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4644,7 +4644,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 538439431}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Enemy Spawnpoints
   m_TagString: Spawnpoints
   m_Icon: {fileID: 0}
@@ -4988,7 +4988,7 @@ GameObject:
   m_Component:
   - component: {fileID: 595245336}
   - component: {fileID: 595245337}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wave 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5030,11 +5030,11 @@ MonoBehaviour:
   m_iPylonCount: 5
   m_fPylonBonusTime: 30
   m_sSubWavesList:
-  - 1,1,1
-  - 0,1,2
-  - 0,3,0
-  - 0,3,0
-  - 0,3,1
+  - 3,2,0
+  - 2,4,0
+  - 0,4,0
+  - 4,1,0
+  - 4,4,0
 --- !u!1 &604664050
 GameObject:
   m_ObjectHideFlags: 0
@@ -5090,7 +5090,7 @@ GameObject:
   m_Component:
   - component: {fileID: 613275302}
   - component: {fileID: 613275301}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5136,7 +5136,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 626943857}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5211,7 +5211,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 639738966}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5242,7 +5242,7 @@ GameObject:
   m_Component:
   - component: {fileID: 641804204}
   - component: {fileID: 641804203}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6295,7 +6295,7 @@ GameObject:
   m_Component:
   - component: {fileID: 691540024}
   - component: {fileID: 691540023}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6433,7 +6433,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705354024}
   - component: {fileID: 705354023}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6480,7 +6480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 711721495}
   - component: {fileID: 711721494}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6606,7 +6606,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 725296242}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6637,7 +6637,7 @@ GameObject:
   m_Component:
   - component: {fileID: 752130381}
   - component: {fileID: 752130380}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6729,7 +6729,7 @@ GameObject:
   m_Component:
   - component: {fileID: 768605732}
   - component: {fileID: 768605731}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6775,7 +6775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 788769990}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6967,7 +6967,7 @@ GameObject:
   m_Component:
   - component: {fileID: 800040134}
   - component: {fileID: 800040133}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7138,7 +7138,7 @@ GameObject:
   m_Component:
   - component: {fileID: 809946388}
   - component: {fileID: 809946387}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7184,7 +7184,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 811801919}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7333,7 +7333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 832737675}
   - component: {fileID: 832737674}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7690,7 +7690,7 @@ GameObject:
   m_Component:
   - component: {fileID: 863472335}
   - component: {fileID: 863472334}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8066,7 +8066,7 @@ GameObject:
   m_Component:
   - component: {fileID: 894626601}
   - component: {fileID: 894626600}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8792,7 +8792,7 @@ GameObject:
   m_Component:
   - component: {fileID: 945320701}
   - component: {fileID: 945320700}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8839,7 +8839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 947620470}
   - component: {fileID: 947620469}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8890,7 +8890,7 @@ GameObject:
   m_Component:
   - component: {fileID: 951189319}
   - component: {fileID: 951189318}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9032,7 +9032,7 @@ GameObject:
   m_Component:
   - component: {fileID: 963021413}
   - component: {fileID: 963021412}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9081,7 +9081,7 @@ GameObject:
   m_Component:
   - component: {fileID: 969764283}
   - component: {fileID: 969764282}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9131,7 +9131,7 @@ GameObject:
   m_Component:
   - component: {fileID: 971789239}
   - component: {fileID: 971789238}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9309,7 +9309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1000032978}
   - component: {fileID: 1000032977}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9357,7 +9357,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1002996002}
   - component: {fileID: 1002996001}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9404,7 +9404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1004615274}
   - component: {fileID: 1004615273}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9542,7 +9542,7 @@ MonoBehaviour:
   m_maxMagCapacity: 20
   m_reloadTime: 1
   m_bulletRange: 100
-  m_shotDamage: 3
+  m_shotDamage: 1
   m_adsSpeed: 2
   m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
   m_adsPos: {x: 0, y: -0.17, z: 0.5}
@@ -9747,7 +9747,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1027710377}
   - component: {fileID: 1027710376}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9885,7 +9885,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1050182727}
   - component: {fileID: 1050182726}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9932,7 +9932,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1064968654}
   - component: {fileID: 1064968653}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10104,7 +10104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1084960978}
   - component: {fileID: 1084960977}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10275,7 +10275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1110672563}
   - component: {fileID: 1110672562}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10371,7 +10371,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1122814686}
   - component: {fileID: 1122814685}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10623,7 +10623,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1151107220}
   - component: {fileID: 1151107219}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10669,7 +10669,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1153778597}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10699,7 +10699,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1155024480}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10775,7 +10775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1164766833}
   - component: {fileID: 1164766832}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11095,7 +11095,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1187905684}
   - component: {fileID: 1187905683}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11532,7 +11532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1234670787}
   - component: {fileID: 1234670786}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11579,7 +11579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1243928885}
   - component: {fileID: 1243928884}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11800,7 +11800,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1260385682}
   - component: {fileID: 1260385681}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12212,7 +12212,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1301787550}
   - component: {fileID: 1301787549}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12261,7 +12261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1344009273}
   - component: {fileID: 1344009272}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12525,7 +12525,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1365257729}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12556,7 +12556,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1370605023}
   - component: {fileID: 1370605022}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12824,7 +12824,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399232236}
   - component: {fileID: 1399232235}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17747,7 +17747,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1420159662}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17865,7 +17865,7 @@ GameObject:
   - component: {fileID: 1428896662}
   - component: {fileID: 1428896664}
   - component: {fileID: 1428896663}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17879,7 +17879,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.12942638, y: 0.6968017, z: 0.13006176, w: 0.6933976}
+  m_LocalRotation: {x: 0.11134899, y: 0.88826776, z: 0.30095848, w: -0.3286424}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18125,7 +18125,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1453730884}
   - component: {fileID: 1453730883}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18385,7 +18385,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1472966166}
   - component: {fileID: 1472966165}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18600,7 +18600,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1497782660}
   - component: {fileID: 1497782661}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18903,7 +18903,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1513507337}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Game Controller
   m_TagString: GameController
   m_Icon: {fileID: 0}
@@ -18938,7 +18938,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1522472485}
   - component: {fileID: 1522472484}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19116,7 +19116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1530041294}
   - component: {fileID: 1530041293}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19208,7 +19208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1546787216}
   - component: {fileID: 1546787215}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19457,7 +19457,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1554767158}
   - component: {fileID: 1554767159}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Wave 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19492,16 +19492,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveNickname: wave 1
-  m_iWaveDuration: 30
+  m_iWaveDuration: 40
   m_iSubWaveRestDuration: 3
-  m_iSubWaveKillLenience: 2
+  m_iSubWaveKillLenience: 0
   m_eStarstoneElement: 3
   m_iPylonCount: 3
   m_fPylonBonusTime: 15
   m_sSubWavesList:
-  - 1,1,1
+  - 1,0,0
   - 3,0,0
-  - 2,0,1
+  - 4,1,0
 --- !u!1 &1565745938
 GameObject:
   m_ObjectHideFlags: 0
@@ -19956,7 +19956,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1648000606}
   - component: {fileID: 1648000605}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20004,7 +20004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1654952762}
   - component: {fileID: 1654952761}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20228,7 +20228,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1684427710}
   - component: {fileID: 1684427709}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20406,7 +20406,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1696783880}
   - component: {fileID: 1696783879}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25565,7 +25565,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1710913892}
   - component: {fileID: 1710913891}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26009,7 +26009,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1733826160}
   - component: {fileID: 1733826159}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26332,7 +26332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1760373622}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26830,7 +26830,7 @@ GameObject:
   - component: {fileID: 1839892573}
   - component: {fileID: 1839892575}
   - component: {fileID: 1839892574}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -26844,7 +26844,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.12829107, y: 0.6980476, z: 0.12932001, w: 0.6924936}
+  m_LocalRotation: {x: 0.03014944, y: 0.9615725, z: 0.11776705, w: -0.24617134}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -27140,7 +27140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1859422113}
   - component: {fileID: 1859422112}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27445,7 +27445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1876604744}
   - component: {fileID: 1876604743}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27588,7 +27588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1885586107}
   - component: {fileID: 1885586106}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27636,7 +27636,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1891314191}
   - component: {fileID: 1891314190}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28017,7 +28017,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1940986666}
   - component: {fileID: 1940986665}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28221,7 +28221,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1946584376}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28630,7 +28630,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1980152273}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Spawnpoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28755,7 +28755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986633183}
   - component: {fileID: 1986633182}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28848,7 +28848,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1995675876}
   - component: {fileID: 1995675875}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29062,7 +29062,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2040733321}
   - component: {fileID: 2040733320}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29281,7 +29281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2065689243}
   - component: {fileID: 2065689242}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29329,7 +29329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2065794209}
   - component: {fileID: 2065794208}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29532,7 +29532,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2081029283}
   - component: {fileID: 2081029282}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29976,7 +29976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2101700590}
   - component: {fileID: 2101700589}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30495,12 +30495,12 @@ MonoBehaviour:
   m_maxMagCapacity: 6
   m_reloadTime: 0.75
   m_bulletRange: 100
-  m_shotDamage: 3
+  m_shotDamage: 3.5
   m_adsSpeed: 2.5
   m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
   m_adsPos: {x: 0, y: -0.17, z: 0.5}
-  m_recoil: -1
-  m_recoilDampening: 0.05
+  m_recoil: -0.8
+  m_recoilDampening: 0.06
   m_recoilControl: 1
   shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   reloadEffect: {fileID: 8300000, guid: b5ee368715e6bf94b9fdc0a7b33db68b, type: 3}
