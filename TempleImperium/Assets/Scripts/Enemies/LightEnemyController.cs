@@ -46,15 +46,18 @@ public class LightEnemyController : MonoBehaviour
 
     [Header("Movement & Attack")]
     [Tooltip("The maximum vertical distance that the enemy can go to above any node")]
-    public float m_maximumRelativeHeight;
+    public float m_maximumHeight;
     [Tooltip("The minimum vertical distance that the enemy can go to below any node")]
-    public float m_minimumRelativeHeight;
+    public float m_minimumHeight;
     [Tooltip("Distance at which enemy starts attacking the player")]
     public float m_attackDistance;
+    [Tooltip("Distance at which enemy float around player whilst waiting to attack")]
+    public float m_retreatDistance;
     [Tooltip("Rate of enemy attacks (In seconds)")]
     public float m_attackRate;
     [Tooltip("Damage that the attack applies to the player")]
     public float m_attackDamage;
+
 
 
     //Pathfinding
@@ -91,10 +94,10 @@ public class LightEnemyController : MonoBehaviour
         //Variable assignment
         m_path = new Stack<Vector3>();
         m_currentHealth = m_startingHealth;
-        m_isAttacking = true;
+        m_isAttacking = false;
         m_playerInSight = false;
 
-        m_heightTarget = Random.Range(m_minimumRelativeHeight, m_maximumRelativeHeight);
+        m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         m_attackTimer = m_attackRate;
     }
 
@@ -189,71 +192,87 @@ public class LightEnemyController : MonoBehaviour
 
     private void Movement()
     {
-        Debug.Log(m_playerInSight);
+        //Variable Y height ground detector
         RaycastHit[] downRay = Physics.RaycastAll(transform.position, -transform.up, 100);
         m_groundYLevel = downRay[0].point.y;
-        
-        //Target y position
         float targetSwitchDistance = 0.4f;
         if (Mathf.Abs(m_groundYLevel + m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
-            m_heightTarget = Random.Range(m_minimumRelativeHeight, m_maximumRelativeHeight);
+            m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         }
 
         //Attack rate tracker
-        if (m_attackTimer < m_attackRate) 
+        if (m_attackTimer < m_attackRate)
         { m_attackTimer += Time.deltaTime; }
 
-        //Stops moving towards player if withtin attack range but not ready to attack
-        if(Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) < m_attackDistance && m_playerInSight ) 
-        { m_isMoving = false; }
-        else 
-        { m_isMoving = true;  }
-
-        //If retreating from attack and out of attack range
-        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) > m_attackDistance && m_isAttacking)
+        //Player in sight
+        if (m_playerInSight) 
         {
-            m_isAttacking = false;
-            m_attackTimer = 0;
-        }
-
-        //If in attack range and ready to attack
-        if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) <= m_attackDistance && m_isAttacking == false && m_attackTimer >= m_attackRate && m_playerInSight == false)
-        { 
-            m_isAttacking = true;
-            m_playerHasBeenHit = false;
-        }
-
-        //Normal navigation 
-        if (m_isAttacking == false || m_playerInSight == false)
-        {
-            if (m_isMoving)
+            //Withtin attack range
+            if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) < m_attackDistance)
             {
+                //Not attacking
+                if(m_isAttacking == false)
+                {
+                    //Ready to attack
+                    if (m_attackTimer >= m_attackRate)
+                    {
+                        //Start attacking
+                        m_isAttacking = true;
+                        m_playerHasBeenHit = false;
+                        m_attackTimer = 0;
+                    }
+
+                    //Not ready to attack
+                    else 
+                    {
+                        //Float about the Y Axis
+                        m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                    }
+                }
+               
+                //Attacking & not yet hit
+                if (m_isAttacking && m_playerHasBeenHit == false)
+                {
+                    Vector3 target = new Vector3(m_nextNode.x, m_groundYLevel + m_heightTarget, m_nextNode.z);
+                    m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                }
+
+                //Attacking and has hit
+                if (m_isAttacking && m_playerHasBeenHit) 
+                {
+                    m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                }
+            }
+
+            //Out of attack range
+            else
+            {
+                //Get into attack range through nodes
                 Vector3 target = new Vector3(m_nextNode.x, m_groundYLevel + m_heightTarget, m_nextNode.z);
-                m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);             
             }
 
-            else 
+            //Outside of retreating range
+            if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) > m_retreatDistance) 
             {
-                m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                //Is retreating from an attack
+                if (m_isAttacking && m_playerHasBeenHit)
+                {
+                    m_isAttacking = false;
+                    m_playerHasBeenHit = false;
+                }
             }
         }
 
-        //Attack
-        if (m_isAttacking && m_playerHasBeenHit == false && m_playerInSight) 
+        //Player not in sight - navigate through the nodes 
+        else 
         {
-            m_enemyRb.AddForce((m_player.position - transform.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
-        }
+            Vector3 target = new Vector3(m_nextNode.x, m_groundYLevel + m_heightTarget, m_nextNode.z);
+            m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
 
-        //Back up and reset
-        if (m_isAttacking && m_playerHasBeenHit && m_playerInSight)
-        {
-            m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
-        }
-
-        if (m_isAttacking && m_playerHasBeenHit && m_playerInSight == false) 
-        {
             m_isAttacking = false;
+            m_playerHasBeenHit= false;
         }
     }
 
