@@ -32,6 +32,8 @@ public class LightEnemyController : MonoBehaviour
     public float m_normalAcceleration;
     [Tooltip("Acceleration applied to enemy to attack")]
     public float m_attackAcceleration;
+    [Tooltip("Acceleration applied to enemy when dodging")]
+    public float m_dodgeAcceleration;
     [Tooltip("Maximum Y axis velocity the enemy can experience")]
     public float m_verticalLimit;
     [Tooltip("Maximum Z & X axis velocity the player can experience")]
@@ -68,6 +70,11 @@ public class LightEnemyController : MonoBehaviour
     bool m_playerInSight;       //True when player is in (unobstruced) view
     bool m_playerHasBeenHit;    //True when enemy hits into the player
 
+    bool m_pointedAt;
+    Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
+    public void PointedAt(Transform bulletOrigin)
+    { m_pointedAtBulletOrigin = bulletOrigin; }
+
     float m_heightTarget;
     float m_groundYLevel;
 
@@ -93,6 +100,7 @@ public class LightEnemyController : MonoBehaviour
         m_currentHealth = m_startingHealth;
         m_isAttacking = false;
         m_playerInSight = false;
+        m_pointedAt = false;
 
         m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         m_attackTimer = m_attackRate;
@@ -199,6 +207,28 @@ public class LightEnemyController : MonoBehaviour
             m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         }
 
+        //Is being pointed at by the player's gun
+        RaycastHit hit = new RaycastHit();
+        if (m_pointedAtBulletOrigin != null)
+        {
+            if (Physics.Raycast(m_pointedAtBulletOrigin.position, m_pointedAtBulletOrigin.forward, out hit, 100))
+            {
+                if (hit.transform == transform)
+                {
+                    m_pointedAt = true;
+                }
+
+                else
+                {
+                    m_pointedAt = false;
+                }
+            }
+            else
+            {
+                m_pointedAt = false;
+            }
+        }
+
         //Attack rate tracker
         if (m_attackTimer < m_attackRate)
         { m_attackTimer += Time.deltaTime; }
@@ -224,8 +254,17 @@ public class LightEnemyController : MonoBehaviour
                     //Not ready to attack
                     else
                     {
+                        //Dodge player's gun 
+                        if (m_pointedAt)
+                        {
+                            m_enemyRb.AddForce((transform.position - hit.point).normalized * m_dodgeAcceleration);
+                        }
+
                         //Float about the Y Axis
-                        m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                        else
+                        {
+                            m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                        }
                     }
                 }
 
@@ -236,10 +275,19 @@ public class LightEnemyController : MonoBehaviour
                     m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
                 }
 
-                //Attacking and has hit
+                //Attacking and has hit - Retreats away
                 if (m_isAttacking && m_playerHasBeenHit)
                 {
-                    m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                    //Dodge player's gun 
+                    if (m_pointedAt)
+                    {
+                        m_enemyRb.AddForce((transform.position - hit.point).normalized * m_dodgeAcceleration);
+                    }
+
+                    else
+                    {
+                        m_enemyRb.AddForce((new Vector3(transform.position.x, m_groundYLevel + m_heightTarget, transform.position.z) - m_player.position).normalized * m_attackAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                    }
                 }
             }
 
@@ -248,13 +296,13 @@ public class LightEnemyController : MonoBehaviour
             {
                 //Get into attack range through nodes
                 Vector3 target = new Vector3(m_nextNode.x, m_groundYLevel + m_heightTarget, m_nextNode.z);
-                m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
+                m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);               
             }
 
             //Outside of retreating range
             if (Vector3.Distance(new Vector3(transform.position.x, m_player.position.y, transform.position.z), m_player.position) > m_retreatDistance)
             {
-                //Is retreating from an attack
+                //Is retreating from an attack  - Stop retreating
                 if (m_isAttacking && m_playerHasBeenHit)
                 {
                     m_isAttacking = false;
@@ -342,6 +390,8 @@ public class LightEnemyController : MonoBehaviour
     {
         m_enemyRb.AddForce(Vector3.down * m_gravity, ForceMode.Acceleration);
     }
+
+
     #endregion
 
 

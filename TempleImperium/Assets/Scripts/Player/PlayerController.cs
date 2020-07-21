@@ -143,7 +143,6 @@ public class PlayerController : MonoBehaviour
     //Fixed update
     private void FixedUpdate()
     {
-
         Movement();
         ExtremityCheck();
         Exceptions();

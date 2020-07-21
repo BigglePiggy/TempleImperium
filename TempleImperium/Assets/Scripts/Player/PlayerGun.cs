@@ -112,6 +112,7 @@ public class PlayerGun : MonoBehaviour
         {
             Inputs();
             HudValues();
+            WeaponPointingAt();
         }
     }
 
@@ -218,6 +219,22 @@ public class PlayerGun : MonoBehaviour
         m_hudController.CurrentWeaponAmmoReserve = m_ammoCount;
         m_hudController.CurrentWeaponAmmoMagazineMax = m_maxMagCapacity;
         m_hudController.CurrentWeaponAmmoReserveMax = m_maxAmmoCount;
+    }
+
+    private void WeaponPointingAt()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
+        {
+            if (hit.transform.CompareTag("Enemy"))
+            {
+                hit.transform.gameObject.SendMessage("PointedAt", m_bulletOrigin);
+            }
+            else if (hit.transform.root.CompareTag("Enemy"))
+            {
+                hit.transform.root.gameObject.SendMessage("PointedAt", m_bulletOrigin);
+            }
+        }
     }
     #endregion
 

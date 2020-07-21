@@ -225,6 +225,7 @@ MonoBehaviour:
   m_gravity: 0
   m_normalAcceleration: 20
   m_attackAcceleration: 30
+  m_dodgeAcceleration: 50
   m_verticalLimit: 15
   m_horizontalLimit: 15
   m_drag: {x: 1, y: 1, z: 1}
@@ -233,5 +234,5 @@ MonoBehaviour:
   m_minimumHeight: 0.5
   m_attackDistance: 7
   m_retreatDistance: 4.25
-  m_attackRate: 7
+  m_attackRate: 20
   m_attackDamage: 1
