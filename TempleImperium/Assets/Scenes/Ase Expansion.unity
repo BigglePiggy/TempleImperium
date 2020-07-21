@@ -3374,7 +3374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2bf3d698ea17004eba1ce9de715d988, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lightEnemy: {fileID: 7995707737010115624, guid: 01d37af21d004bd4da1843615e5cedaa,
+  lightEnemy: {fileID: 2868906841354794610, guid: a97e7a40f325f124b8a2f4a4468cbc04,
     type: 3}
   mediumEnemy: {fileID: 7995707737010115624, guid: 01d37af21d004bd4da1843615e5cedaa,
     type: 3}
@@ -3910,7 +3910,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.090619035, y: 0.4740728, z: 0.049129117, w: 0.87443095}
+  m_LocalRotation: {x: 0.068270594, y: 0.51147777, z: -0.04081181, w: 0.85560745}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -4368,7 +4368,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.13061096, y: 0.5054048, z: 0.077716045, w: 0.8493922}
+  m_LocalRotation: {x: -0.023956086, y: 0.59934753, z: 0.017949115, w: 0.7999291}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5030,11 +5030,11 @@ MonoBehaviour:
   m_iPylonCount: 5
   m_fPylonBonusTime: 30
   m_sSubWavesList:
-  - 1,1,1
-  - 0,1,2
-  - 0,3,0
-  - 0,3,0
-  - 0,3,1
+  - 3,2,0
+  - 2,4,0
+  - 0,4,0
+  - 4,1,0
+  - 4,4,0
 --- !u!1 &604664050
 GameObject:
   m_ObjectHideFlags: 0
@@ -9542,7 +9542,7 @@ MonoBehaviour:
   m_maxMagCapacity: 20
   m_reloadTime: 1
   m_bulletRange: 100
-  m_shotDamage: 3
+  m_shotDamage: 1
   m_adsSpeed: 2
   m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
   m_adsPos: {x: 0, y: -0.17, z: 0.5}
@@ -17879,7 +17879,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.1277927, y: 0.47154915, z: 0.06928282, w: 0.86977607}
+  m_LocalRotation: {x: -0.023585897, y: 0.5129096, z: 0.014099528, w: 0.8580027}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -19492,16 +19492,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   WaveNickname: wave 1
-  m_iWaveDuration: 30
+  m_iWaveDuration: 40
   m_iSubWaveRestDuration: 3
-  m_iSubWaveKillLenience: 2
+  m_iSubWaveKillLenience: 0
   m_eStarstoneElement: 3
   m_iPylonCount: 3
   m_fPylonBonusTime: 15
   m_sSubWavesList:
-  - 1,1,1
+  - 1,0,0
   - 3,0,0
-  - 2,0,1
+  - 4,1,0
 --- !u!1 &1565745938
 GameObject:
   m_ObjectHideFlags: 0
@@ -26844,7 +26844,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.09275957, y: 0.5083575, z: 0.055193745, w: 0.8543547}
+  m_LocalRotation: {x: 0.06923449, y: 0.5973682, z: -0.051873997, w: 0.7972872}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -30495,12 +30495,12 @@ MonoBehaviour:
   m_maxMagCapacity: 6
   m_reloadTime: 0.75
   m_bulletRange: 100
-  m_shotDamage: 3
+  m_shotDamage: 3.5
   m_adsSpeed: 2.5
   m_hipPos: {x: 0.38, y: -0.17, z: 0.5}
   m_adsPos: {x: 0, y: -0.17, z: 0.5}
-  m_recoil: -1
-  m_recoilDampening: 0.05
+  m_recoil: -0.8
+  m_recoilDampening: 0.06
   m_recoilControl: 1
   shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   reloadEffect: {fileID: 8300000, guid: b5ee368715e6bf94b9fdc0a7b33db68b, type: 3}
