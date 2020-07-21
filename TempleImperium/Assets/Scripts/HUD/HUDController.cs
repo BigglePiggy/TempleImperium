@@ -225,9 +225,11 @@ public class HUDController : MonoBehaviour
         m_sTextHealthMax = m_fPlayerHealthMax + "/";
 
         //ability offensive
-        m_sTextAbilityOffensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityOffensiveCooldownMax - m_fAbilityOffensiveCooldown)).ToString();
+        m_sTextAbilityOffensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityOffensiveCooldownMax - m_fAbilityOffensiveCooldown)+1).ToString();
+        if(m_sTextAbilityOffensive == "0") { m_sTextAbilityOffensive = ""; }    //hide text if 0 (show just the underlying icon)
         //ability defensive
-        m_sTextAbilityDefensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityDefensiveCooldownMax - m_fAbilityDefensiveCooldown)).ToString();
+        m_sTextAbilityDefensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityDefensiveCooldownMax - m_fAbilityDefensiveCooldown)+1).ToString();
+        if(m_sTextAbilityDefensive == "0") { m_sTextAbilityDefensive = ""; }
 
 
         //WRITE --------------------------------------------------------------
@@ -263,22 +265,19 @@ public class HUDController : MonoBehaviour
         oImageHealthBar.color = cGenericFunctions.LerpColor(m_cTextColourAlertBad, m_cTextColourAlertGood, m_fPlayerHealth, m_fPlayerHealthMax);
         //hp bar width
         oImageHealthBar.rectTransform.sizeDelta = new Vector2(
-            m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth) * m_fHealthBarAdjustWidth,
+            m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fPlayerHealthMax),
             oImageHealthBar.rectTransform.rect.height
             );
 
-        //Debug.Log(m_fImageHealthBarBaseWidth * (m_fPlayerHealth / m_fImageHealthBarBaseWidth));
-        //Debug.Log("(" + m_fImageHealthBarBaseWidth + ")*(" + (m_fPlayerHealth / m_fImageHealthBarBaseWidth) + ")");
-
         //ability offensive bar height
-        oImageAbilityOffensiveBar.rectTransform.sizeDelta = new Vector2(
+        oImageAbilityOffensiveBar.rectTransform.sizeDelta = new Vector2(    //uncomment the middle bit for bar to go full-->empty
             oImageAbilityOffensiveBar.rectTransform.rect.width,
-            m_fImageAbilityOffensiveBarBaseHeight * (m_fAbilityOffensiveCooldown / m_fImageAbilityOffensiveBarBaseHeight)
+            m_fImageAbilityOffensiveBarBaseHeight * ((/*m_fAbilityOffensiveCooldownMax - */m_fAbilityOffensiveCooldown) / m_fAbilityOffensiveCooldownMax)
             );
         //ability defensive bar height
         oImageAbilityDefensiveBar.rectTransform.sizeDelta = new Vector2(
             oImageAbilityDefensiveBar.rectTransform.rect.width,
-            m_fImageAbilityDefensiveBarBaseHeight * (m_fAbilityDefensiveCooldown / m_fImageAbilityDefensiveBarBaseHeight)
+            m_fImageAbilityDefensiveBarBaseHeight * ((/*m_fAbilityDefensiveCooldownMax - */m_fAbilityDefensiveCooldown) / m_fAbilityDefensiveCooldownMax)
             );
     }
 }
