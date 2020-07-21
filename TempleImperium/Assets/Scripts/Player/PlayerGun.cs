@@ -150,11 +150,11 @@ public class PlayerGun : MonoBehaviour
                 {
                     if (hit.transform.CompareTag("Enemy"))
                     {
-                        hit.transform.gameObject.SendMessage("RaycastHit", m_shotDamage);
+                        hit.transform.gameObject.SendMessage("TakeDamage", m_shotDamage);
                     }
                     else if (hit.transform.root.CompareTag("Enemy"))
                     {
-                        hit.transform.root.gameObject.SendMessage("RaycastHit", m_shotDamage);                   
+                        hit.transform.root.gameObject.SendMessage("TakeDamage", m_shotDamage);                   
                     }
                 }
 

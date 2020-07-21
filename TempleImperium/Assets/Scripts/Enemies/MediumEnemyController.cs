@@ -391,7 +391,7 @@ public class MediumEnemyController : MonoBehaviour
 
 
     #region Health & Enemy State
-    private void TakeDamage(float change)
+    public void TakeDamage(float change)
     {
         if (m_currentHealth - change <= 0)
         {
@@ -400,11 +400,6 @@ public class MediumEnemyController : MonoBehaviour
         }
         else
         { m_currentHealth -= change; }
-    }
-
-    public void RaycastHit(float damage)
-    {
-        TakeDamage(damage);
     }
     #endregion
 }

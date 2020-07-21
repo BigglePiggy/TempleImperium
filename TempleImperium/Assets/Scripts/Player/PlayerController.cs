@@ -97,6 +97,7 @@ public class PlayerController : MonoBehaviour
     AudioSource m_audioOrigin;      //Audio source component
     PlayerGun m_primaryGun;         //Primary weapon script
     PlayerGun m_secondaryGun;       //Secondary weapon script
+    MeleeWeapon m_meleeWeapon;       //Secondary weapon script
     HUDController m_hudController;  //Reference to Hud Controller script - Display values are passed
 
     Transform m_playerCamera;   //Player's POV camera
@@ -118,6 +119,7 @@ public class PlayerController : MonoBehaviour
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
+        m_meleeWeapon = transform.Find("Player Camera").transform.Find("Melee Weapon").GetComponent<MeleeWeapon>(); //Melee weapon script reference
 
         m_hudController = GameObject.Find("HUD").GetComponent<HUDController>(); //Hud Controller script reference
 
@@ -295,6 +297,12 @@ public class PlayerController : MonoBehaviour
         {
             DefensiveAbility();
             m_defensiveCurrentCooldown = 0;
+        }
+
+        //Melee weapon
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyMelee))
+        {
+            m_meleeWeapon.StartAttacking();
         }
 
         //Increase Cooldown Counters
