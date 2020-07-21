@@ -194,7 +194,8 @@ public class LightEnemyController : MonoBehaviour
     {
         //Variable Y height ground detector
         RaycastHit[] downRay = Physics.RaycastAll(transform.position, -transform.up, 100);
-        m_groundYLevel = downRay[0].point.y;
+        if (downRay.Length > 0) 
+        { m_groundYLevel = downRay[0].point.y; }
         float targetSwitchDistance = 0.4f;
         if (Mathf.Abs(m_groundYLevel + m_heightTarget - transform.position.y) < targetSwitchDistance)
         {

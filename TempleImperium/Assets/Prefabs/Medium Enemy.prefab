@@ -5087,7 +5087,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe34c8c4e88c58a4b8eca1f644048e88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startingHealth: 5
+  m_startingHealth: 7
   m_viewDistance: 14
   m_stopDistance: 3.5
   m_shootingDistance: 11

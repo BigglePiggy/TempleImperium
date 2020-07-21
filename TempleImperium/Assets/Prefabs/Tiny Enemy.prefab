@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5008502703001005941}
   - component: {fileID: 5008502703001005940}
   m_Layer: 0
-  m_Name: Light Enemy
+  m_Name: Tiny Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 5008502703001005939}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171df09f43c32f14cadbe4f562668363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startingHealth: 7
+  m_startingHealth: 5
   m_viewDistance: 15
   m_gravity: 0
   m_normalAcceleration: 20
@@ -229,9 +229,9 @@ MonoBehaviour:
   m_horizontalLimit: 15
   m_drag: {x: 1, y: 1, z: 1}
   m_rotateSpeed: 2
-  m_maximumHeight: 2
-  m_minimumHeight: 0.5
+  m_maximumHeight: 3
+  m_minimumHeight: 0.2
   m_attackDistance: 6
   m_retreatDistance: 3
-  m_attackRate: 10
-  m_attackDamage: 1
+  m_attackRate: 2
+  m_attackDamage: 0.5
