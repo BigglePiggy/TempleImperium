@@ -5,8 +5,7 @@ using UnityEngine.UI;
 using System.Linq;
 
 
-//Written by Ase
-//Bugs fixed by Eddie
+//Written by Ase and Eddie
 
 
 public class GameLogic : MonoBehaviour

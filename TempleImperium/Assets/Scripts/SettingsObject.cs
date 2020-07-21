@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//written by Ase
+//written by Ase and Eddie
 
 public class SettingsObject
 {
@@ -47,6 +47,6 @@ public class SettingsObject
     public float m_fVolumeUI = 0.5f;
 
     //Crosshair
-    public Color m_crosshairColor;
-    public Material m_crosshairMaterial;
+    public Color m_CrosshairColor = Color.white;
+    public Texture m_CrosshairMaterial;
 }
