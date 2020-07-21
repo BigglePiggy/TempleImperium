@@ -45,4 +45,8 @@ public class SettingsObject
     public float m_fVolumeSFX = 0.5f;           //(briefly multiplying by 10 to work in integer space instead works around this)
     public float m_fVolumeMusic = 0.5f;
     public float m_fVolumeUI = 0.5f;
+
+    //Crosshair
+    public Color m_crosshairColor;
+    public Material m_crosshairMaterial;
 }
