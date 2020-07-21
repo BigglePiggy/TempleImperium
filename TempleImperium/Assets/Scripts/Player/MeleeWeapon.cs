@@ -4,58 +4,58 @@ using UnityEngine;
 
 public class MeleeWeapon : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Declarations
+    [Header("Melee Configuration")]
+    [Tooltip("Speed of movement")]
+    public float m_speed;
+    [Tooltip("Local start position of weapon")]
+    public Vector3 m_startPosition;
+    [Tooltip("Local end position of weapon")]
+    public Vector3 m_endPosition;
+
+    float m_startTime;      //Time that journey was started
+    float m_journeyLength;  //Length of entire journey
+    bool m_attacking;       //True when weapon is traveling from start to end
+    #endregion
+
+
+    //Called per frame
+    private void Update()
     {
-        
+        WeaponMovement();
     }
 
-    //// Update is called once per frame
-    //void Update()
-    //{
-    //    //Aim Down Sight
-    //    if (m_left || m_right)
-    //    {
-    //        float distCovered = (Time.time - m_startTime) * m_adsSpeed;
-    //        float fractionOfJourney = distCovered / m_journeyLength;
 
-    //        if (m_left)
-    //        { transform.localPosition = Vector3.Lerp(m_gunPosition, m_adsPos, fractionOfJourney); }
+    private void WeaponMovement()
+    {
+        if (m_attacking)
+        {
+            //If at endpoint
+            if (transform.position == m_endPosition)
+            {
+                m_attacking = false;
+            }
 
-    //        if (m_right)
-    //        { transform.localPosition = Vector3.Lerp(m_gunPosition, m_hipPos, fractionOfJourney); }
-    //    }
+            //If travling to endpoint
+            else 
+            {
+                float distCovered = (Time.time - m_startTime) * m_speed;
+                float fractionOfJourney = distCovered / m_journeyLength;
 
-    //    //Down - Go left
-    //    if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyAltFire))
-    //    {
-    //        m_startTime = Time.time;
-    //        m_gunPosition = transform.localPosition;
-    //        m_journeyLength = Vector3.Distance(m_gunPosition, m_adsPos);
-    //        m_left = true;
-    //        m_right = false;
-    //    }
-    //}
+                transform.localPosition = Vector3.Slerp(m_startPosition, m_endPosition, fractionOfJourney);
+            }
+        }
+    }
 
-    //private void WeaponMovement() 
-    //{
-    //    if (m_attacking)
-    //    {
-    //        float distCovered = (Time.time - m_startTime) * m_speed;
-    //        float fractionOfJourney = distCovered / m_journeyLength;
-
-    //        transform.localPosition = Vector3.Slerp(m_startPosition, m_endPosition, fractionOfJourney);
-    //    }
-    //}
-
-    //public void StartAttacking() 
-    //{
-    //    if(m_attacking == false) 
-    //    {
-    //        m_startTime = Time.time;
-    //        m_startPosition = transform.localPosition;
-    //        m_journeyLength = Vector3.Distance(m_startPosition, m_endPosition);
-    //        m_attacking = true;
-    //    }
-    //}
+    public void StartAttacking()
+    {
+        if (m_attacking == false)
+        {
+            //Starts new journey from start to end
+            m_startTime = Time.time;
+            transform.localPosition = m_startPosition;
+            m_journeyLength = Vector3.Distance(m_startPosition, m_endPosition);
+            m_attacking = true;
+        }
+    }
 }
