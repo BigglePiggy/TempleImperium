@@ -10,7 +10,7 @@ public static class GlobalValues
     */
 
     public static SettingsObject g_settings = new SettingsObject();
-    public static int g_lightEnemiesKilled;
-    public static int g_mediumEnemiesKilled;
-    public static int g_heavyEnemiesKilled;
+    public static int g_iLightEnemiesKilled;
+    public static int g_iMediumEnemiesKilled;
+    public static int g_iHeavyEnemiesKilled;
 }

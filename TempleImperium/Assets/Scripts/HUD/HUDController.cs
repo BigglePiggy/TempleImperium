@@ -75,6 +75,7 @@ public class HUDController : MonoBehaviour
     //--
     private float m_fAbilityDefensiveCooldownMax;
     public float AbilityDefensiveCooldownMax { set { m_fAbilityDefensiveCooldownMax = value; } }
+    //--
 
 
     #endregion getset declarations
@@ -91,7 +92,8 @@ public class HUDController : MonoBehaviour
     public Color m_cTextColourAlertGood = Color.green;
     public Color m_cColourAbilityCharge = new Color(152, 107, 41);
     [Space]
-    public float m_fHealthBarAdjustWidth = 75;
+    public Color m_cCrosshairColourDefault = Color.white;
+    public Texture m_texCrosshairDefault;
 
     //-----------------------------------------------------
     //text object references (and their related private vars)
@@ -99,6 +101,7 @@ public class HUDController : MonoBehaviour
     [Header("HUD Elements")]
     public Text oTextDebugReadout;
     string m_sTextDebugReadout = "";
+    public Image oImageCrosshair;
     public Text oTextWaveCounter;
     string m_sTextWaveCounter = "";
     public Text oTextWaveTimer;
@@ -152,6 +155,12 @@ public class HUDController : MonoBehaviour
         m_fImageAbilityOffensiveBarBaseHeight = oImageAbilityOffensiveBar.rectTransform.rect.height;
         //ability defensive bar height
         m_fImageAbilityDefensiveBarBaseHeight = oImageAbilityDefensiveBar.rectTransform.rect.height;
+
+        //make sure global value's crosshair material ISN'T null
+        if(GlobalValues.g_settings.m_CrosshairMaterial == null)
+        {
+            GlobalValues.g_settings.m_CrosshairMaterial = m_texCrosshairDefault;
+        }
 
 
         //reflection attempt
@@ -279,5 +288,19 @@ public class HUDController : MonoBehaviour
             oImageAbilityDefensiveBar.rectTransform.rect.width,
             m_fImageAbilityDefensiveBarBaseHeight * ((/*m_fAbilityDefensiveCooldownMax - */m_fAbilityDefensiveCooldown) / m_fAbilityDefensiveCooldownMax)
             );
+
+
+        //crosshair
+        //this script's vague semblance of an organised structure is VERY swiftly falling apart
+        //check if mat changed
+        if(oImageCrosshair.material.mainTexture != m_texCrosshairDefault)
+        {
+            Debug.LogWarning("changing crosshair mat");
+            oImageCrosshair.material.mainTexture = GlobalValues.g_settings.m_CrosshairMaterial;
+        }
+        //write colour because whatever it's cheap
+        oImageCrosshair.color = GlobalValues.g_settings.m_CrosshairColor;
+
+
     }
 }
