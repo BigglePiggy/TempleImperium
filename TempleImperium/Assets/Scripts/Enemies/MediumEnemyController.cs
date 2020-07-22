@@ -78,6 +78,11 @@ public class MediumEnemyController : MonoBehaviour
     bool m_playerInSight;       //True when player is in (unobstruced) view
     float m_timeSinceLastShot;  //Manages gun firerate by tracking time since last shot
 
+    bool m_pointedAt;
+    Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
+    public void PointedAt(Transform bulletOrigin)
+    { m_pointedAtBulletOrigin = bulletOrigin; }
+
     float m_currentHealth;      //Current Health
     Transform m_player;         //Player position reference
     Transform m_enemyHead;      //Enemy head reference - Head is rotated
