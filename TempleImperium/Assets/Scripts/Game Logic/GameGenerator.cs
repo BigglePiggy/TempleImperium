@@ -16,6 +16,8 @@ public class GameGenerator : MonoBehaviour
 
     public GameObject oCrystal;
 
+    MeshRenderer oGlowRenderer;
+
     //material references
     //TODO: cleanup / auto references (is that needed?)
     public Material matFire;                
@@ -24,10 +26,12 @@ public class GameGenerator : MonoBehaviour
     public Material matDarkness;
     public Material matInert;
 
+    GenericFunctions cGenericFunctions = new GenericFunctions(); //instantiate a GenericFunctions for use here
+
     // Start is called before the first frame update
     void Start()
     {
-
+        oGlowRenderer = oCrystal.transform.Find("Outline").GetComponent<MeshRenderer>();
     }
 
     /// <summary>
@@ -53,6 +57,11 @@ public class GameGenerator : MonoBehaviour
                 oCrystal.GetComponent<MeshRenderer>().material = matDarkness;
                 break;
         }
+
+        //enable glow
+        oGlowRenderer.gameObject.SetActive(true);
+        //set zIgnore glow colour
+        //oGlowRenderer.material.color = cGenericFunctions.GetStarstoneElementColour(input_starstoneElement);
     }
     /// <summary>
     /// go to inert material
@@ -60,6 +69,9 @@ public class GameGenerator : MonoBehaviour
     public void GoInert()
     {
         oCrystal.GetComponent<MeshRenderer>().material = matInert;
+
+        //glow -> white
+        //oGlowRenderer.material.color = Color.white;
     }
 
     public void GoCritical()
@@ -67,5 +79,9 @@ public class GameGenerator : MonoBehaviour
         //TODO
         //cool generator explosion here
         Debug.LogWarning("GameGenerator has nothing cool for GoCritical() yet");
+
+        //placeholder
+        oCrystal.GetComponent<MeshRenderer>().material = matFire;
+        //oGlowRenderer.material.color = Color.red;
     }
 }

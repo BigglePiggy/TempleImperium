@@ -9,11 +9,14 @@ public class GamePylon : MonoBehaviour
     private GameObject oGameLogic;
     private Animator anim;
 
+    GameObject oGlow;
+
     //Initalization
     void Start()
     {
         oGameLogic = GameObject.Find("Game Logic");
         anim = GetComponent<Animator>();
+        oGlow = gameObject.transform.Find("Core").Find("Outline").gameObject;
     }
 
     //Raise the pylon
@@ -21,6 +24,8 @@ public class GamePylon : MonoBehaviour
     {
         anim.SetBool("Raise", true);
         anim.SetBool("Lower", false);
+
+        oGlow.SetActive(true);
     }
 
     //Lower the pylon
@@ -28,6 +33,8 @@ public class GamePylon : MonoBehaviour
     {
         anim.SetBool("Raise", false);
         anim.SetBool("Lower", true);
+
+        oGlow.SetActive(false);
     }
 
     //Pylon state
