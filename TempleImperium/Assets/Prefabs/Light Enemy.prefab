@@ -230,7 +230,7 @@ MonoBehaviour:
   m_horizontalLimit: 15
   m_drag: {x: 1, y: 1, z: 1}
   m_rotateSpeed: 2
-  m_maximumHeight: 2
+  m_maximumHeight: 4
   m_minimumHeight: 0.5
   m_attackDistance: 7
   m_retreatDistance: 4.25
