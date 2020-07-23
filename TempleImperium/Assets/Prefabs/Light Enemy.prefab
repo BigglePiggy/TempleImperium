@@ -187,7 +187,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2868906841354794610}
   serializedVersion: 2
-  m_Mass: 5
+  m_Mass: 4
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_attackAcceleration: 30
   m_dodgeAcceleration: 50
   m_verticalLimit: 15
-  m_horizontalLimit: 15
+  m_horizontalLimit: 35
   m_drag: {x: 1, y: 1, z: 1}
   m_rotateSpeed: 2
   m_maximumHeight: 2.5
