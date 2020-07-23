@@ -119,6 +119,9 @@ public class PlayerController : MonoBehaviour
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
+        m_primaryGun.Initalization();
+        m_secondaryGun.Initalization();
+
         m_meleeWeapon = transform.Find("Player Camera").transform.Find("Melee Weapon").GetComponent<MeleeWeapon>(); //Melee weapon script reference
 
         m_hudController = GameObject.Find("HUD").GetComponent<HUDController>(); //Hud Controller script reference

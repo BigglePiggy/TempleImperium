@@ -84,7 +84,7 @@ public class PlayerGun : MonoBehaviour
 
 
     //Initalization
-    void Start()
+    public void Initalization()
     {
         m_left = false;
         m_right = false;
