@@ -305,7 +305,11 @@ public class GameLogic : MonoBehaviour
             case GameplayPhase.PostGame:
                 //Debug.Log("enactphase() switch firing PostGame");
                 //win!
-                Debug.LogWarning("gamelogic enactphase() doesn't have a win condition programmed yet!");
+
+                //tell HUD
+                oHudController.GetComponent<HUDController>().FadeToWin();
+
+                Debug.LogWarning("gamelogic enactphase() in PostGame! do we get put back to the menu yet?");
                 break;
 
         }
@@ -361,6 +365,9 @@ public class GameLogic : MonoBehaviour
     {
         //kill player
         GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
+
+        //tell HUD
+        oHudController.GetComponent<HUDController>().FadeToLoss();
 
         //tell generator to explode (if configured to)
         if (input_GeneratorGoesCritical) { oGenerator.GetComponent<GameGenerator>().GoCritical(); }        

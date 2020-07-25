@@ -145,7 +145,6 @@ public class HUDController : MonoBehaviour
     //---
     [Header("other non-menu UI objects")]
     public Image oFader;
-    public GameObject oResults;
     public Text oTextResultsMessage;
     string m_sTextResultsMessage = "";
     //-----------------------------------------------------

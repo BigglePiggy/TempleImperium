@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 //written by Ase
@@ -26,6 +27,7 @@ public class HUDFader : MonoBehaviour
 
     void Start()
     {
+
     }
 
     void Update()
@@ -39,7 +41,7 @@ public class HUDFader : MonoBehaviour
             m_iCurrentAlpha = Mathf.Max(m_iCurrentAlpha, 0);
 
             m_cColour.a = (m_iCurrentAlpha / m_iStepUpperBound);    //update local colour (unityEngine.color takes 0-1f)
-            gameObject.GetComponent<Material>().color = m_cColour;  //write to gameObject (individual channels are readonly for some reason)
+            gameObject.GetComponent<Image>().color = m_cColour;     //write to gameObject (individual channels are readonly for some reason)
         }
     }
 
