@@ -82,6 +82,7 @@ public class HUDController : MonoBehaviour
 
     //-----------------------------------------------------
     //public vars
+    [Header("HUD config")]
     public bool m_bShowDebug = false;
     [Tooltip("Start fading timer colour from default to AlertBad at this number of seconds")]
     public int m_iTimerAlertThreshold = 30;
@@ -90,15 +91,22 @@ public class HUDController : MonoBehaviour
     public Color m_cTextColour = Color.white;
     public Color m_cTextColourAlertBad = Color.red;
     public Color m_cTextColourAlertGood = Color.green;
-    public Color m_cColourAbilityCharge = new Color(152, 107, 41);
+    public Color m_cColourAbilityCharge = new Color(0.6f, 0.3f, 0.1f);
     [Space]
     public Color m_cCrosshairColourDefault = Color.white;
     public Texture m_texCrosshairDefault;
+    [Space]
+    //other bits
+    public Color m_cFaderColourPause = Color.black;
+    public int m_iFadeStepPause = 5;
+    public Color m_cFaderColourDeath = new Color(0.5f, 0.1f, 0.15f);
+    public Color m_cFaderColourWin = new Color(0.3f, 0.6f, 0.6f);
 
     //-----------------------------------------------------
     //text object references (and their related private vars)
     #region output text obj refs declarations   
     [Header("HUD Elements")]
+    //public GameObject oHudParent; //can't parent at this point, breaks references in other scripts
     public Text oTextDebugReadout;
     string m_sTextDebugReadout = "";
     public Image oImageCrosshair;
@@ -129,6 +137,9 @@ public class HUDController : MonoBehaviour
     public Image oImageAbilityDefensiveBar;
     float m_fImageAbilityDefensiveBarBaseHeight;
     #endregion output text obj refs declarations
+    //---
+    [Header("other non-menu UI objects")]
+    public Image oFader;
     //-----------------------------------------------------
 
 
