@@ -96,11 +96,16 @@ public class HUDController : MonoBehaviour
     public Color m_cCrosshairColourDefault = Color.white;
     public Texture m_texCrosshairDefault;
     [Space]
-    //other bits
+    //fader
     public Color m_cFaderColourPause = Color.black;
     public int m_iFadeStepPause = 5;
-    public Color m_cFaderColourDeath = new Color(0.5f, 0.1f, 0.15f);
+    public Color m_cFaderColourLoss = new Color(0.5f, 0.1f, 0.15f);
     public Color m_cFaderColourWin = new Color(0.3f, 0.6f, 0.6f);
+    [Space]
+    //results
+    public string m_sResultsMessageWin = "Victory!";
+    public string m_sResultsMessageLoss = "You have perished...";
+
 
     //-----------------------------------------------------
     //text object references (and their related private vars)
@@ -140,6 +145,9 @@ public class HUDController : MonoBehaviour
     //---
     [Header("other non-menu UI objects")]
     public Image oFader;
+    public GameObject oResults;
+    public Text oTextResultsMessage;
+    string m_sTextResultsMessage = "";
     //-----------------------------------------------------
 
 
@@ -158,6 +166,7 @@ public class HUDController : MonoBehaviour
         oTextHealthMax.color        = m_cTextColour;
         oTextAbilityOffensive.color = m_cTextColour;
         oTextAbilityDefensive.color = m_cTextColour;
+        oTextResultsMessage.color   = m_cTextColour;
 
         //save misc things
         //health bar width
@@ -251,6 +260,8 @@ public class HUDController : MonoBehaviour
         m_sTextAbilityDefensive = Math.Max(0,Mathf.FloorToInt(m_fAbilityDefensiveCooldownMax - m_fAbilityDefensiveCooldown)+1).ToString();
         if(m_sTextAbilityDefensive == "0") { m_sTextAbilityDefensive = ""; }
 
+        //don't put results text here. pointless to write every frame when it'll be hidden during gameplay, and unchanging during game end where it'll be displayed
+
 
         //WRITE --------------------------------------------------------------
         //text
@@ -313,5 +324,46 @@ public class HUDController : MonoBehaviour
         oImageCrosshair.color = GlobalValues.g_settings.m_CrosshairColor;
 
 
+    }
+
+    //fader handling
+    public void FadeOut(bool input_instant = false)
+    {
+        oFader.GetComponent<HUDFader>().FadeOut(input_instant);     //fade out
+        m_sTextResultsMessage = "";                                 //wipe results text
+        oTextResultsMessage.text = m_sTextResultsMessage;           //write to object
+    }
+    public void FadeToPause(bool input_instant = false)
+    {
+        oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourPause);
+        oFader.GetComponent<HUDFader>().FadeIn(input_instant);
+    }
+    public void FadeToWin(bool input_instant = false)
+    {
+        ShowResults(m_sResultsMessageWin);
+        oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourWin);
+        oFader.GetComponent<HUDFader>().FadeIn(input_instant);
+    }
+    public void FadeToLoss(bool input_instant = false)
+    {
+        ShowResults(m_sResultsMessageLoss);
+        oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourLoss);
+        oFader.GetComponent<HUDFader>().FadeIn(input_instant);
+    }
+    /// <summary>
+    /// show the Results text and update its text.
+    /// </summary>
+    /// <param name="input_message"></param>
+    void ShowResults(string input_message)
+    {
+        //build string
+        m_sTextResultsMessage = (
+            input_message + "\n\n"
+            + GlobalValues.g_iLightEnemiesKilled + " Light Enemy kills\n"
+            + GlobalValues.g_iMediumEnemiesKilled + " Medium Enemy kills\n"
+            + GlobalValues.g_iHeavyEnemiesKilled + " Heavy Enemy kills"
+            );
+        //write to object
+        oTextResultsMessage.text = m_sTextResultsMessage;
     }
 }

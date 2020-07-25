@@ -45,18 +45,23 @@ public class HUDFader : MonoBehaviour
 
     #region inputs
 
-    public void FadeIn()
+    public void FadeIn(bool instant)
     {
         m_iTargetAlpha = m_iStepUpperBound;
+        if (instant) { m_iCurrentAlpha = m_iTargetAlpha; }
     }
-    public void FadeOut()
+    public void FadeOut(bool instant)
     {
         m_iTargetAlpha = 0;
+        if (instant) { m_iCurrentAlpha = m_iTargetAlpha; }
     }
 
-    public void Configure(Color input_colour, int input_step)
+    public void ConfigureColour(Color input_colour)
     {
         m_cColour = input_colour;
+    }
+    public void ConfigureStep(int input_step)
+    {
         m_iStep = input_step;
     }
 
