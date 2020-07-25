@@ -93,12 +93,13 @@ public class PlayerController : MonoBehaviour
 
     float m_health; //Current health
 
-    Rigidbody m_playerRb;           //Rigidbody component
-    AudioSource m_audioOrigin;      //Audio source component
-    PlayerGun m_primaryGun;         //Primary weapon script
-    PlayerGun m_secondaryGun;       //Secondary weapon script
-    MeleeWeapon m_meleeWeapon;       //Secondary weapon script
-    HUDController m_hudController;  //Reference to Hud Controller script - Display values are passed
+    Rigidbody m_playerRb;               //Rigidbody component
+    AudioSource m_audioOrigin;          //Audio source component
+    PlayerGun m_primaryGun;             //Primary gun script
+    PlayerGun m_secondaryGun;           //Secondary gun script
+    PrototypeWeapon m_prototypeWeapon;  //Prototype weapon script
+    MeleeWeapon m_meleeWeapon;          //Melee weapon script
+    HUDController m_hudController;      //Reference to Hud Controller script - Display values are passed
 
     Transform m_playerCamera;   //Player's POV camera
     Transform m_grenadeOrigin;  //Defensive ability grenade origin  
@@ -119,8 +120,10 @@ public class PlayerController : MonoBehaviour
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
+        m_prototypeWeapon = transform.Find("Player Camera").transform.Find("Prototype Weapon").GetComponent<PrototypeWeapon>(); //Secondary gun script reference
         m_primaryGun.Initalization();
         m_secondaryGun.Initalization();
+        m_prototypeWeapon.Initalization();
 
         m_meleeWeapon = transform.Find("Player Camera").transform.Find("Melee Weapon").GetComponent<MeleeWeapon>(); //Melee weapon script reference
 
@@ -196,8 +199,9 @@ public class PlayerController : MonoBehaviour
         //Switch to primary
         if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyWeaponSlot1) && m_primaryGun.GetIsHeld() == false)
         {
-            m_secondaryGun.StopHolding();
             m_primaryGun.StartHolding();
+            m_secondaryGun.StopHolding();
+            m_prototypeWeapon.StopHolding();
         }
 
         //Switch to secondary
@@ -205,6 +209,16 @@ public class PlayerController : MonoBehaviour
         {
             m_primaryGun.StopHolding();
             m_secondaryGun.StartHolding();
+            m_prototypeWeapon.StopHolding();
+
+        }
+
+        //Switch to prototype
+        if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyWeaponSlot3) && m_prototypeWeapon.GetIsHeld() == false)
+        {
+            m_primaryGun.StopHolding();
+            m_secondaryGun.StopHolding();
+            m_prototypeWeapon.StartHolding();
         }
     }
 

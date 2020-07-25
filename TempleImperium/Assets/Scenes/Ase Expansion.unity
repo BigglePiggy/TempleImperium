@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: e7628e2a7ec41ce49953a3cbe23fb113,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1812,7 +1812,7 @@ MonoBehaviour:
   - {fileID: 37022104}
   - {fileID: 1713240888}
   oEnemyDispatch: {fileID: 369008127}
-  oHudController: {fileID: 0}
+  oHudController: {fileID: 77392378}
   oGenerator: {fileID: 176368782}
 --- !u!1 &133800936
 GameObject:
@@ -4633,7 +4633,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: -0.026426263, y: 0.97246104, z: 0.13845178, w: 0.18561344}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5185,7 +5185,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.026496315, y: 0.9724372, z: 0.13908347, w: 0.18525568}
+  m_LocalRotation: {x: -0, y: 0.8112422, z: -0.58471024, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18731,7 +18731,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.026589315, y: 0.97233903, z: 0.13930604, w: 0.18559013}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -27908,7 +27908,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0.026333798, y: 0.9725588, z: 0.13823038, w: 0.18527888}
+  m_LocalRotation: {x: -0, y: 0.78820544, z: -0.61541224, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
