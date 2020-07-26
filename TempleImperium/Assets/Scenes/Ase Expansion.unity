@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_cColour: {r: 0, g: 0, b: 0, a: 1}
   m_iStep: 5
-  m_iStepUpperBound: 300
+  m_iStepUpperBound: 1000
 --- !u!222 &89594825
 CanvasRenderer:
   m_ObjectHideFlags: 0

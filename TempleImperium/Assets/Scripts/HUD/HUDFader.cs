@@ -18,8 +18,8 @@ public class HUDFader : MonoBehaviour
     [Tooltip("Amount to in/decrement alpha each frame")]
     public int m_iStep = 5;
     [Tooltip("Upper bound for stepping colour to/from. Lower is 0")]
-    public int m_iStepUpperBound = 300;
-
+    public int m_iStepUpperBound = 1000;
+    int m_iStepUpperBoundDefault = 1000;
     //private declares
     int m_iCurrentAlpha = 0;
     int m_iTargetAlpha = 0;
@@ -38,10 +38,14 @@ public class HUDFader : MonoBehaviour
             else { m_iCurrentAlpha += m_iStep; }                                    //else lesser, step up
 
             m_iCurrentAlpha = Mathf.Min(m_iCurrentAlpha, m_iStepUpperBound);  //bounds check
+            Debug.Log(m_iCurrentAlpha + "AAAAAAAAAAAAAAAAA");
             m_iCurrentAlpha = Mathf.Max(m_iCurrentAlpha, 0);
+            Debug.Log(m_iCurrentAlpha + "BBBBBBBBBBBBBBBBB");
+            Debug.Log((m_iCurrentAlpha / (float)m_iStepUpperBound) + "CCCCCCCCCCCCCCCCCC");
 
-            m_cColour.a = (m_iCurrentAlpha / m_iStepUpperBound);    //update local colour (unityEngine.color takes 0-1f)
-            gameObject.GetComponent<Image>().color = m_cColour;     //write to gameObject (individual channels are readonly for some reason)
+            //cast one of these to float - int/int returns int, which is very unhelpful here
+            m_cColour.a = (m_iCurrentAlpha / (float)m_iStepUpperBound);     //update local colour (unityEngine.color takes 0-1f)
+            gameObject.GetComponent<Image>().color = m_cColour;             //write to gameObject (individual channels are readonly for some reason)
         }
     }
 
@@ -65,6 +69,20 @@ public class HUDFader : MonoBehaviour
     public void ConfigureStep(int input_step)
     {
         m_iStep = input_step;
+    }
+    /// <summary>
+    /// you probably don't need to change this!
+    /// </summary>
+    /// <param name="input_upperBound">leave default to return to normal upperbound</param>
+    public void ConfigureStepUpperBound(int input_upperBound = 0)
+    {
+        if(m_iStepUpperBound <= 0) {
+            m_iStepUpperBound = m_iStepUpperBoundDefault;
+        }
+        else
+        {
+            m_iStepUpperBound = input_upperBound;
+        }
     }
 
     #endregion inputs
