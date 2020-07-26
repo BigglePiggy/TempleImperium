@@ -401,7 +401,7 @@ public class LightEnemyController : MonoBehaviour
         if (m_currentHealth - change <= 0)
         {
             Destroy(this.gameObject);
-            GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath();
+            GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
         }
         else
         { m_currentHealth -= change; }

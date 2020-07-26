@@ -326,9 +326,34 @@ public class GameLogic : MonoBehaviour
     #endregion
 
     #region wave arbitrary event handling
-    //called when an enemy dies
-    public void WaveEventEnemyDeath()
+    /// <summary>
+    /// called when an enemy dies.
+    /// </summary>
+    /// <param name="input_enemyClass">0 light, 1 medium, 2 heavy (defaults to -1, throws warning)</param>
+    public void WaveEventEnemyDeath(int input_enemyClass = -1)
     {
+        //scorekeeping
+        switch (input_enemyClass)
+        {
+            case 0: //light death
+                GlobalValues.g_iLightEnemiesKilled++;
+                break;
+            case 1: //med death
+                GlobalValues.g_iMediumEnemiesKilled++;
+                break;
+            case 2: //heavy death
+                GlobalValues.g_iHeavyEnemiesKilled++;
+                break;
+            case -1:    //left default (or given explicit -1)
+                Debug.LogWarning("GameLogic.WaveEventEnemyDeath() called with no param (or -1)! What enemy type died?");
+                break;
+            default:    //given bad enemy class/type ID
+                Debug.LogWarning("GameLogi.WaveEventEnemyDeath() called with bad param \"" + input_enemyClass + "\"! Add it to the switch/case!");
+                break;
+        }
+
+
+        //game logic
         m_iEnemiesAlive--;      //decrement counter
 
         if (m_iEnemiesAlive <= m_WaveDataArray[m_iCurrentWave].m_iSubWaveKillLenience && m_iCurrentWaveSub != m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0) - 1 && m_eGameplayPhase != GameplayPhase.InbetweenSubwave)  //if no enemies left (or below kill lenience)...

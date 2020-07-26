@@ -401,7 +401,7 @@ public class MediumEnemyController : MonoBehaviour
         if (m_currentHealth - change <= 0)
         {
             Destroy(this.gameObject);
-            GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath();
+            GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(1);
         }
         else
         { m_currentHealth -= change; }

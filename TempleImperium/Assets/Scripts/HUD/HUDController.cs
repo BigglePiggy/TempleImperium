@@ -101,6 +101,7 @@ public class HUDController : MonoBehaviour
     public int m_iFadeStepPause = 5;
     public Color m_cFaderColourLoss = new Color(0.5f, 0.1f, 0.15f);
     public Color m_cFaderColourWin = new Color(0.3f, 0.6f, 0.6f);
+    public int m_iFadeStepGameEnd = 5;
     [Space]
     //results
     public string m_sResultsMessageWin = "Victory!";
@@ -166,6 +167,9 @@ public class HUDController : MonoBehaviour
         oTextAbilityOffensive.color = m_cTextColour;
         oTextAbilityDefensive.color = m_cTextColour;
         oTextResultsMessage.color   = m_cTextColour;
+
+        //initialise text on UnityEngine.Text objects that don't get updated live
+        oTextResultsMessage.text = m_sTextResultsMessage;
 
         //save misc things
         //health bar width
@@ -335,29 +339,32 @@ public class HUDController : MonoBehaviour
     public void FadeToPause(bool input_instant = false)
     {
         oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourPause);
+        oFader.GetComponent<HUDFader>().ConfigureStep(m_iFadeStepPause);
         oFader.GetComponent<HUDFader>().FadeIn(input_instant);
     }
     public void FadeToWin(bool input_instant = false)
     {
         ShowResults(m_sResultsMessageWin);
         oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourWin);
+        oFader.GetComponent<HUDFader>().ConfigureStep(m_iFadeStepGameEnd);
         oFader.GetComponent<HUDFader>().FadeIn(input_instant);
     }
     public void FadeToLoss(bool input_instant = false)
     {
         ShowResults(m_sResultsMessageLoss);
         oFader.GetComponent<HUDFader>().ConfigureColour(m_cFaderColourLoss);
+        oFader.GetComponent<HUDFader>().ConfigureStep(m_iFadeStepGameEnd);
         oFader.GetComponent<HUDFader>().FadeIn(input_instant);
     }
     /// <summary>
-    /// show the Results text and update its text.
+    /// show the Results text and update its string.
     /// </summary>
     /// <param name="input_message"></param>
     void ShowResults(string input_message)
     {
         //build string
         m_sTextResultsMessage = (
-            input_message + "\n\n"
+            input_message + "\n\n\n"
             + GlobalValues.g_iLightEnemiesKilled + " Light Enemy kills\n"
             + GlobalValues.g_iMediumEnemiesKilled + " Medium Enemy kills\n"
             + GlobalValues.g_iHeavyEnemiesKilled + " Heavy Enemy kills"
