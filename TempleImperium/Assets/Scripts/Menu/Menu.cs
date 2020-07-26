@@ -24,7 +24,7 @@ public class Menu : MonoBehaviour
     GameObject m_pausePage;
     GameObject m_optionsPage;
 
-    GameObject m_gameHUD;
+    HUDController m_gameHUD;
 
     //Key change settings
     bool m_keyCaptureMode;
@@ -50,7 +50,7 @@ public class Menu : MonoBehaviour
             m_mainPage.SetActive(false);
             m_pausePage.SetActive(false);
             m_optionsPage.SetActive(false);
-            m_gameHUD = GameObject.Find("HUD");
+            m_gameHUD = GameObject.Find("HUD").GetComponent<HUDController>();
         }
 
         else
@@ -84,7 +84,7 @@ public class Menu : MonoBehaviour
                     Time.timeScale = 0.0f;
                     Cursor.lockState = CursorLockMode.None;
                     m_pausePage.SetActive(true);
-                    m_gameHUD.SetActive(false);
+                    m_gameHUD.FadeToPause();
                 }
             }
         }
@@ -109,7 +109,7 @@ public class Menu : MonoBehaviour
         m_pausePage.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Time.timeScale = 1.0f;
-        m_gameHUD.SetActive(true);
+        m_gameHUD.FadeOut();
     }
 
     public void MainMenuButton()

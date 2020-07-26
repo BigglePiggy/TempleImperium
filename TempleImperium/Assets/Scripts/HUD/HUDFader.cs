@@ -37,11 +37,12 @@ public class HUDFader : MonoBehaviour
             if(m_iCurrentAlpha > m_iTargetAlpha) { m_iCurrentAlpha -= m_iStep; }    //if greater, step down
             else { m_iCurrentAlpha += m_iStep; }                                    //else lesser, step up
 
-            m_iCurrentAlpha = Mathf.Min(m_iCurrentAlpha, m_iStepUpperBound);  //bounds check
-            Debug.Log(m_iCurrentAlpha + "AAAAAAAAAAAAAAAAA");
+            m_iCurrentAlpha = Mathf.Min(m_iCurrentAlpha, m_iStepUpperBound);  //bounds check           
             m_iCurrentAlpha = Mathf.Max(m_iCurrentAlpha, 0);
-            Debug.Log(m_iCurrentAlpha + "BBBBBBBBBBBBBBBBB");
-            Debug.Log((m_iCurrentAlpha / (float)m_iStepUpperBound) + "CCCCCCCCCCCCCCCCCC");
+
+            //Debug.Log(m_iCurrentAlpha + "AAAAAAAAAAAAAAAAA");
+            //Debug.Log(m_iCurrentAlpha + "BBBBBBBBBBBBBBBBB");
+            //Debug.Log((m_iCurrentAlpha / (float)m_iStepUpperBound) + "CCCCCCCCCCCCCCCCCC");
 
             //cast one of these to float - int/int returns int, which is very unhelpful here
             m_cColour.a = (m_iCurrentAlpha / (float)m_iStepUpperBound);     //update local colour (unityEngine.color takes 0-1f)
