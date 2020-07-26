@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: e7628e2a7ec41ce49953a3cbe23fb113,
     type: 2}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -1001,6 +1001,7 @@ MonoBehaviour:
   m_iFadeStepPause: 5
   m_cFaderColourLoss: {r: 0.5, g: 0.1, b: 0.15, a: 1}
   m_cFaderColourWin: {r: 0.3, g: 0.6, b: 0.6, a: 1}
+  m_iFadeStepGameEnd: 5
   m_sResultsMessageWin: Victory!
   m_sResultsMessageLoss: You have perished...
   oTextDebugReadout: {fileID: 1890225891}
@@ -1234,7 +1235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_Maskable: 1
@@ -4637,7 +4638,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.0584805, y: 0.9136693, z: 0.14197809, w: 0.37633857}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5189,7 +5190,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0, y: 0.8112422, z: -0.58471024, w: 0}
+  m_LocalRotation: {x: -0.058651246, y: 0.9138412, z: 0.14269009, w: 0.37562475}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18572,7 +18573,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.058837045, y: 0.91353434, z: 0.1428437, w: 0.37628302}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -23050,7 +23051,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: -0, y: 0.78820544, z: -0.61541224, w: 0}
+  m_LocalRotation: {x: -0.05829576, y: 0.9139758, z: 0.14182523, w: 0.37568006}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
