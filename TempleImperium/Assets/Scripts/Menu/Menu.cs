@@ -25,6 +25,7 @@ public class Menu : MonoBehaviour
     GameObject m_optionsPage;
 
     HUDController m_gameHUD;
+    GameObject[] a;
 
     //Key change settings
     bool m_keyCaptureMode;
@@ -44,6 +45,15 @@ public class Menu : MonoBehaviour
         m_mainPage = transform.Find("Main Page").gameObject;
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
+
+        m_optionsPage.SetActive(true);
+        GameObject[] settingsTexts = GameObject.FindGameObjectsWithTag("SettingsText");
+        for (int i = 0; i < settingsTexts.Length; i++)
+        {
+            settingsTexts[i].GetComponent<Text>().text = typeof(SettingsObject).GetField(settingsTexts[i].name).GetValue(GlobalValues.g_settings).ToString();
+        }
+        m_optionsPage.SetActive(false);
+
 
         if (m_pauseMode)
         {
@@ -65,6 +75,8 @@ public class Menu : MonoBehaviour
 
         m_ySensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityY.ToString();
         m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
+
+
     }
 
     //Called per frame

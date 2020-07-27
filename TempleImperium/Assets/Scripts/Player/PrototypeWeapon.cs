@@ -38,6 +38,10 @@ public class PrototypeWeapon : MonoBehaviour
         {
             if (m_chargeUpProgress < m_chargeUpTime)
             { m_chargeUpProgress += Time.deltaTime; }
+            else 
+            {
+                //Firing
+            } 
 
         }
         else if (m_chargeUpProgress > 0)
