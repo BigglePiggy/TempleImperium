@@ -35,6 +35,10 @@ public class HeavyEnemyController : MonoBehaviour
     public float m_fireRate;
     [Tooltip("Range of accuarcy offset on enemy's weapon")]
     public Vector3 m_accuracyOffset;
+    [Tooltip("Range of accuarcy offset on enemy's weapon")]
+    public Vector3 m_relativeShotForce;
+    [Tooltip("Heavy projectile prefab reference")]
+    public GameObject m_heavyProjectile;
     [Space]
 
     [Header("Sound Effects")]
@@ -154,7 +158,14 @@ public class HeavyEnemyController : MonoBehaviour
     private void Shooting()
     {
         if (m_timeSinceLastShot < m_fireRate)
-        { m_timeSinceLastShot += Time.deltaTime; }      
+        { m_timeSinceLastShot += Time.deltaTime; }
+
+        if (m_playerInSight && Vector3.Distance(m_player.position,transform.position) < m_shootingDistance && m_timeSinceLastShot >= m_fireRate) 
+        {
+            //Shoot
+            m_timeSinceLastShot = 0;
+            Instantiate(m_heavyProjectile, m_bulletOrigin.position, Quaternion.LookRotation(m_bulletOrigin.position - m_player.position)).GetComponent<Rigidbody>().AddRelativeForce(m_relativeShotForce);
+        }
     }
     #endregion
 
