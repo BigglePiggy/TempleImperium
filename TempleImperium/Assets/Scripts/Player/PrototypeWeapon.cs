@@ -11,7 +11,6 @@ public class PrototypeWeapon : MonoBehaviour
 
     MeshRenderer m_meshRenderer;            //Mesh renderer component - used to make gun invisible when not in use
 
-
     //Initalization
     public void Initalization()
     {
@@ -42,7 +41,6 @@ public class PrototypeWeapon : MonoBehaviour
             {
                 //Firing
             } 
-
         }
         else if (m_chargeUpProgress > 0)
         {
