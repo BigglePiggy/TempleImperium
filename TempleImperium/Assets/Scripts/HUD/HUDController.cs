@@ -357,7 +357,7 @@ public class HUDController : MonoBehaviour
         oNewFlyingText.GetComponent<HUDFlyingText>().Initialise(m_cTextColourAlertGood, m_sFlyTextContent, m_fFlyingTextEaseMultiplier);
     }
 
-
+    //todo ammo counter flying text
     #endregion flying text
 
     #region fader
