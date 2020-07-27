@@ -46,6 +46,7 @@ public class Menu : MonoBehaviour
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
 
+        //Assigns all default values to options text
         m_optionsPage.SetActive(true);
         GameObject[] settingsTexts = GameObject.FindGameObjectsWithTag("SettingsText");
         for (int i = 0; i < settingsTexts.Length; i++)
@@ -75,8 +76,6 @@ public class Menu : MonoBehaviour
 
         m_ySensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityY.ToString();
         m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
-
-
     }
 
     //Called per frame
