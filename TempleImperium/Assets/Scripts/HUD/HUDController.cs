@@ -106,6 +106,12 @@ public class HUDController : MonoBehaviour
     //results
     public string m_sResultsMessageWin = "Victory!";
     public string m_sResultsMessageLoss = "You have perished...";
+    [Space]
+    //flying text
+    [Tooltip("Reference to a prefab for a Text object with attached HUDFlyingText script")]
+    public GameObject oFlyingTextPrefab;
+    [Tooltip("How fast will flying text leave the screen? Vertical offset begins at 1 and is multiplied by this value every frame.")]
+    public float m_fFlyingTextEaseMultiplier = 1.01f;
 
 
     //-----------------------------------------------------
@@ -329,6 +335,20 @@ public class HUDController : MonoBehaviour
 
     }
 
+    #region flying text
+    public void FlyingTextAddTime(int input_timeAdded)
+    {
+        GameObject oNewFlyingText = Instantiate(oFlyingTextPrefab,oTextWaveTimer.transform.position, Quaternion.identity);
+
+        string m_sFlyTextContent = "+" + input_timeAdded;
+
+        oNewFlyingText.GetComponent<HUDFlyingText>().Initialise(m_cTextColourAlertGood, m_sFlyTextContent, m_fFlyingTextEaseMultiplier);
+    }
+
+
+    #endregion flying text
+
+    #region fader
     //fader handling
     public void FadeOut(bool input_instant = false)
     {
@@ -372,4 +392,5 @@ public class HUDController : MonoBehaviour
         //write to object
         oTextResultsMessage.text = m_sTextResultsMessage;
     }
+    #endregion fader
 }
