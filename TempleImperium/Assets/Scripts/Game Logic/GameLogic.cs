@@ -345,7 +345,7 @@ public class GameLogic : MonoBehaviour
                 GlobalValues.g_iHeavyEnemiesKilled++;
                 break;
             case -1:    //left default (or given explicit -1)
-                Debug.LogWarning("GameLogic.WaveEventEnemyDeath() called with no param (or -1)! What enemy type died?");
+                Debug.LogWarning("GameLogic.WaveEventEnemyDeath() called with no param (or explicit -1)! What enemy type died?");
                 break;
             default:    //given bad enemy class/type ID
                 Debug.LogWarning("GameLogi.WaveEventEnemyDeath() called with bad param \"" + input_enemyClass + "\"! Add it to the switch/case!");
@@ -376,6 +376,10 @@ public class GameLogic : MonoBehaviour
     {
         //add current wave config's pylon bonus time to timer
         WaveEventExtendTimerSeconds(m_WaveDataArray[m_iCurrentWave].m_fPylonBonusTime);
+
+        //tell HUD
+        oHudControllerScript.FlyingTextAddTime(m_WaveDataArray[m_iCurrentWave].m_fPylonBonusTime);
+
         m_iPylonsDown++;
 
         if (m_iEnemiesAlive == 0 && m_iPylonsDown == m_WaveDataArray[m_iCurrentWave].m_iPylonCount && m_iCurrentWaveSub == m_WaveDataArray[m_iCurrentWave].m_iSubWavesArray.GetLength(0) - 1)

@@ -336,9 +336,12 @@ public class HUDController : MonoBehaviour
     }
 
     #region flying text
-    public void FlyingTextAddTime(int input_timeAdded)
+    public void FlyingTextAddTime(float input_timeAdded)
     {
-        GameObject oNewFlyingText = Instantiate(oFlyingTextPrefab,oTextWaveTimer.transform.position, Quaternion.identity);
+        Vector3 m_vPos = oTextWaveTimer.rectTransform.position;
+        m_vPos.y -= oTextWaveTimer.rectTransform.sizeDelta.y / 2;
+
+        GameObject oNewFlyingText = Instantiate(oFlyingTextPrefab, m_vPos, Quaternion.identity, gameObject.transform);
 
         string m_sFlyTextContent = "+" + input_timeAdded;
 

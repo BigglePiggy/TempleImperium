@@ -1004,6 +1004,9 @@ MonoBehaviour:
   m_iFadeStepGameEnd: 5
   m_sResultsMessageWin: Victory!
   m_sResultsMessageLoss: You have perished...
+  oFlyingTextPrefab: {fileID: 649616501759436105, guid: 0eb8e934a30e99145bd5c7efd70abb52,
+    type: 3}
+  m_fFlyingTextEaseMultiplier: 1.05
   oTextDebugReadout: {fileID: 1890225891}
   oImageCrosshair: {fileID: 411765972}
   oTextWaveCounter: {fileID: 1028456305}
@@ -4638,7 +4641,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.000433854, y: 0.94650716, z: -0.0012726099, w: 0.32268015}
+  m_LocalRotation: {x: -0.0584805, y: 0.9136693, z: 0.14197809, w: 0.37633857}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5190,7 +5193,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: -0.02434479, y: 0.9593637, z: 0.087413445, w: 0.26718444}
+  m_LocalRotation: {x: -0.058651246, y: 0.9138412, z: 0.14269009, w: 0.37562475}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -18573,7 +18576,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: -0.034433533, y: 0.9411035, z: 0.10100277, w: 0.32083791}
+  m_LocalRotation: {x: -0.058837045, y: 0.91353434, z: 0.1428437, w: 0.37628302}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -23051,7 +23054,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: 0.0003052573, y: 0.96333724, z: -0.0010960698, w: 0.26829106}
+  m_LocalRotation: {x: -0.05829576, y: 0.9139758, z: 0.14182523, w: 0.37568006}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

@@ -107,5 +107,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef209039ccb037743893bafe99175aea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_uiLifetimeMax: 60
+  m_uiLifetimeMax: 180
   m_fEaseMultiplier: 1.01

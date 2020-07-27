@@ -15,11 +15,11 @@ public class HUDFlyingText : MonoBehaviour
     uint m_uiLifetime = 0;
     public float m_fEaseMultiplier = 1.01f;
     Vector2 m_vInitialXY;
+    Vector2 m_vCurrentXY;
     float m_fOffsetY = 1;
 
     void Start()
     {
-        m_vInitialXY = gameObject.transform.position;   //save pos
     }
 
     public void Initialise(Color input_colour, string input_text, float input_easeMultiplier)
@@ -29,21 +29,26 @@ public class HUDFlyingText : MonoBehaviour
 
         m_fEaseMultiplier = input_easeMultiplier;
 
+        //save pos
+        m_vInitialXY = gameObject.GetComponent<Text>().rectTransform.position;  
+
         //layer 8 error catcher
         if (m_fEaseMultiplier <= 1) { m_fEaseMultiplier = 1.01f; Debug.LogWarning("HUDFlyingText with easeMultiplier <=1. setting to 1.01...."); }
     }
 
+    
     void Update()
     {
         //doing it this order means the object's position lags behind by one tick (but that's fine)
         //write
-        gameObject.GetComponent<Text>().rectTransform.position = m_vInitialXY;
+        gameObject.GetComponent<Text>().rectTransform.position = m_vCurrentXY;
         //calc for next
         m_fOffsetY *= m_fEaseMultiplier;
-        m_vInitialXY.y = m_fOffsetY;
+        m_vCurrentXY = new Vector2(m_vInitialXY.x, m_vInitialXY.y + m_fOffsetY);
 
         //lifetime
         m_uiLifetime++;
         if(m_uiLifetime >= m_uiLifetimeMax) { Destroy(gameObject); }    //die when lifetime >= max
     }
+    
 }
