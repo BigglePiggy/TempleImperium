@@ -336,15 +336,24 @@ public class HUDController : MonoBehaviour
     }
 
     #region flying text
+    /// <summary>
+    /// flying +n text for Wave Timer
+    /// </summary>
+    /// <param name="input_timeAdded"></param>
     public void FlyingTextAddTime(float input_timeAdded)
     {
+        //get pos of timer
         Vector3 m_vPos = oTextWaveTimer.rectTransform.position;
+        //adjust (lower by half the timer element's height, so we're now just below it)
         m_vPos.y -= oTextWaveTimer.rectTransform.sizeDelta.y / 2;
 
+        //instantiate new flying text (Prefab, Position, Rotation default, Parent to HUD canvas so it renders)
         GameObject oNewFlyingText = Instantiate(oFlyingTextPrefab, m_vPos, Quaternion.identity, gameObject.transform);
 
+        //build string
         string m_sFlyTextContent = "+" + input_timeAdded;
 
+        //Initialise() HUDFlyingText sending (Colour, String, and Ease Rate)
         oNewFlyingText.GetComponent<HUDFlyingText>().Initialise(m_cTextColourAlertGood, m_sFlyTextContent, m_fFlyingTextEaseMultiplier);
     }
 
