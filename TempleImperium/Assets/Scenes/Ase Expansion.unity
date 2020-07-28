@@ -4781,7 +4781,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 458367773}
-  m_LocalRotation: {x: 0.048722964, y: 0.94962835, z: 0.18830799, w: -0.24570762}
+  m_LocalRotation: {x: -0.03253318, y: -0.65012014, z: -0.027880108, w: 0.7586225}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -5526,7 +5526,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508289350}
-  m_LocalRotation: {x: 0.04966101, y: 0.9499324, z: 0.20340805, w: -0.23192102}
+  m_LocalRotation: {x: -0.07170565, y: -0.6894502, z: -0.06890491, w: 0.717474}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -19267,7 +19267,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1428896661}
-  m_LocalRotation: {x: 0.054826528, y: 0.9446446, z: 0.21189749, w: -0.2444181}
+  m_LocalRotation: {x: -0.07470435, y: -0.64756083, z: -0.06401972, w: 0.75563604}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -25698,7 +25698,7 @@ MonoBehaviour:
   m_iPylonCount: 3
   m_fPylonBonusTime: 15
   m_sSubWavesList:
-  - 0,0,1
+  - 2,0,1
   - 0,2,1
   - 2,0,1
   - 2,2,2
@@ -28327,7 +28327,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1839892572}
-  m_LocalRotation: {x: 0.044070486, y: 0.9545485, z: 0.18050966, w: -0.23304799}
+  m_LocalRotation: {x: -0.031235429, y: -0.69223446, z: -0.030015405, w: 0.72037137}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []

@@ -61,6 +61,12 @@ public class HeavyEnemyController : MonoBehaviour
     [Tooltip("The speed that the enemy turns at")]
     public float m_rotateSpeed;
 
+    [Header("Materials")]
+    public Material matSummon;
+    public Material matArc;
+    public Material matHazard;
+    public Material matPower;
+
 
     //Pathfinding
     Pathfinder m_pathfinder;    //Pathfinder script reference - Updates m_path 
@@ -96,6 +102,23 @@ public class HeavyEnemyController : MonoBehaviour
     {
         //Startstone
         m_starstone = element;
+
+
+        switch (m_starstone)
+        {
+            case GameLogic.StarstoneElement.Summon:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                break;
+            case GameLogic.StarstoneElement.Arc:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                break;
+            case GameLogic.StarstoneElement.Hazard:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matHazard;
+                break;
+            case GameLogic.StarstoneElement.Power:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                break;
+        }
 
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();

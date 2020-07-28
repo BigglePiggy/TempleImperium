@@ -22,7 +22,6 @@ public class LightEnemyController : MonoBehaviour
     public float m_startingHealth;
     [Tooltip("Distance at which looks at the player")]
     public float m_viewDistance;
-
     [Space]
 
     [Header("Physics")]
@@ -57,6 +56,12 @@ public class LightEnemyController : MonoBehaviour
     public float m_attackRate;
     [Tooltip("Damage that the attack applies to the player")]
     public float m_attackDamage;
+
+    [Header("Materials")]
+    public Material matSummon;
+    public Material matArc;
+    public Material matHazard;
+    public Material matPower;
 
 
 
@@ -93,6 +98,22 @@ public class LightEnemyController : MonoBehaviour
     {
         //Startstone
         m_starstone = element;
+
+        switch (m_starstone)
+        {
+            case GameLogic.StarstoneElement.Summon:
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                break;
+            case GameLogic.StarstoneElement.Arc:
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                break;
+            case GameLogic.StarstoneElement.Hazard:
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matHazard;               
+                break;
+            case GameLogic.StarstoneElement.Power:
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                break;
+        }
 
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();
