@@ -52,19 +52,19 @@ public class GameEnemyDispatch : MonoBehaviour
         //Instantiates enemies at unquie spawnpoints
         for (int i = 0; i < input_numLight; i++)
         {
-            Instantiate(lightEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            Instantiate(lightEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<LightEnemyController>().Initialize(input_element);
             obscuredSpawnpoints.RemoveAt(0);
         }
 
         for (int i = 0; i < input_numMedium; i++)
         {
-            Instantiate(mediumEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            Instantiate(mediumEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<MediumEnemyController>().Initialize(input_element);
             obscuredSpawnpoints.RemoveAt(0);
         }
 
         for (int i = 0; i < input_numHeavy; i++)
         {
-            Instantiate(heavyEnemy, obscuredSpawnpoints[0], Quaternion.identity);
+            Instantiate(heavyEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<HeavyEnemyController>().Initialize(input_element);
             obscuredSpawnpoints.RemoveAt(0);
         }
     }

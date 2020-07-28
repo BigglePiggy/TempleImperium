@@ -75,6 +75,8 @@ public class MediumEnemyController : MonoBehaviour
     bool m_applyGravity;        //Changes state dependent on the above two (stops slope momentum issues)
     bool m_moving;              //When true movement is applied
 
+    GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
+
     bool m_playerInSight;       //True when player is in (unobstruced) view
     float m_timeSinceLastShot;  //Manages gun firerate by tracking time since last shot
 
@@ -94,8 +96,11 @@ public class MediumEnemyController : MonoBehaviour
 
 
     //Initalization
-    void Start()
+    public void Initialize(GameLogic.StarstoneElement element)
     {
+        //Startstone
+        m_starstone = element;
+
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();
         m_pathfinder = GameObject.FindGameObjectWithTag("Nodes").GetComponent<Pathfinder>();
