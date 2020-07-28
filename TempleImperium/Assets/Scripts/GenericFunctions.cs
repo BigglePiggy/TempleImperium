@@ -28,17 +28,17 @@ public class GenericFunctions
         Color m_cOutput = Color.white;
         switch (input_element)
         {
-            case GameLogic.StarstoneElement.Fire:
-                m_cOutput = new Color(0.9f, 0.2f, 0.2f);    //fire red
+            case GameLogic.StarstoneElement.Summon:
+                m_cOutput = new Color(0.5f, 0.1f, 0.7f);    //Summon purple
                 break;
-            case GameLogic.StarstoneElement.Water:
-                m_cOutput = new Color(0.2f, 0.5f, 0.9f);    //water blue
+            case GameLogic.StarstoneElement.Arc:
+                m_cOutput = new Color(0.9f, 0.9f, 0.4f);    //Arc yellow
                 break;
-            case GameLogic.StarstoneElement.Electricity:
-                m_cOutput = new Color(0.9f, 0.9f, 0.4f);    //electricity yellow
+            case GameLogic.StarstoneElement.Hazard:
+                m_cOutput = new Color(0.9f, 0.2f, 0.2f);    //Hazard red
                 break;
-            case GameLogic.StarstoneElement.Darkness:
-                m_cOutput = new Color(0.5f, 0.1f, 0.7f);    //darkness purple
+            case GameLogic.StarstoneElement.Power:
+                m_cOutput = new Color(0.2f, 0.5f, 0.9f);    //Power blue
                 break;
 
             default:

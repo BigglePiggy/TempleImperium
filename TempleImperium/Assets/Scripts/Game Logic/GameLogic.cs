@@ -11,7 +11,7 @@ using System.Linq;
 public class GameLogic : MonoBehaviour
 {
     [HideInInspector]
-    public enum StarstoneElement { Fire, Water, Electricity, Darkness };    //public - used across lots of classes!! BE CAREFUL WITH ME
+    public enum StarstoneElement { Summon, Arc, Hazard, Power };    //public - used across lots of classes!! BE CAREFUL WITH ME
 
     [HideInInspector]
     public enum GameplayPhase { Init, PreGame, Subwave, InbetweenSubwave, InbetweenWave, PostGame } // ^
