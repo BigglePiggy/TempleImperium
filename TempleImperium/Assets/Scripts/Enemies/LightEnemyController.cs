@@ -70,6 +70,8 @@ public class LightEnemyController : MonoBehaviour
     bool m_playerInSight;       //True when player is in (unobstruced) view
     bool m_playerHasBeenHit;    //True when enemy hits into the player
 
+    GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
+
     bool m_pointedAt;
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
     public void PointedAt(Transform bulletOrigin)
@@ -87,8 +89,11 @@ public class LightEnemyController : MonoBehaviour
 
 
     //Initalization
-    void Start()
+    public void Initialize(GameLogic.StarstoneElement element)
     {
+        //Startstone
+        m_starstone = element;
+
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();
         m_pathfinder = GameObject.FindGameObjectWithTag("Nodes").GetComponent<Pathfinder>();
