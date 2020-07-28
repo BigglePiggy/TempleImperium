@@ -161,20 +161,20 @@ public class PlayerController : MonoBehaviour
     #region Mouse & Weapons
     private void MouseInputRecoil()
     {
-        float rotateVertical = Input.GetAxis("Mouse Y") * GlobalValues.g_settings.m_fMouseSensitivityY * (Time.deltaTime * 100);     //Frame rate indenpentdent Y rotation value
-        float rotateHorizontal = Input.GetAxis("Mouse X") * GlobalValues.g_settings.m_fMouseSensitivityX * (Time.deltaTime * 100);   //Frame rate indenpentdent X rotation value
+        float rotateVertical = Input.GetAxis("Mouse Y") * GlobalValues.g_settings.m_fMouseSensitivityY; //Frame rate indenpentdent Y rotation value
+        float rotateHorizontal = Input.GetAxis("Mouse X") * GlobalValues.g_settings.m_fMouseSensitivityX; //Frame rate indenpentdent X rotation value
 
         transform.Rotate(transform.up * rotateHorizontal);  //Rotates the X Axis
 
         //Recoil value manager
         if (m_currentRecoil < 0 && m_playerCamera.localRotation.x > -0.7 * (m_upAngleLimit / 90)) //Limits the camera's angle of rotation
         {
-            m_playerCamera.Rotate(m_currentRecoil, 0, 0); //Applies current recoil to the camera
+            m_playerCamera.Rotate(m_currentRecoil * (Time.deltaTime * 100), 0, 0); //Applies current recoil to the camera
             m_currentRecoil += m_gunRecoilDampening * (Time.deltaTime * 100);   //Reduces current recoil recoil 
         }
 
         if (m_currentRecoil < 0 && rotateVertical < 0 && m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90)) //Limits the camera's angle of rotation
-        { m_playerCamera.transform.Rotate(rotateVertical * m_gunRecoilControl, 0, 0); } //Applies the players mouse inputs against recoil
+        { m_playerCamera.transform.Rotate(rotateVertical, 0, 0); } //Applies the players mouse inputs against recoil
 
         //Normal control
         else

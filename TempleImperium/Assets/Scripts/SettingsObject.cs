@@ -22,8 +22,8 @@ public class SettingsObject
     //camera
     public KeyCode m_kcKeyFire                  = KeyCode.Mouse0;
     public KeyCode m_kcKeyAltFire               = KeyCode.Mouse1;
-    public float m_fMouseSensitivityX           = 2.5f;
-    public float m_fMouseSensitivityY           = 2.5f;
+    public float m_fMouseSensitivityX           = 1.6f;
+    public float m_fMouseSensitivityY           = 1.6f;
     public bool m_bMouseInvertX                 = false;
     public bool m_bMouseInvertY                 = false;
 
