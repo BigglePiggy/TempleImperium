@@ -20,10 +20,10 @@ public class GameGenerator : MonoBehaviour
 
     //material references
     //TODO: cleanup / auto references (is that needed?)
-    public Material matFire;                
-    public Material matWater;
-    public Material matElectricity;
-    public Material matDarkness;
+    public Material matSummon;                
+    public Material matArc;
+    public Material matHazard;
+    public Material matPower;
     public Material matInert;
 
     GenericFunctions cGenericFunctions = new GenericFunctions(); //instantiate a GenericFunctions for use here
@@ -44,17 +44,17 @@ public class GameGenerator : MonoBehaviour
 
         switch (input_starstoneElement)
         {
-            case GameLogic.StarstoneElement.Fire:
-                oCrystal.GetComponent<MeshRenderer>().material = matFire;
+            case GameLogic.StarstoneElement.Summon:
+                oCrystal.GetComponent<MeshRenderer>().material = matSummon;
                 break;
-            case GameLogic.StarstoneElement.Water:
-                oCrystal.GetComponent<MeshRenderer>().material = matWater;
+            case GameLogic.StarstoneElement.Arc:
+                oCrystal.GetComponent<MeshRenderer>().material = matArc;
                 break;
-            case GameLogic.StarstoneElement.Electricity:
-                oCrystal.GetComponent<MeshRenderer>().material = matElectricity;
+            case GameLogic.StarstoneElement.Hazard:
+                oCrystal.GetComponent<MeshRenderer>().material = matHazard;
                 break;
-            case GameLogic.StarstoneElement.Darkness:
-                oCrystal.GetComponent<MeshRenderer>().material = matDarkness;
+            case GameLogic.StarstoneElement.Power:
+                oCrystal.GetComponent<MeshRenderer>().material = matPower;
                 break;
         }
 
@@ -81,7 +81,7 @@ public class GameGenerator : MonoBehaviour
         Debug.LogWarning("GameGenerator has nothing cool for GoCritical() yet");
 
         //placeholder
-        oCrystal.GetComponent<MeshRenderer>().material = matFire;
+        oCrystal.GetComponent<MeshRenderer>().material = matSummon;
         //oGlowRenderer.material.color = Color.red;
     }
 }
