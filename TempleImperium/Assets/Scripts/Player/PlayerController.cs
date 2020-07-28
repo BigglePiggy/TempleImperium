@@ -560,4 +560,17 @@ public class PlayerController : MonoBehaviour
         m_hudController.AbilityOffensiveCooldownMax = m_offensiveCooldown;
     }
     #endregion
+
+
+    #region Ammo
+    public (int,int) GetPrimaryGunAmmo() 
+    {
+        return (m_primaryGun.m_maxAmmoCount, m_primaryGun.GetAmmoCount());
+    }
+
+    public (int, int) GetSecondaryGunAmmo()
+    {
+        return (m_secondaryGun.m_maxAmmoCount, m_secondaryGun.GetAmmoCount());
+    }
+    #endregion
 }

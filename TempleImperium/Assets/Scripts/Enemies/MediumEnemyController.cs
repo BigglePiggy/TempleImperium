@@ -39,7 +39,6 @@ public class MediumEnemyController : MonoBehaviour
     public Vector3 m_accuracyOffset;
     [Tooltip("Shot damage applied to player when hit")]
     public float m_shotDamage;
-    [Space]
 
     [Header("Sound Effects")]
     [Tooltip("Effect played when the enemy shoots")]
@@ -62,6 +61,12 @@ public class MediumEnemyController : MonoBehaviour
     public float m_bodyRotateSpeed;
     [Tooltip("The speed that enemy's head turns at")]
     public float m_headRotateSpeed;
+
+    [Header("Materials")]
+    public Material matSummon;
+    public Material matArc;
+    public Material matHazard;
+    public Material matPower;
 
 
     //Pathfinding
@@ -100,6 +105,22 @@ public class MediumEnemyController : MonoBehaviour
     {
         //Startstone
         m_starstone = element;
+
+        switch (m_starstone)
+        {
+            case GameLogic.StarstoneElement.Summon:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                break;
+            case GameLogic.StarstoneElement.Arc:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                break;
+            case GameLogic.StarstoneElement.Hazard:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matHazard;
+                break;
+            case GameLogic.StarstoneElement.Power:
+                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                break;
+        }
 
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();
