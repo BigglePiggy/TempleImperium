@@ -57,6 +57,10 @@ public class LightEnemyController : MonoBehaviour
     [Tooltip("Damage that the attack applies to the player")]
     public float m_attackDamage;
 
+    [Header("Starstones")]
+    [Tooltip("Force applied to the player when hit by enemy influenced by the 'Power' starstone")]
+    public float m_powerPushback;
+
     [Header("Materials")]
     public Material matSummon;
     public Material matArc;
@@ -437,16 +441,16 @@ public class LightEnemyController : MonoBehaviour
     {
         if (m_isAttacking && m_playerHasBeenHit == false)
         {
-            if (collision.gameObject.CompareTag("Player"))
+            if (collision.transform.CompareTag("Player"))
             {
                 m_playerHasBeenHit = true;
-                collision.gameObject.SendMessage("TakeDamage", m_attackDamage);
-            }
+                collision.transform.GetComponent<PlayerController>().TakeDamage(m_attackDamage);
 
-            else if (collision.transform.root.gameObject.CompareTag("Player"))
-            { 
-                m_playerHasBeenHit = true;
-                collision.transform.root.gameObject.SendMessage("TakeDamage", m_attackDamage);
+                if (m_starstone == GameLogic.StarstoneElement.Power)
+                {
+                    collision.transform.GetComponent<PlayerController>().ReduceDrag();
+                    collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback,ForceMode.Acceleration);
+                }
             }
         }
     }

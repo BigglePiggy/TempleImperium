@@ -62,6 +62,10 @@ public class MediumEnemyController : MonoBehaviour
     [Tooltip("The speed that enemy's head turns at")]
     public float m_headRotateSpeed;
 
+    [Header("Starstones")]
+    [Tooltip("Force applied to the player when hit by enemy influenced by the 'Power' starstone")]
+    public float m_powerPushback;
+
     [Header("Materials")]
     public Material matSummon;
     public Material matArc;
@@ -203,12 +207,13 @@ public class MediumEnemyController : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Player")) 
                 {
-                    hit.transform.gameObject.SendMessage("TakeDamage", m_shotDamage);
-                }
+                    hit.transform.GetComponent<PlayerController>().TakeDamage(m_shotDamage);
 
-                else if (hit.transform.root.CompareTag("Player")) 
-                {
-                    hit.transform.root.gameObject.SendMessage("TakeDamage", m_shotDamage);
+                    if(m_starstone == GameLogic.StarstoneElement.Power) 
+                    {
+                        hit.transform.GetComponent<PlayerController>().ReduceDrag();
+                        hit.transform.GetComponent<Rigidbody>().AddForce((new Vector3(m_bulletOrigin.position.x, 0, m_bulletOrigin.position.z) - hit.point).normalized * m_powerPushback);
+                    }
                 }
             }
 

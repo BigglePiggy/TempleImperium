@@ -192,7 +192,9 @@ public class HeavyEnemyController : MonoBehaviour
         {
             //Shoot
             m_timeSinceLastShot = 0;
-            Instantiate(m_heavyProjectile, m_bulletOrigin.position, Quaternion.LookRotation(m_bulletOrigin.position - m_player.position)).GetComponent<Rigidbody>().AddRelativeForce(m_relativeShotForce);
+            HeavyProjectile projectile = Instantiate(m_heavyProjectile, m_bulletOrigin.position, Quaternion.LookRotation(m_player.position - m_bulletOrigin.position)).GetComponent<HeavyProjectile>();
+            projectile.Initalization(m_starstone);
+            projectile.GetComponent<Rigidbody>().AddRelativeForce(m_relativeShotForce);
         }
     }
     #endregion
@@ -296,7 +298,7 @@ public class HeavyEnemyController : MonoBehaviour
     private void Movement()
     {
         //Stopping distance
-        if (Vector3.Distance(transform.position, m_player.position) < m_stopDistance)
+        if (Vector3.Distance(transform.position, m_player.position) < m_stopDistance && m_playerInSight)
         { m_moving = false; }
         else
         { m_moving = true; }

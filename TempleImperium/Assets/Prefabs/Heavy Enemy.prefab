@@ -103,7 +103,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2312182894477078475}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0.7}
+  m_LocalPosition: {x: 0, y: 0.25, z: 0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6731319750842843879}
@@ -287,10 +287,10 @@ MonoBehaviour:
   m_startingHealth: 7
   m_viewDistance: 22
   m_stopDistance: 15
-  m_shootingDistance: 20
+  m_shootingDistance: 15
   m_fireRate: 4
   m_accuracyOffset: {x: 0, y: 0, z: 0}
-  m_relativeShotForce: {x: 0, y: 400, z: 700}
+  m_relativeShotForce: {x: 0, y: 400, z: 350}
   m_heavyProjectile: {fileID: 4247020981666605293, guid: b422bb86b04b43243a90fb71dd3f1979,
     type: 3}
   m_shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}

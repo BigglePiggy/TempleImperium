@@ -5184,6 +5184,7 @@ MonoBehaviour:
   m_airHorizontalDrag: {x: 0.3, y: 0, z: 0.3}
   m_bodyRotateSpeed: 2
   m_headRotateSpeed: 2
+  m_powerPushback: 20
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}
   matArc: {fileID: 2100000, guid: 024eb1d354d086a46bd84276828cfb07, type: 2}
   matHazard: {fileID: 2100000, guid: 83aed5f6bac1fe344bc2bbb2cdd3bd89, type: 2}

@@ -58,6 +58,8 @@ public class PlayerController : MonoBehaviour
     public Vector3 m_horizontalDrag;
     [Tooltip("Z & X axis drag applied to the player whilst in the air")]
     public Vector3 m_airHorizontalDrag;
+    [Tooltip("Z & X axis drag applied to the player whilst drag is reduced 'a state applied to the player by enemies'")]
+    public Vector3 m_reducedHorizontalDrag;
     [Space]
 
     [Tooltip("Increase to the maximum horizonal velocity when sprinting")]
@@ -87,6 +89,7 @@ public class PlayerController : MonoBehaviour
     bool m_onSlope;             //True when on a slope
     bool m_isJumping;           //True whilst in the air after a jump
     bool m_applyGravity;        //Changes state depending on the above three (stops slope momentum issues)
+    float m_reducedDragDuration;         //When true drag is reduced
 
     float m_offensiveCurrentCooldown;   //Offensive ability cooldown in seconds
     float m_defensiveCurrentCooldown;   //Defensive ability cooldown in seconds
@@ -456,6 +459,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ReduceDrag(float input_duration = 1f) 
+    {
+        m_reducedDragDuration = input_duration;
+    } 
+
     private void LinearDrag()
     {
         //Velocity relative to view
@@ -467,6 +475,12 @@ public class PlayerController : MonoBehaviour
         //Air modifer
         if (m_isGrounded == false)
         { drag = m_airHorizontalDrag; }
+
+        if(m_reducedDragDuration > 0) 
+        {
+            m_reducedDragDuration -= Time.deltaTime;
+            drag = m_reducedHorizontalDrag;
+        }
 
         //Drag application
         if (relativeVelocity.x != 0 || relativeVelocity.z != 0)
