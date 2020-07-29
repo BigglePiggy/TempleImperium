@@ -446,7 +446,7 @@ public class LightEnemyController : MonoBehaviour
                 m_playerHasBeenHit = true;
                 collision.transform.GetComponent<PlayerController>().TakeDamage(m_attackDamage);
 
-                if (m_starstone == GameLogic.StarstoneElement.Power)
+                if (m_starstone == GameLogic.StarstoneElement.Arc)
                 {
                     collision.transform.GetComponent<PlayerController>().ReduceDrag();
                     collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback,ForceMode.Acceleration);

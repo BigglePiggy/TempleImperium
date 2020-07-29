@@ -40,7 +40,7 @@ public class HeavyProjectile : MonoBehaviour
             m_isLethal = false;
             collision.transform.GetComponent<PlayerController>().TakeDamage(m_damage);
 
-            if (m_starstone == GameLogic.StarstoneElement.Power)
+            if (m_starstone == GameLogic.StarstoneElement.Arc)
             {
                 collision.transform.GetComponent<PlayerController>().ReduceDrag();
                 collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_projectileRb.velocity.x, 0, m_projectileRb.velocity.z).normalized * m_powerPushback, ForceMode.Acceleration);

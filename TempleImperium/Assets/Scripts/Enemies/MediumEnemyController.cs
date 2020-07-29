@@ -209,7 +209,7 @@ public class MediumEnemyController : MonoBehaviour
                 {
                     hit.transform.GetComponent<PlayerController>().TakeDamage(m_shotDamage);
 
-                    if(m_starstone == GameLogic.StarstoneElement.Power) 
+                    if(m_starstone == GameLogic.StarstoneElement.Arc) 
                     {
                         hit.transform.GetComponent<PlayerController>().ReduceDrag();
                         hit.transform.GetComponent<Rigidbody>().AddForce((new Vector3(m_bulletOrigin.position.x, 0, m_bulletOrigin.position.z) - hit.point).normalized * m_powerPushback);
