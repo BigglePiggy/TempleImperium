@@ -25,9 +25,8 @@ public class AmmoDropController : MonoBehaviour
     /*[Space(30f)]
     public*/ bool DisableBoundsWarnings = false;
 
-    GameObject oPlayer; //player obj ref
-
-    int m_iNumberOfWeaponsWithAmmo = 2; //number of weapons that require conventional ammo pickups - so EXCLUDING power weapons, melee, etc
+    GameObject oPlayer;         //player obj ref
+    (int, int) m_tiMagSizes;    //gun max mag sizes (for calc ammo box contents, * multiplier)
 
 
     void Start()
@@ -80,17 +79,32 @@ public class AmmoDropController : MonoBehaviour
             if (m_bSecondaryRollPassed)
             {
                 //if BOTH rolls passed
+
+                m_fRoll = Random.Range(0, m_fPrimaryChance + m_fSecondaryChance);   //do new roll between chances
+
+                if (m_fRoll <= m_fPrimaryChance)    //check against primary chance (lower side of chance)
+                {
+                    //if <= primary chance (within lower side of chance), spawn primary ammo
+                    DropAtPosition(input_spawnPosition, true, false);
+                }
+                else
+                {
+                    //if > primary chance (within upper side of chance), spawn secondary ammo
+                    DropAtPosition(input_spawnPosition, false, true);
+                }
             }
             else
             {
-                //if ONLY PRIMARY roll passed
+                //if ONLY PRIMARY roll passed, spawn primary ammo
+                DropAtPosition(input_spawnPosition, true, false);
             }
         }
         else
         {
             if (m_bSecondaryRollPassed)
             {
-                //if ONLY SECONDARY roll passed
+                //if ONLY SECONDARY roll passed, spawn secondary ammo
+                DropAtPosition(input_spawnPosition, false, true);
             }
             else
             {
@@ -99,5 +113,21 @@ public class AmmoDropController : MonoBehaviour
                 //do nothing
             }
         }
+    }
+
+    /// <summary>
+    /// spawn ammo box at position
+    /// </summary>
+    /// <param name="input_spawnPosition"></param>
+    /// <param name="input_hasPrimaryAmmo"></param>
+    /// <param name="input_hasSecondaryAmmo"></param>
+    public void DropAtPosition(Vector3 input_spawnPosition, bool input_hasPrimaryAmmo, bool input_hasSecondaryAmmo)
+    {
+        GameObject oNewAmmoBox = Instantiate(oAmmoBoxPrefab);
+
+        int m_iNewAmmoBoxPrimary = 0;
+        int m_iNewAmmoBoxSecondary = 0;
+
+        if (input_hasPrimaryAmmo) { m_iNewAmmoBoxPrimary = }
     }
 }

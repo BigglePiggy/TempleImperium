@@ -9,10 +9,10 @@ public class AmmoBox : MonoBehaviour
 {
     //GameObject that stores ammo for the player to pick up. not too interesting.
 
-    public int m_iPrimary;      //primary ammo in this box
-    public int m_iSecondary;    //secondary ammo in this box
+    public int m_iPrimary = 0;      //primary ammo in this box
+    public int m_iSecondary = 0;    //secondary ammo in this box
 
-    bool m_bPendingDestroy;     //destroy next Update()?
+    bool m_bPendingDestroy;         //destroy next Update()?
 
     void Update()
     {
