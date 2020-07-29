@@ -586,5 +586,10 @@ public class PlayerController : MonoBehaviour
     {
         return (m_secondaryGun.m_maxAmmoCount, m_secondaryGun.GetAmmoCount());
     }
+
+    public (int,int) GetMagSizes() 
+    {
+        return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
+    }
     #endregion
 }
