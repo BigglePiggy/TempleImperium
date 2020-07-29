@@ -19,9 +19,11 @@ public class AmmoDropController : MonoBehaviour
     [Tooltip("drop chance calculted with:\n((gun reserve / reserve max)+flat increase)*multiplier")]
     public float m_fDropChanceMultiplier = 0.5f;
     public float m_fDropChanceFlatIncrease = 0.2f;
-    [Space]
-    [Tooltip("0-1. chance of which weapon's ammo should drop.\neg 0.33 with the Primary weapon equipped would give a 2/3rds chance of drops being Secondary ammo.")]
-    public float m_fEquippedWeaponWeight = 0.33f;
+    //WEIGHTING NOT IMPLEMENTED - used different approach to the maths behind it. can probably tack on weighting if it's really needed. -ase
+    //[Space]
+    //[Tooltip("0-1. chance of which weapon's ammo should drop.\neg 0.33 with the Primary weapon equipped would give a 2/3rds chance of drops being Secondary ammo.")]
+    //public float m_fEquippedWeaponWeight = 0.33f;    
+
     /*[Space(30f)]
     public*/ bool DisableBoundsWarnings = false;
 
@@ -33,6 +35,7 @@ public class AmmoDropController : MonoBehaviour
     {
         oPlayer = GameObject.Find("Player");    //establish reference to Player
 
+        m_tiMagSizes = oPlayer.GetComponent<PlayerController>().GetMagSizes();
 
         //reasonable bounds checks
         if (DisableBoundsWarnings) { return; }  //drop from Start() if not doing bounds checks
@@ -123,11 +126,18 @@ public class AmmoDropController : MonoBehaviour
     /// <param name="input_hasSecondaryAmmo"></param>
     public void DropAtPosition(Vector3 input_spawnPosition, bool input_hasPrimaryAmmo, bool input_hasSecondaryAmmo)
     {
-        GameObject oNewAmmoBox = Instantiate(oAmmoBoxPrefab);
+        //spawn new AmmoBox GameObject
+        GameObject oNewAmmoBox = Instantiate(oAmmoBoxPrefab, input_spawnPosition, Quaternion.identity);
 
+        //ammo vars
         int m_iNewAmmoBoxPrimary = 0;
         int m_iNewAmmoBoxSecondary = 0;
 
-        if (input_hasPrimaryAmmo) { m_iNewAmmoBoxPrimary = }
+        //calc based on if each has ammo
+        if (input_hasPrimaryAmmo) { m_iNewAmmoBoxPrimary = Mathf.RoundToInt(m_tiMagSizes.Item1 * m_fAmmoPerBoxMultiplierPrimary); }
+        if (input_hasSecondaryAmmo) { m_iNewAmmoBoxSecondary = Mathf.RoundToInt(m_tiMagSizes.Item2 * m_fAmmoPerBoxMultiplierSecondary); }
+
+        //write to ammo box instance
+        oNewAmmoBox.GetComponent<AmmoBox>().SetAmmo(m_iNewAmmoBoxPrimary, m_iNewAmmoBoxSecondary);
     }
 }
