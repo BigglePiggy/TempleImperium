@@ -449,7 +449,7 @@ public class LightEnemyController : MonoBehaviour
                 if (m_starstone == GameLogic.StarstoneElement.Arc)
                 {
                     collision.transform.GetComponent<PlayerController>().ReduceDrag();
-                    collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback,ForceMode.Acceleration);
+                    collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback, ForceMode.Acceleration);
                 }
             }
         }
