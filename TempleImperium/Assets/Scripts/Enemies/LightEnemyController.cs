@@ -93,7 +93,8 @@ public class LightEnemyController : MonoBehaviour
     float m_currentHealth;      //Current Health
     Transform m_player;         //Player position reference
     Rigidbody m_enemyRb;        //Rigidbody component
-    AudioSource m_audioSource;  //Audio source component        
+    AudioSource m_audioSource;  //Audio source component       
+    AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     #endregion
 
 
@@ -124,6 +125,7 @@ public class LightEnemyController : MonoBehaviour
         m_pathfinder = GameObject.FindGameObjectWithTag("Nodes").GetComponent<Pathfinder>();
         m_player = GameObject.FindGameObjectWithTag("Player").transform;
         m_audioSource = GetComponent<AudioSource>();
+        m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -432,6 +434,7 @@ public class LightEnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
+            m_AmmoDropController.RollDropChanceAtPosition(gameObject.transform.position);
         }
         else
         { m_currentHealth -= change; }

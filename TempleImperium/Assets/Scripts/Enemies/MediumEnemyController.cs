@@ -99,6 +99,7 @@ public class MediumEnemyController : MonoBehaviour
     Transform m_enemyHead;      //Enemy head reference - Head is rotated
     Rigidbody m_enemyRb;        //Rigidbody component
     AudioSource m_audioSource;  //Audio source component
+    AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
     ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
     #endregion
@@ -134,6 +135,7 @@ public class MediumEnemyController : MonoBehaviour
         m_audioSource = GetComponent<AudioSource>();
         m_bulletOrigin = m_enemyHead.Find("Bullet Origin");
         m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>();
+        m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -433,6 +435,7 @@ public class MediumEnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(1);
+            m_AmmoDropController.RollDropChanceAtPosition(gameObject.transform.position);
         }
         else
         { m_currentHealth -= change; }

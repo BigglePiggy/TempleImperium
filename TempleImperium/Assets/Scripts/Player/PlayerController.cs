@@ -3,6 +3,7 @@ using UnityEngine;
 
 //Created by Eddie
 
+
 public class PlayerController : MonoBehaviour
 {
     //Player controller script - there should be only one player object with an instance of me!

@@ -93,6 +93,7 @@ public class HeavyEnemyController : MonoBehaviour
     Transform m_player;         //Player position reference
     Rigidbody m_enemyRb;        //Rigidbody component
     AudioSource m_audioSource;  //Audio source component
+    AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     Transform m_bulletOrigin;   //Reference to editor positioned bullet origin
     #endregion
 
@@ -126,6 +127,7 @@ public class HeavyEnemyController : MonoBehaviour
         m_player = GameObject.FindGameObjectWithTag("Player").transform;
         m_audioSource = GetComponent<AudioSource>();
         m_bulletOrigin = transform.Find("Bullet Origin");
+        m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -399,6 +401,7 @@ public class HeavyEnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(2);
+            m_AmmoDropController.RollDropChanceAtPosition(gameObject.transform.position);
         }
         else
         { m_currentHealth -= change; }
