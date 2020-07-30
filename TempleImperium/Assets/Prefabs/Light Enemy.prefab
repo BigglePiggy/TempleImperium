@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171df09f43c32f14cadbe4f562668363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startingHealth: 7
+  m_startingHealth: 5
   m_viewDistance: 10
   m_gravity: 0
   m_normalAcceleration: 20
