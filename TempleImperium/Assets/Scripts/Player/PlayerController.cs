@@ -590,7 +590,16 @@ public class PlayerController : MonoBehaviour
 
     public (int,int) GetMagSizes() 
     {
-        return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
+        try
+        {
+            return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
+        }
+        catch(System.NullReferenceException e) 
+        {
+            m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();  
+            m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();
+            return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
+        }
     }
     #endregion
 }
