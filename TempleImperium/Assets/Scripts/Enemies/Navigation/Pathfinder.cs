@@ -7,29 +7,36 @@ using UnityEngine;
 
 public class Pathfinder : MonoBehaviour
 {
-    
+
     //Pathfinder  script 
     //What this script does:
     /*
         - Locates closest node from a given point 
         - Uses A* to generate a path (Vector3 Stack) between two points on the attached node map
     */
+    private List<Transform> m_nodes;
+
+    private void Start()
+    {
+        m_nodes = new List<Transform>();
+
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            m_nodes.Add(transform.GetChild(i));
+        }
+    }
 
     private Node FindClosestNode(Vector3 target)
     {
         Node closestNode = null;
         float smallestDistance = Mathf.Infinity;
 
-        List<Transform> nodes = new List<Transform>();
-        for (int i = 0; i < transform.childCount; i++)
-        { nodes.Add(transform.GetChild(i)); }
-
-        for (int i = 0; i < nodes.Count; i++)
+        for (int i = 0; i < m_nodes.Count; i++)
         {
-            var distance = (nodes[i].transform.position - target).magnitude;
+            var distance = (m_nodes[i].transform.position - target).magnitude;
             if (distance < smallestDistance)
             {
-                closestNode = nodes[i].GetComponent<Node>();
+                closestNode = m_nodes[i].GetComponent<Node>();
                 smallestDistance = distance;
             }
         }
