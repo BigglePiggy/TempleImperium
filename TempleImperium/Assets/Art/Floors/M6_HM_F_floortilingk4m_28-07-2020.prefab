@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4420026907638381931}
-  - component: {fileID: 8143899439405421703}
   m_Layer: 0
   m_Name: M6_HM_F_floortilingk4m_28-07-2020
   m_TagString: Untagged
@@ -33,20 +32,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &8143899439405421703
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6132426542582170}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &19768033852599462
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,6 +418,7 @@ GameObject:
   - component: {fileID: 5838906665531059714}
   - component: {fileID: 992826431165288595}
   - component: {fileID: 8027099571257642199}
+  - component: {fileID: 883044746}
   m_Layer: 0
   m_Name: polySurface471
   m_TagString: Untagged
@@ -502,6 +488,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &883044746
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4745936133852528979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7937728790723069946, guid: ecb2868fcaee95b41b8f775f4738c179, type: 3}
 --- !u!1 &5169610168352321385
 GameObject:
   m_ObjectHideFlags: 0
