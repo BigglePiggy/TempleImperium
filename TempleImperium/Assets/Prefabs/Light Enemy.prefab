@@ -237,7 +237,7 @@ MonoBehaviour:
   m_attackDistance: 7
   m_retreatDistance: 4.25
   m_attackRate: 4
-  m_attackDamage: 1
+  m_attackDamage: 2
   m_powerPushback: 400
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}
   matArc: {fileID: 2100000, guid: 024eb1d354d086a46bd84276828cfb07, type: 2}
