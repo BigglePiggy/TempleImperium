@@ -601,5 +601,15 @@ public class PlayerController : MonoBehaviour
             return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.CompareTag("AmmoBox")) 
+        {
+            (int, int) ammo = collision.transform.GetComponent<AmmoBox>().GetAmmo();
+            m_primaryGun.AddAmmo(ammo.Item1);
+            m_secondaryGun.AddAmmo(ammo.Item2);
+        }
+    }
     #endregion
 }
