@@ -70,6 +70,7 @@ public class PlayerGun : MonoBehaviour
     bool m_isHeld;              //True when gun is selected by player & active   
     int m_ammoCount;            //Total ammo for this gun
     public int GetAmmoCount() { return m_ammoCount; }   //Getter for ammo count
+    public void AddAmmo(int value) { m_ammoCount += value; }   //Getter for ammo count
     int m_currentMagCapacity;   //Ammo in the current magazine
     float m_timeSinceLastShot;  //Time since last shot in seconds
     float m_reloadProgress;     //Tracks reload progress 
