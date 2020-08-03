@@ -17,6 +17,8 @@ public class AmmoBox : MonoBehaviour
     void Update()
     {
         if (m_bPendingDestroy) { Destroy(gameObject); }
+
+        if(m_iPrimary ==0 && m_iSecondary == 0) { Destroy(gameObject); }
     }
 
     public void SetAmmo(int input_primary, int input_secondary)
