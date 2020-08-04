@@ -14,15 +14,49 @@ public class Pathfinder : MonoBehaviour
         - Locates closest node from a given point 
         - Uses A* to generate a path (Vector3 Stack) between two points on the attached node map
     */
+    private Transform m_player;
     private List<Transform> m_nodes;
+    private List<Transform> m_coveredNodes;
 
     private void Start()
     {
+        m_player = GameObject.FindGameObjectWithTag("Player").transform;
+
         m_nodes = new List<Transform>();
+        m_coveredNodes = new List<Transform>();
 
         for (int i = 0; i < transform.childCount; i++)
         {
             m_nodes.Add(transform.GetChild(i));
+        }
+    }
+
+    public Node FindClosestCoveredNode(Vector3 target) 
+    {
+        FindCoveredNodes();
+
+        Node closestCoveredNode = null;
+        float smallestDistance = Mathf.Infinity;
+
+        for (int i = 0; i < m_coveredNodes.Count; i++)
+        {
+            var distance = (m_coveredNodes[i].transform.position - target).magnitude;
+            if (distance < smallestDistance)
+            {
+                closestCoveredNode = m_coveredNodes[i].GetComponent<Node>();
+                smallestDistance = distance;
+            }
+        }
+
+        return closestCoveredNode;
+    }
+
+    private void FindCoveredNodes() 
+    {
+        for (int i = 0; i < m_nodes.Count; i++)
+        {
+            if (Physics.Linecast(m_nodes[i].position, m_player.position) == false)
+            { m_coveredNodes.Add(m_nodes[i]); }
         }
     }
 
