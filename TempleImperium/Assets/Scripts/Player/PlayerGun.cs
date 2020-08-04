@@ -79,7 +79,7 @@ public class PlayerGun : MonoBehaviour
     HUDController m_hudController;          //Reference to Hud Controller script - Display values are passed
 
     AudioSource m_audioOrigin;              //Audio origin component
-    MeshRenderer m_meshRenderer;            //Mesh renderer component - used to make gun invisible when not in use
+    GameObject m_gunModel;                  //Mesh renderer component - used to make gun invisible when not in use
     Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
     ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
     #endregion
@@ -101,10 +101,12 @@ public class PlayerGun : MonoBehaviour
         m_playerController = transform.root.GetComponent<PlayerController>();
         m_hudController = GameObject.Find("HUD").GetComponent<HUDController>();
 
-        m_bulletOrigin = transform.Find("Bullet Origin");
-        m_meshRenderer = GetComponent<MeshRenderer>();
+        m_gunModel = transform.Find("Gun Model").gameObject;
+        m_bulletOrigin = m_gunModel.transform.Find("Bullet Origin");
         m_audioOrigin = GetComponent<AudioSource>();
-        m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>(); 
+        m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>();
+
+        StopHolding();
     }
 
     //Called per frame
@@ -246,8 +248,8 @@ public class PlayerGun : MonoBehaviour
     {
         m_isHeld = true;
 
-        //Makes mesh visable
-        m_meshRenderer.enabled = true;
+        //Makes model visable
+        m_gunModel.SetActive(true);
 
         //Moves gun to hip 
         transform.localPosition = m_hipPos;
@@ -261,7 +263,7 @@ public class PlayerGun : MonoBehaviour
     public void StopHolding()
     {
         m_isHeld = false;
-        m_meshRenderer.enabled = false;
+        m_gunModel.SetActive(false);
 
         //Resets reload if mid reload
         if (m_reloadProgress < m_reloadTime)
