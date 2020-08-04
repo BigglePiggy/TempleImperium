@@ -230,14 +230,31 @@ public class LightEnemyController : MonoBehaviour
     private void Movement()
     {
         //Variable Y height ground detector
-        RaycastHit[] downRay = Physics.RaycastAll(transform.position, -transform.up, 100);
-        if (downRay.Length > 0)
-        { m_groundYLevel = downRay[0].point.y; }
+        RaycastHit downRay;
+        RaycastHit upRay;
+
         float targetSwitchDistance = 0.4f;
-        if (Mathf.Abs(m_groundYLevel + m_heightTarget - transform.position.y) < targetSwitchDistance)
+        if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
-            m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
+            m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y + m_maximumHeight);
         }
+
+        if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))  
+        {
+            if (m_heightTarget < downRay.point.y)
+            {
+                m_heightTarget = Random.Range(downRay.point.y, transform.position.y + m_maximumHeight);
+            }
+        }
+
+        if (Physics.Raycast(transform.position, Vector3.up, out upRay, 100)) 
+        {
+            if (m_heightTarget > upRay.point.y)
+            {
+                m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, upRay.point.y);
+            }
+        }
+
 
         //Is being pointed at by the player's gun
         RaycastHit hit = new RaycastHit();
