@@ -240,7 +240,7 @@ public class LightEnemyController : MonoBehaviour
         RaycastHit downRay;
         RaycastHit upRay;
 
-        float targetSwitchDistance = 0.4f;
+        float targetSwitchDistance = 0.6f;
         if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
             m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y + m_maximumHeight);
@@ -250,7 +250,7 @@ public class LightEnemyController : MonoBehaviour
         {
             if (m_heightTarget < downRay.point.y)
             {
-                m_heightTarget = Random.Range(downRay.point.y, transform.position.y + m_maximumHeight);
+                m_heightTarget = Random.Range(transform.position.y, transform.position.y + m_maximumHeight);
             }
         }
 
@@ -258,7 +258,7 @@ public class LightEnemyController : MonoBehaviour
         {
             if (m_heightTarget > upRay.point.y)
             {
-                m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, upRay.point.y);
+                m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y);
             }
         }
 
