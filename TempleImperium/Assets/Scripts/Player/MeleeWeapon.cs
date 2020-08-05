@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//written by Eddie
+
 public class MeleeWeapon : MonoBehaviour
 {
     //Melee weapon script

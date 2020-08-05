@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//written by Eddie
+
 public class Grenade : MonoBehaviour
 {
     ////Declarations

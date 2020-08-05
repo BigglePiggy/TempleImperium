@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//written by Eddie
+
 public class HeavyProjectile : MonoBehaviour
 {
     public float m_startLifetime;

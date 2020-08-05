@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 
 //written by Ase
-
+//deprecated!!!
 
 
 public class ActorBase : MonoBehaviour

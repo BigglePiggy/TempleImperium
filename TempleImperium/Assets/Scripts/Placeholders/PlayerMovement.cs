@@ -5,6 +5,7 @@ using UnityEngine;
 
 
 //written by Ase
+//deprecated!!
 
 
 
