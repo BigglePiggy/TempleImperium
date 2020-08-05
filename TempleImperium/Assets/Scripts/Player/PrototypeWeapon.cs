@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//written by Eddie
+
+
 public class PrototypeWeapon : MonoBehaviour
 {
     public float m_chargeUpTime;
