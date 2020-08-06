@@ -47,13 +47,6 @@ public class PlayerController : MonoBehaviour
     public float m_crouchSpeed;
     [Space]
 
-    [Header("Sound Effects")]
-    [Tooltip("Effect played when the player jumps")]
-    public AudioClip jumpClip;
-    [Tooltip("Effect played when the player is hit by an enemy")]
-    public AudioClip hitClip;
-    [Space]
-
     [Header("Player Physics")]
     [Tooltip("Downward force the player experiences")]
     public float m_gravity;
@@ -626,7 +619,7 @@ public class PlayerController : MonoBehaviour
         {
             return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
         }
-        catch (System.NullReferenceException e)
+        catch (System.NullReferenceException  e)
         {
             m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();
             m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();

@@ -35,6 +35,8 @@ public class Bug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
+
         if(m_chasing == false && m_attached == false) 
         {
             m_lifetimeTimer -= Time.deltaTime;
@@ -43,10 +45,16 @@ public class Bug : MonoBehaviour
             { Destroy(gameObject); }
         }
 
-        if (m_chasing && m_attached == false) 
+        try
         {
-            m_bugRb.AddForce((m_targetEnemy.position - transform.position).normalized * (m_chaseForce * Time.deltaTime * 100));
+            if (m_chasing && m_attached == false)
+            {
+                m_bugRb.AddForce((m_targetEnemy.position - transform.position).normalized * (m_chaseForce * Time.deltaTime * 100));
+            }
         }
+        catch (MissingReferenceException e)
+        { Destroy(gameObject); }
+
 
         if (m_attached) 
         {
