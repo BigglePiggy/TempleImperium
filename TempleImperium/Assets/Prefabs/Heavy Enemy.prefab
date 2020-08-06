@@ -285,9 +285,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_startingHealth: 10
-  m_viewDistance: 22
+  m_viewDistance: 18
   m_stopDistance: 15
-  m_shootingDistance: 15
+  m_shootingDistance: 16
   m_fireRate: 4
   m_accuracyOffset: {x: 0, y: 0, z: 0}
   m_relativeShotForce: {x: 0, y: 400, z: 350}
