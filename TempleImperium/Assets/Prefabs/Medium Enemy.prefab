@@ -5082,12 +5082,11 @@ MonoBehaviour:
   m_fireRate: 1.5
   m_accuracyOffset: {x: 1.3, y: 0.25, z: 0.5}
   m_shotDamage: 1
-  m_shotEffect: {fileID: 8300000, guid: b0b9bfda809df7b4d8108dcf4cddedc6, type: 3}
   m_gravity: 15
-  m_acceleration: {x: 15, y: 0, z: 15}
+  m_acceleration: {x: 12, y: 0, z: 12}
   m_verticalLimit: 5
-  m_horizontalLimit: 9
-  m_horizontalDrag: {x: 0.8, y: 0, z: 0.8}
+  m_horizontalLimit: 3.25
+  m_horizontalDrag: {x: 1.25, y: 0, z: 1.25}
   m_airHorizontalDrag: {x: 0.3, y: 0, z: 0.3}
   m_bodyRotateSpeed: 2
   m_headRotateSpeed: 2
