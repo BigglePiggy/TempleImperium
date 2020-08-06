@@ -32,7 +32,9 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Buffer in seconds between defensive ability uses")]
     public float m_defensiveCooldown;
     [Tooltip("Prefab of the defenisve ability greande")]
-    public GameObject grenade;
+    public GameObject m_grenade;
+    [Tooltip("Prefab of the offensive ability bugs")]
+    public GameObject m_bug;
     [Tooltip("number of seconds between player dying and the main menu being shown")]
     public float m_deathToMenuDuration;
     [Space]
@@ -106,7 +108,7 @@ public class PlayerController : MonoBehaviour
     HUDController m_hudController;      //Reference to Hud Controller script - Display values are passed
 
     Transform m_playerCamera;   //Player's POV camera
-    Transform m_grenadeOrigin;  //Defensive ability grenade origin  
+    Transform m_abilityOrigin;  //Defensive ability grenade origin  
     #endregion
 
 
@@ -120,7 +122,7 @@ public class PlayerController : MonoBehaviour
         m_playerRb = GetComponent<Rigidbody>();     //Rigidbody reference
         m_audioOrigin = GetComponent<AudioSource>();    //AudioSource reference
         m_playerCamera = transform.Find("Player Camera");   //Player Camera reference
-        m_grenadeOrigin = transform.Find("Player Camera").transform.Find("Grenade Origin"); //Grenade Origin reference
+        m_abilityOrigin = transform.Find("Player Camera").transform.Find("Ability Origin"); //Grenade Origin reference
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
@@ -335,12 +337,12 @@ public class PlayerController : MonoBehaviour
 
     private void OffensiveAbility()
     {
-
+        Instantiate(m_bug, m_abilityOrigin.position, m_abilityOrigin.rotation);
     }
 
     private void DefensiveAbility()
     {
-        Instantiate(grenade, m_grenadeOrigin.position, m_grenadeOrigin.rotation);
+        Instantiate(m_grenade, m_abilityOrigin.position, m_abilityOrigin.rotation);
     }
     #endregion
 

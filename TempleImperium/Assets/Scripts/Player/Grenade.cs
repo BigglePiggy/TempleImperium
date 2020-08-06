@@ -8,33 +8,33 @@ public class Grenade : MonoBehaviour
 {
     ////Declarations
     //Public
-    public float initalForce;
-    public float explosionTimer;
-    public float explosionPower;
-    public float explosionRadius;
+    public float m_initalForce;
+    public float m_explosionTimer;
+    public float m_explosionPower;
+    public float m_explosionRadius;
 
     //Private
-    private float currentTimer;
-    private bool timerRunning;
-    private Rigidbody grenadeRb;
+    private float m_currentTimer;
+    private bool m_timerRunning;
+    private Rigidbody m_grenadeRb;
 
     //Initalization
     void Start()
     {
-        currentTimer = 0;
-        timerRunning = false;
-        grenadeRb = GetComponent<Rigidbody>();
-        grenadeRb.AddForce(transform.forward * initalForce, ForceMode.Force);
+        m_currentTimer = 0;
+        m_timerRunning = false;
+        m_grenadeRb = GetComponent<Rigidbody>();
+        m_grenadeRb.AddForce(transform.forward * m_initalForce, ForceMode.Force);
     }
 
     //Called per frame
     void Update()
     {
-        if (timerRunning) 
+        if (m_timerRunning) 
         {
-            currentTimer += Time.deltaTime;
+            m_currentTimer += Time.deltaTime;
 
-            if(currentTimer >= explosionTimer) 
+            if(m_currentTimer >= m_explosionTimer) 
             { _explode(); }
         }
     }
@@ -42,7 +42,7 @@ public class Grenade : MonoBehaviour
     //Explode
     public void _explode()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, explosionRadius);
+        Collider[] colliders = Physics.OverlapSphere(transform.position, m_explosionRadius);
 
         foreach (Collider closeObject in colliders)
         {
@@ -51,7 +51,7 @@ public class Grenade : MonoBehaviour
                 Rigidbody rb = closeObject.GetComponent<Rigidbody>();
 
                 if (rb != null) 
-                {closeObject.GetComponent<Rigidbody>().AddExplosionForce(explosionPower, transform.position, explosionRadius);}
+                {closeObject.GetComponent<Rigidbody>().AddExplosionForce(m_explosionPower, transform.position, m_explosionRadius);}
             }
         }
 
@@ -61,13 +61,13 @@ public class Grenade : MonoBehaviour
     ////Collision detection
     private void OnCollisionEnter(Collision collision)
     {
-        if (timerRunning == false)
+        if (m_timerRunning == false)
         {
             if (collision.collider.transform.root.CompareTag("Enemy"))
             { _explode(); }
 
             if (collision.collider.transform.root.CompareTag("Player") == false)
-            { timerRunning = true; }
+            { m_timerRunning = true; }
         }   
     }
 }

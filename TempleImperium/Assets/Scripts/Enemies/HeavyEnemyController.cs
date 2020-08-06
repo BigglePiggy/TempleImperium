@@ -84,6 +84,7 @@ public class HeavyEnemyController : MonoBehaviour
 
     bool m_playerInSight;       //True when player is in (unobstruced) view
     float m_timeSinceLastShot;  //Manages gun firerate by tracking time since last shot
+    float m_stunnedTimer;  
 
     bool m_pointedAt;
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
@@ -139,14 +140,19 @@ public class HeavyEnemyController : MonoBehaviour
         m_moving = true;
         m_playerInSight = false;
         m_timeSinceLastShot = 0;
+        m_stunnedTimer = 0;
     }
 
     //Called per frame
     void Update()
     {
         PlayerInSight();
-        Turning();
-        Shooting();
+        if (m_stunnedTimer <= 0)
+        {
+            Turning();
+            Shooting();
+        }
+        else { m_stunnedTimer -= Time.deltaTime; }
         PathUpdate();
         PathRead();
     }
@@ -155,7 +161,8 @@ public class HeavyEnemyController : MonoBehaviour
     private void FixedUpdate()
     {
         ExtremityCheck();
-        Movement();
+        if (m_stunnedTimer <= 0)
+        { Movement(); }
         Gravity();
         LinearDrag();
         VelocityLimits();
@@ -399,6 +406,11 @@ public class HeavyEnemyController : MonoBehaviour
         if (m_onSlope)
         { m_applyGravity = false; }
         else { m_applyGravity = true; }
+    }
+
+    public void Stun(float input_stunTime) 
+    {
+        m_stunnedTimer = input_stunTime;
     }
     #endregion
 

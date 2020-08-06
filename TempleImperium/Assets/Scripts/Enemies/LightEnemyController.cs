@@ -83,6 +83,8 @@ public class LightEnemyController : MonoBehaviour
 
     GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
 
+    float m_stunnedTimer;
+
     bool m_pointedAt;
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
     public void PointedAt(Transform bulletOrigin)
@@ -138,13 +140,18 @@ public class LightEnemyController : MonoBehaviour
 
         m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         m_attackTimer = m_attackRate;
+        m_stunnedTimer = 0;
     }
 
     //Called per frame
     void Update()
     {
         PlayerInSight();
-        Turning();
+        if (m_stunnedTimer <= 0)
+        {
+            Turning();
+        }
+        else { m_stunnedTimer -= Time.deltaTime; }
         PathUpdate();
         PathRead();
     }
@@ -152,7 +159,8 @@ public class LightEnemyController : MonoBehaviour
     //Fixed update
     private void FixedUpdate()
     {
-        Movement();
+        if (m_stunnedTimer <= 0)
+        { Movement(); }
         Gravity();
         LinearDrag();
         VelocityLimits();
@@ -452,6 +460,11 @@ public class LightEnemyController : MonoBehaviour
     private void Gravity()
     {
         m_enemyRb.AddForce(Vector3.down * m_gravity, ForceMode.Acceleration);
+    }
+
+    public void Stun(float input_stunTime)
+    {
+        m_stunnedTimer = input_stunTime;
     }
     #endregion
 
