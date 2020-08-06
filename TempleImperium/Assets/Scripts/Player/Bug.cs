@@ -7,6 +7,7 @@ public class Bug : MonoBehaviour
     ////Declarations
     //Public
     public float m_initalForce;
+    public Vector2 m_initalOffset;
     public float m_lifetime;
     public float m_stunTime;
     public float m_chaseForce;
@@ -28,6 +29,7 @@ public class Bug : MonoBehaviour
 
         m_bugRb = GetComponent<Rigidbody>();
         m_bugRb.AddForce(transform.forward * m_initalForce);
+        m_bugRb.AddRelativeForce(new Vector3(Random.Range(-m_initalOffset.x, m_initalOffset.x), Random.Range(-m_initalOffset.y / 2, m_initalOffset.y), 0));
     }
 
     // Update is called once per frame
@@ -66,11 +68,11 @@ public class Bug : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(m_chasing && m_attached == false && collision.transform == m_targetEnemy) 
+        if(m_chasing && m_attached == false && collision.transform.CompareTag("Enemy")) 
         {
             m_attached = true;
-            transform.parent = m_targetEnemy;
-            m_targetEnemy.SendMessage("Stun", m_stunTime);
+            transform.parent = collision.transform;
+            collision.transform.SendMessage("Stun", m_stunTime);
             Destroy(m_bugRb);
         }
     }

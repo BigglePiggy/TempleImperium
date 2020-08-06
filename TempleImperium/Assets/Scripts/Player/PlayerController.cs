@@ -29,6 +29,8 @@ public class PlayerController : MonoBehaviour
     public float m_downAngleLimit;
     [Tooltip("Buffer in seconds between offensive ability uses")]
     public float m_offensiveCooldown;
+    [Tooltip("Number of bugs created on offensive ability use")]
+    public float m_offensiveBugCount;
     [Tooltip("Buffer in seconds between defensive ability uses")]
     public float m_defensiveCooldown;
     [Tooltip("Prefab of the defenisve ability greande")]
@@ -351,14 +353,23 @@ public class PlayerController : MonoBehaviour
         { m_playerCapsule.height += m_crouchSpeed * (Time.deltaTime * 100); }
     }
 
-    private void OffensiveAbility()
-    {
-        Instantiate(m_bug, m_abilityOrigin.position, m_abilityOrigin.rotation);
-    }
-
     private void DefensiveAbility()
     {
         Instantiate(m_grenade, m_abilityOrigin.position, m_abilityOrigin.rotation);
+    }
+
+    private void OffensiveAbility()
+    {
+        float delay = 0.2f;
+        for (int i = 0; i < m_offensiveBugCount; i++)
+        {
+            Invoke("CreateBug", delay * i + delay);
+        }
+    }
+
+    private void CreateBug() 
+    {
+        Instantiate(m_bug, m_abilityOrigin.position, m_abilityOrigin.rotation);
     }
     #endregion
 
