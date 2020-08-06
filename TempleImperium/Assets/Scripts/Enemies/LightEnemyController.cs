@@ -89,6 +89,7 @@ public class LightEnemyController : MonoBehaviour
     { m_pointedAtBulletOrigin = bulletOrigin; }
 
     float m_heightTarget;
+    float m_groundLevel;
 
     float m_attackTimer;
     float m_currentHealth;      //Current Health
@@ -177,7 +178,7 @@ public class LightEnemyController : MonoBehaviour
     {
         if (m_path != null)
         {
-            if (m_path.Peek() != transform.position)
+            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > 2f)
             {
                 m_nextNode = m_path.Peek();
             }
@@ -240,29 +241,33 @@ public class LightEnemyController : MonoBehaviour
     {
         //Variable Y height ground detector
         RaycastHit downRay;
-        RaycastHit upRay;
 
         float targetSwitchDistance = 0.6f;
+        if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))
+        {
+            m_groundLevel = downRay.point.y;
+        }
+
         if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
-            m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y + m_maximumHeight);
+            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
         }
 
-        if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))  
-        {
-            if (m_heightTarget < downRay.point.y)
-            {
-                m_heightTarget = Random.Range(transform.position.y, transform.position.y + m_maximumHeight);
-            }
-        }
+        //if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))  
+        //{
+        //    if (m_heightTarget < downRay.point.y)
+        //    {
+        //        m_heightTarget = Random.Range(transform.position.y, transform.position.y + m_maximumHeight);
+        //    }
+        //}
 
-        if (Physics.Raycast(transform.position, Vector3.up, out upRay, 100)) 
-        {
-            if (m_heightTarget > upRay.point.y)
-            {
-                m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y);
-            }
-        }
+        //if (Physics.Raycast(transform.position, Vector3.up, out upRay, 100)) 
+        //{
+        //    if (m_heightTarget > upRay.point.y)
+        //    {
+        //        m_heightTarget = Random.Range(transform.position.y - m_minimumHeight, transform.position.y);
+        //    }
+        //}
 
 
         //Is being pointed at by the player's gun
