@@ -255,9 +255,11 @@ public class MediumEnemyController : MonoBehaviour
 
     public void PathRead()
     {
+        float m_nodeSwitchDistance = 2f;
+
         if (m_path != null)
         {
-            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > 2f)
+            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > m_nodeSwitchDistance && m_path.Count > 1)
             {
                 m_nextNode = m_path.Peek();
             }
@@ -458,7 +460,7 @@ public class MediumEnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(1);
-            m_AmmoDropController.RollDropChanceAtPosition(gameObject.transform.position);
+            m_AmmoDropController.RollDropChanceAtPosition(transform.position);
         }
         else
         { m_currentHealth -= change; }

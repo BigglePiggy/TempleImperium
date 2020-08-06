@@ -184,9 +184,11 @@ public class LightEnemyController : MonoBehaviour
 
     public void PathRead()
     {
+        float m_nodeSwitchDistance = 2f;
+
         if (m_path != null)
         {
-            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > 2f)
+            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > m_nodeSwitchDistance && m_path.Count > 1)
             {
                 m_nextNode = m_path.Peek();
             }
@@ -342,7 +344,7 @@ public class LightEnemyController : MonoBehaviour
                 //Attacking & not yet hit
                 if (m_isAttacking && m_playerHasBeenHit == false)
                 {
-                    Vector3 target = new Vector3(m_nextNode.x, m_heightTarget, m_nextNode.z);
+                    Vector3 target = new Vector3(m_nextNode.x, m_player.position.y, m_nextNode.z);
                     m_enemyRb.AddForce((target - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
                 }
 
@@ -476,7 +478,7 @@ public class LightEnemyController : MonoBehaviour
         {
             Destroy(this.gameObject);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
-            m_AmmoDropController.RollDropChanceAtPosition(gameObject.transform.position);
+            m_AmmoDropController.RollDropChanceAtPosition(transform.position);
         }
         else
         { m_currentHealth -= change; }
