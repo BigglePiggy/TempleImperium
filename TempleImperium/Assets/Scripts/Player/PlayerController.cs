@@ -117,7 +117,8 @@ public class PlayerController : MonoBehaviour
     HUDController m_hudController;      //Reference to Hud Controller script - Display values are passed
 
     Transform m_playerCamera;   //Player's POV camera
-    Transform m_abilityOrigin;  //Defensive ability grenade origin  
+    Transform m_abilityOrigin;  //Defensive ability grenade origin
+    SoundManager m_soundManager;
     #endregion
 
 
@@ -144,6 +145,7 @@ public class PlayerController : MonoBehaviour
         m_meleeWeapon = transform.Find("Player Camera").transform.Find("Melee Weapon").GetComponent<MeleeWeapon>(); //Melee weapon script reference
 
         m_hudController = GameObject.Find("HUD").GetComponent<HUDController>(); //Hud Controller script reference
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
 
         m_primaryGun.StartHolding();   //Primary gun configured to be held
 
@@ -218,6 +220,7 @@ public class PlayerController : MonoBehaviour
             m_primaryGun.StartHolding();
             m_secondaryGun.StopHolding();
             m_prototypeWeapon.StopHolding();
+            m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunEquip);
         }
 
         //Switch to secondary
@@ -226,7 +229,7 @@ public class PlayerController : MonoBehaviour
             m_primaryGun.StopHolding();
             m_secondaryGun.StartHolding();
             m_prototypeWeapon.StopHolding();
-
+            m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunEquip);
         }
 
         //Switch to prototype
@@ -307,7 +310,7 @@ public class PlayerController : MonoBehaviour
             m_playerRb.AddRelativeForce(Vector3.up * m_jumpPower);
             m_sinceLastJump = 0;
 
-            m_audioOrigin.PlayOneShot(jumpClip);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_playerJump);
         }
 
         //Jump buffer
@@ -560,18 +563,18 @@ public class PlayerController : MonoBehaviour
         if (m_health > 0)
         {
             m_health -= damage;
-            m_audioOrigin.PlayOneShot(hitClip);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_playerDamaged);
         }
 
         if (m_health <= 0)
         {
             GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
-            m_audioOrigin.PlayOneShot(hitClip);
         }
     }
 
     public void PlayerDeath()
     {
+        m_audioOrigin.PlayOneShot(m_soundManager.m_playerDeath);
         m_health = 0;
         m_primaryGun.StopHolding();
         m_secondaryGun.StopHolding();
@@ -635,6 +638,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.transform.CompareTag("AmmoBox"))
         {
+            m_audioOrigin.PlayOneShot(m_soundManager.m_playerAmmoBox);
             (int, int) ammo = collision.transform.GetComponent<AmmoBox>().GetAmmo();
             m_primaryGun.AddAmmo(ammo.Item1);
             m_secondaryGun.AddAmmo(ammo.Item2);

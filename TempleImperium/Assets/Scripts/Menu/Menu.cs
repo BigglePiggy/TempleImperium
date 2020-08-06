@@ -25,7 +25,7 @@ public class Menu : MonoBehaviour
     GameObject m_optionsPage;
 
     HUDController m_gameHUD;
-    GameObject[] a;
+    SoundManager m_soundManager;
 
     //Key change settings
     bool m_keyCaptureMode;
@@ -76,6 +76,8 @@ public class Menu : MonoBehaviour
 
         m_ySensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityY.ToString();
         m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
+
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
     }
 
     //Called per frame

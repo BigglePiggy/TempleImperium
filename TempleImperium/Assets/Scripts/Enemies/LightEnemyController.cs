@@ -100,6 +100,7 @@ public class LightEnemyController : MonoBehaviour
     Rigidbody m_enemyRb;        //Rigidbody component
     AudioSource m_audioSource;  //Audio source component       
     AmmoDropController m_AmmoDropController;    //ammo drop controller reference
+    SoundManager m_soundManager;
     #endregion
 
 
@@ -131,6 +132,7 @@ public class LightEnemyController : MonoBehaviour
         m_player = GameObject.FindGameObjectWithTag("Player").transform;
         m_audioSource = GetComponent<AudioSource>();
         m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -477,12 +479,16 @@ public class LightEnemyController : MonoBehaviour
     {
         if (m_currentHealth - change <= 0)
         {
-            Destroy(this.gameObject);
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDeath);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
             m_AmmoDropController.RollDropChanceAtPosition(transform.position);
+            Destroy(this.gameObject);
         }
         else
-        { m_currentHealth -= change; }
+        { 
+            m_currentHealth -= change;
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDamaged);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -493,6 +499,7 @@ public class LightEnemyController : MonoBehaviour
             {
                 m_playerHasBeenHit = true;
                 collision.transform.GetComponent<PlayerController>().TakeDamage(m_attackDamage);
+                m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyAttack);
 
                 if (m_starstone == GameLogic.StarstoneElement.Arc)
                 {

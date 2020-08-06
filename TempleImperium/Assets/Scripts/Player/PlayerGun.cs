@@ -18,6 +18,8 @@ public class PlayerGun : MonoBehaviour
 
     #region Declarations
     [Header("Gun Configuration")]
+    [Tooltip("Used to determine sound effects played")]
+    public bool m_isPrimaryWeapon;
     [Tooltip("Toggles between the gun being automatic or semi-automatic")]
     public bool m_automatic;
     [Tooltip("Minimum time between shots in seconds")]
@@ -53,12 +55,6 @@ public class PlayerGun : MonoBehaviour
     public float m_recoilControl;
     [Space]
 
-    [Header("Sound Effects")]
-    [Tooltip("Effect played when a shot is fired")]
-    public AudioClip shotEffect;
-    [Tooltip("Effect played reloading")]
-    public AudioClip reloadEffect;
-
 
     //ADS variables
     bool m_left;                //True when gun moving towards ADS position 
@@ -77,6 +73,7 @@ public class PlayerGun : MonoBehaviour
 
     PlayerController m_playerController;    //Reference to Player Controller script - Recoil values are passed 
     HUDController m_hudController;          //Reference to Hud Controller script - Display values are passed
+    SoundManager m_soundManager;
 
     AudioSource m_audioOrigin;              //Audio origin component
     GameObject m_gunModel;                  //Mesh renderer component - used to make gun invisible when not in use
@@ -105,6 +102,7 @@ public class PlayerGun : MonoBehaviour
         m_bulletOrigin = m_gunModel.transform.Find("Bullet Origin");
         m_audioOrigin = GetComponent<AudioSource>();
         m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>();
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
 
         StopHolding();
     }
@@ -148,7 +146,6 @@ public class PlayerGun : MonoBehaviour
             {
                 m_currentMagCapacity--;
                 m_timeSinceLastShot = 0;
-                m_audioOrigin.PlayOneShot(shotEffect);
 
                 RaycastHit hit;
                 if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
@@ -165,7 +162,21 @@ public class PlayerGun : MonoBehaviour
 
                 m_bulletParticleSystem.Emit(1);
                 m_playerController.ShotFired();
+
+                if (m_isPrimaryWeapon)
+                { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunFire); }
+                else
+                { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunFire); }
             }
+        }
+
+        //Dry fire
+        else if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyFire))
+        {
+            if (m_isPrimaryWeapon)
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunDryFire); }
+            else
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunDryFire); }
         }
 
         //Reload
@@ -180,7 +191,10 @@ public class PlayerGun : MonoBehaviour
 
             m_currentMagCapacity = m_maxMagCapacity;
 
-            m_audioOrigin.PlayOneShot(reloadEffect);
+            if (m_isPrimaryWeapon)
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunReload); }
+            else
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunReload); }
         }
 
         //Aim Down Sight

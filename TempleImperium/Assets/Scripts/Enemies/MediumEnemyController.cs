@@ -40,10 +40,6 @@ public class MediumEnemyController : MonoBehaviour
     [Tooltip("Shot damage applied to player when hit")]
     public float m_shotDamage;
 
-    [Header("Sound Effects")]
-    [Tooltip("Effect played when the enemy shoots")]
-    public AudioClip m_shotEffect;
-
     [Header("Enemy Physics")]
     [Tooltip("Downward force the enemy experiences")]
     public float m_gravity;
@@ -105,6 +101,7 @@ public class MediumEnemyController : MonoBehaviour
     AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
     ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
+    SoundManager m_soundManager;
     #endregion
 
 
@@ -139,6 +136,7 @@ public class MediumEnemyController : MonoBehaviour
         m_bulletOrigin = m_enemyHead.Find("Bullet Origin");
         m_bulletParticleSystem = m_bulletOrigin.GetComponent<ParticleSystem>();
         m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
@@ -231,7 +229,7 @@ public class MediumEnemyController : MonoBehaviour
             }
 
             m_timeSinceLastShot = 0;
-            m_audioSource.PlayOneShot(m_shotEffect);
+
             m_bulletOrigin.LookAt(target);
             m_bulletParticleSystem.Emit(1);
         }

@@ -41,10 +41,6 @@ public class HeavyEnemyController : MonoBehaviour
     public GameObject m_heavyProjectile;
     [Space]
 
-    [Header("Sound Effects")]
-    [Tooltip("Effect played when the enemy shoots")]
-    public AudioClip m_shotEffect;
-
     [Header("Enemy Physics")]
     [Tooltip("Downward force the enemy experiences")]
     public float m_gravity;
@@ -98,6 +94,7 @@ public class HeavyEnemyController : MonoBehaviour
     AudioSource m_audioSource;  //Audio source component
     AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     Transform m_bulletOrigin;   //Reference to editor positioned bullet origin
+    SoundManager m_soundManager;
     #endregion
 
 
@@ -131,6 +128,7 @@ public class HeavyEnemyController : MonoBehaviour
         m_audioSource = GetComponent<AudioSource>();
         m_bulletOrigin = transform.Find("Bullet Origin");
         m_AmmoDropController = GameObject.Find("AmmoDropController").GetComponent<AmmoDropController>();
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
 
         //Variable assignment
         m_path = new Stack<Vector3>();
