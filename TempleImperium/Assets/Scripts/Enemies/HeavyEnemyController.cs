@@ -222,7 +222,7 @@ public class HeavyEnemyController : MonoBehaviour
     {
         if (m_path != null)
         {
-            if (m_path.Peek() != transform.position)
+            if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > 2f)
             {
                 m_nextNode = m_path.Peek();
             }
