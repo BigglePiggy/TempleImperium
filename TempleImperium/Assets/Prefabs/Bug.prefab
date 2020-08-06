@@ -141,4 +141,4 @@ MonoBehaviour:
   m_initalOffset: {x: 225, y: 225}
   m_lifetime: 10
   m_stunTime: 3
-  m_chaseForce: 60
+  m_chaseForce: 30
