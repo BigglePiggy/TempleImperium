@@ -37,6 +37,12 @@ public class PlayerController : MonoBehaviour
     public GameObject m_bug;
     [Tooltip("number of seconds between player dying and the main menu being shown")]
     public float m_deathToMenuDuration;
+    [Tooltip("Default player height")]
+    public float m_defaultHeight;
+    [Tooltip("Crouching player height")]
+    public float m_crouchHeight;
+    [Tooltip("Crouching speed")]
+    public float m_crouchSpeed;
     [Space]
 
     [Header("Sound Effects")]
@@ -100,6 +106,7 @@ public class PlayerController : MonoBehaviour
     float m_health; //Current health
 
     Rigidbody m_playerRb;               //Rigidbody component
+    CapsuleCollider m_playerCapsule;    //Capsule collider component
     AudioSource m_audioOrigin;          //Audio source component
     PlayerGun m_primaryGun;             //Primary gun script
     PlayerGun m_secondaryGun;           //Secondary gun script
@@ -120,6 +127,7 @@ public class PlayerController : MonoBehaviour
         m_health = m_maximumHealth; //Health set to maximum
 
         m_playerRb = GetComponent<Rigidbody>();     //Rigidbody reference
+        m_playerCapsule = GetComponent<CapsuleCollider>();     //Rigidbody reference        
         m_audioOrigin = GetComponent<AudioSource>();    //AudioSource reference
         m_playerCamera = transform.Find("Player Camera");   //Player Camera reference
         m_abilityOrigin = transform.Find("Player Camera").transform.Find("Ability Origin"); //Grenade Origin reference
@@ -333,6 +341,14 @@ public class PlayerController : MonoBehaviour
 
         if (m_defensiveCurrentCooldown < m_defensiveCooldown)
         { m_defensiveCurrentCooldown += Time.deltaTime; }
+
+
+        //Crouching
+        if (Input.GetKey(GlobalValues.g_settings.m_kcKeyCrouch) && m_playerCapsule.height > m_crouchHeight)
+        { m_playerCapsule.height -= m_crouchSpeed * (Time.deltaTime * 100); }
+
+        else if (Input.GetKey(GlobalValues.g_settings.m_kcKeyCrouch) == false && m_playerCapsule.height < m_defaultHeight)
+        { m_playerCapsule.height += m_crouchSpeed * (Time.deltaTime * 100); }
     }
 
     private void OffensiveAbility()
@@ -462,10 +478,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ReduceDrag(float input_duration = 1f) 
+    public void ReduceDrag(float input_duration = 1f)
     {
         m_reducedDragDuration = input_duration;
-    } 
+    }
 
     private void LinearDrag()
     {
@@ -479,7 +495,7 @@ public class PlayerController : MonoBehaviour
         if (m_isGrounded == false)
         { drag = m_airHorizontalDrag; }
 
-        if(m_reducedDragDuration > 0) 
+        if (m_reducedDragDuration > 0)
         {
             m_reducedDragDuration -= Time.deltaTime;
             drag = m_reducedHorizontalDrag;
@@ -531,7 +547,7 @@ public class PlayerController : MonoBehaviour
     public void TakeDamage(float damage)
     {
         if (m_health > 0)
-        { 
+        {
             m_health -= damage;
             m_audioOrigin.PlayOneShot(hitClip);
         }
@@ -543,7 +559,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void PlayerDeath() 
+    public void PlayerDeath()
     {
         m_health = 0;
         m_primaryGun.StopHolding();
@@ -557,7 +573,7 @@ public class PlayerController : MonoBehaviour
         Invoke("LoadMenuScene", m_deathToMenuDuration);
     }
 
-    private void LoadMenuScene() 
+    private void LoadMenuScene()
     {
         GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().MainMenuButton();
     }
@@ -565,7 +581,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region HUD 
-    private void UpdateHUD() 
+    private void UpdateHUD()
     {
         m_hudController.PlayerHealth = m_health;
         m_hudController.PlayerHealthMax = m_maximumHealth;
@@ -580,7 +596,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region Ammo
-    public (int,int) GetPrimaryGunAmmo() 
+    public (int, int) GetPrimaryGunAmmo()
     {
         return (m_primaryGun.m_maxAmmoCount, m_primaryGun.GetAmmoCount());
     }
@@ -590,15 +606,15 @@ public class PlayerController : MonoBehaviour
         return (m_secondaryGun.m_maxAmmoCount, m_secondaryGun.GetAmmoCount());
     }
 
-    public (int,int) GetMagSizes() 
+    public (int, int) GetMagSizes()
     {
         try
         {
             return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
         }
-        catch(System.NullReferenceException e) 
+        catch (System.NullReferenceException e)
         {
-            m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();  
+            m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();
             m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();
             return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
         }
@@ -606,7 +622,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.transform.CompareTag("AmmoBox")) 
+        if (collision.transform.CompareTag("AmmoBox"))
         {
             (int, int) ammo = collision.transform.GetComponent<AmmoBox>().GetAmmo();
             m_primaryGun.AddAmmo(ammo.Item1);
