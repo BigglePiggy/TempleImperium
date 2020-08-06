@@ -257,7 +257,7 @@ public class MediumEnemyController : MonoBehaviour
     {
         float m_nodeSwitchDistance = 2f;
 
-        if (m_path != null)
+        if (m_path != null && m_path.Count > 0)
         {
             if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > m_nodeSwitchDistance && m_path.Count > 1)
             {
