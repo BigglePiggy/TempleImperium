@@ -70,10 +70,33 @@ public class Bug : MonoBehaviour
     {
         if(m_chasing && m_attached == false && collision.transform.CompareTag("Enemy")) 
         {
-            m_attached = true;
-            transform.parent = collision.transform;
-            collision.transform.SendMessage("Stun", m_stunTime);
-            Destroy(m_bugRb);
+            bool attach = false;
+
+            if (collision.transform.GetComponent<LightEnemyController>() != null)
+            {
+                if (collision.transform.GetComponent<LightEnemyController>().GetStunnedTimer() <= 0)
+                { attach = true; }
+            }
+
+            if (collision.transform.GetComponent<MediumEnemyController>() != null)
+            {
+                if (collision.transform.GetComponent<MediumEnemyController>().GetStunnedTimer() <= 0)
+                { attach = true; }
+            }
+
+            if (collision.transform.GetComponent<HeavyEnemyController>() != null)
+            {
+                if (collision.transform.GetComponent<HeavyEnemyController>().GetStunnedTimer() <= 0)
+                { attach = true; }
+            }
+
+            if (attach)
+            {
+                m_attached = true;
+                transform.parent = collision.transform;
+                collision.transform.SendMessage("Stun", m_stunTime);
+                Destroy(m_bugRb);
+            }
         }
     }
 }

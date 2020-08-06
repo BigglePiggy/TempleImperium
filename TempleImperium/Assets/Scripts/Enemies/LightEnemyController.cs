@@ -84,6 +84,7 @@ public class LightEnemyController : MonoBehaviour
     GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
 
     float m_stunnedTimer;
+    public float GetStunnedTimer() { return m_stunnedTimer; }
 
     bool m_pointedAt;
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit

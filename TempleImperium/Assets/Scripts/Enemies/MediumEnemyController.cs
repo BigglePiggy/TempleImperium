@@ -90,6 +90,7 @@ public class MediumEnemyController : MonoBehaviour
     bool m_playerInSight;       //True when player is in (unobstruced) view
     float m_timeSinceLastShot;  //Manages gun firerate by tracking time since last shot
     float m_stunnedTimer;
+    public float GetStunnedTimer() { return m_stunnedTimer; }
 
     bool m_pointedAt;
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
