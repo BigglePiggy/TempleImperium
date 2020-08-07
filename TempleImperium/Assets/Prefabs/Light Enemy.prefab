@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: 2492421611574489767}
   - component: {fileID: 362188967292295837}
   m_Layer: 0
-  m_Name: Mod_HeliBladeFinal
+  m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -514,14 +514,14 @@ MonoBehaviour:
   m_attackAcceleration: 34
   m_dodgeAcceleration: 50
   m_verticalLimit: 15
-  m_horizontalLimit: 40
-  m_drag: {x: 0.5, y: 0.5, z: 0.5}
-  m_rotateSpeed: 2
+  m_horizontalLimit: 38
+  m_drag: {x: 1.25, y: 1, z: 0.6}
+  m_rotateSpeed: 3
   m_maximumHeight: 6
-  m_minimumHeight: 0.5
+  m_minimumHeight: 0.75
   m_attackDistance: 7
   m_retreatDistance: 4.25
-  m_attackRate: 5
+  m_attackRate: 6
   m_attackDamage: 2
   m_powerPushback: 500
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}

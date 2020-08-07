@@ -5086,8 +5086,8 @@ MonoBehaviour:
   m_acceleration: {x: 20, y: 0, z: 20}
   m_verticalLimit: 5
   m_horizontalLimit: 7
-  m_horizontalDrag: {x: 1.15, y: 0, z: 1.15}
-  m_airHorizontalDrag: {x: 0.3, y: 0, z: 0.3}
+  m_horizontalDrag: {x: 2, y: 0, z: 1.15}
+  m_airHorizontalDrag: {x: 0.5, y: 0, z: 0.3}
   m_bodyRotateSpeed: 2
   m_headRotateSpeed: 2
   m_powerPushback: 140

@@ -14,5 +14,10 @@ public class JumpPad : MonoBehaviour
         {
             other.gameObject.GetComponent<Rigidbody>().AddForce(0, jumpForce, 0);       
         }
+
+        if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<Rigidbody>().AddForce(0, jumpForce / 2, 0);
+        }
     }
 }

@@ -80,9 +80,12 @@ public class LightEnemyController : MonoBehaviour
     bool m_isAttacking;         //When true, movement is applied
     bool m_playerInSight;       //True when player is in (unobstruced) view
     bool m_playerHasBeenHit;    //True when enemy hits into the player
+    bool m_alive;
+    bool m_deathHitEffectPlayed;
 
-    GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
-
+    float m_heightTarget;
+    float m_attackTimer;
+    float m_deadTimer;
     float m_stunnedTimer;
     public float GetStunnedTimer() { return m_stunnedTimer; }
 
@@ -91,10 +94,8 @@ public class LightEnemyController : MonoBehaviour
     public void PointedAt(Transform bulletOrigin)
     { m_pointedAtBulletOrigin = bulletOrigin; }
 
-    float m_heightTarget;
-    float m_groundLevel;
+    GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
 
-    float m_attackTimer;
     float m_currentHealth;      //Current Health
     Transform m_player;         //Player position reference
     Rigidbody m_enemyRb;        //Rigidbody component
@@ -140,29 +141,40 @@ public class LightEnemyController : MonoBehaviour
         m_isAttacking = false;
         m_playerInSight = false;
         m_pointedAt = false;
+        m_alive = true;
 
         m_heightTarget = Random.Range(m_minimumHeight, m_maximumHeight);
         m_attackTimer = m_attackRate;
         m_stunnedTimer = 0;
+        m_deadTimer = 0;
+        m_deathHitEffectPlayed = false;
     }
 
     //Called per frame
     void Update()
     {
         PlayerInSight();
-        if (m_stunnedTimer <= 0)
+        if (m_stunnedTimer <= 0 && m_alive)
         {
             Turning();
         }
         else { m_stunnedTimer -= Time.deltaTime; }
         PathUpdate();
         PathRead();
+
+        if (m_alive == false) 
+        {
+            if(m_deadTimer < 4) 
+            { m_deadTimer += Time.deltaTime; }
+            else 
+            { Destroy(gameObject); }
+        }
     }
 
     //Fixed update
     private void FixedUpdate()
     {
-        if (m_stunnedTimer <= 0)
+        if (m_stunnedTimer <= 0 && m_alive)
         { Movement(); }
         Gravity();
         LinearDrag();
@@ -258,22 +270,12 @@ public class LightEnemyController : MonoBehaviour
 
         float targetSwitchDistance = 0.6f;
         if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))
-        {
-            m_groundLevel = downRay.point.y;
-        }
+        {}
 
         if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)
         {
             m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
         }
-
-        //if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))  
-        //{
-        //    if (m_heightTarget < downRay.point.y)
-        //    {
-        //        m_heightTarget = Random.Range(transform.position.y, transform.position.y + m_maximumHeight);
-        //    }
-        //}
 
         if (Physics.Raycast(transform.position, Vector3.up, out upRay, 100))
         {
@@ -478,12 +480,16 @@ public class LightEnemyController : MonoBehaviour
     #region Health & Enemy State
     public void TakeDamage(float change)
     {
-        if (m_currentHealth - change <= 0)
+        if (m_currentHealth - change <= 0 && m_alive)
         {
-            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDeath);
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDeath, 0.3f);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
             m_AmmoDropController.RollDropChanceAtPosition(transform.position);
-            Destroy(this.gameObject);
+            m_alive = false;
+            m_gravity = 10;
+            m_enemyRb.constraints = RigidbodyConstraints.None;
+            m_enemyRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+            Destroy(transform.Find("Body").GetComponent<Animator>());
         }
         else
         { 
@@ -506,6 +512,23 @@ public class LightEnemyController : MonoBehaviour
                 {
                     collision.transform.GetComponent<PlayerController>().ReduceDrag();
                     collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback, ForceMode.Acceleration);
+                }
+            }
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (m_alive == false && m_deathHitEffectPlayed == false && Mathf.Abs(m_enemyRb.velocity.y) < 0.5f)
+        {
+            RaycastHit downRay;
+            if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))
+            {
+                if (Mathf.Abs(downRay.point.y - transform.position.y) < 2)
+                {
+                    m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyHitGround);
+                    Debug.Log("Played");
+                    m_deathHitEffectPlayed = true;
                 }
             }
         }
