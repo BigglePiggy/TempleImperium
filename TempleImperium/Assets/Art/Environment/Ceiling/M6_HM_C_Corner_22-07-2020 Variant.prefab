@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7049277241137857771}
   - component: {fileID: 400097481068670262}
   - component: {fileID: 4735461453094727783}
+  - component: {fileID: 3816473773508987176}
   m_Layer: 0
   m_Name: polySurface216
   m_TagString: Untagged
@@ -79,6 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &3816473773508987176
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991518074317752312}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 7696210516099459618, guid: 4b0cb2c2ca185304e8c6d25f88662583, type: 3}
 --- !u!1 &5121009677854544648
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +103,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5501898495011572146}
-  - component: {fileID: 6010953840853894780}
   m_Layer: 0
   m_Name: M6_HM_C_Corner_22-07-2020 Variant
   m_TagString: Untagged
@@ -111,20 +125,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &6010953840853894780
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5121009677854544648}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &9222655332783170369
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6042838693077333662}
   - component: {fileID: 1526088420142876848}
   - component: {fileID: 5953469207440343788}
+  - component: {fileID: 2685630310170442626}
   m_Layer: 0
   m_Name: polySurface5730
   m_TagString: Untagged
@@ -79,6 +80,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2685630310170442626
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458431561500821729}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 1311762566600193193, guid: 4c971771e82f77f48bf4ffa8c0e3f9d8, type: 3}
 --- !u!1 &2728931523327648452
 GameObject:
   m_ObjectHideFlags: 0
@@ -119,7 +134,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2474065805928133736}
-  - component: {fileID: 2962934327508807379}
   m_Layer: 0
   m_Name: base_of_brazier
   m_TagString: Untagged
@@ -145,20 +159,6 @@ Transform:
   m_Father: {fileID: 2728931523327648453}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &2962934327508807379
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2962934327508807378}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
 --- !u!1 &2962934328512337707
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,6 +201,7 @@ GameObject:
   - component: {fileID: 2474065807513034334}
   - component: {fileID: 1583716942689997307}
   - component: {fileID: 3611475008617899313}
+  - component: {fileID: 2647990470713428972}
   m_Layer: 0
   m_Name: kt_ti_brazier_tier_3
   m_TagString: Untagged
@@ -269,6 +270,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &2647990470713428972
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2962934329278285028}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.4545465, y: 0.19616753, z: 0.45277965}
+  m_Center: {x: 0.00016469508, y: 0, z: 0.00031994283}
 --- !u!1 &2962934329319034163
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +294,7 @@ GameObject:
   - component: {fileID: 2474065807474120585}
   - component: {fileID: 1583716942716360748}
   - component: {fileID: 3611475008577121510}
+  - component: {fileID: 1940528209361902990}
   m_Layer: 0
   m_Name: kt_ti_brazier_tier_4
   m_TagString: Untagged
@@ -348,6 +363,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &1940528209361902990
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2962934329319034163}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.46816576, y: 0.7436162, z: 0.46757567}
+  m_Center: {x: -0.0008119568, y: 0.98816925, z: -0.005672112}
 --- !u!1 &4527837598499475390
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,6 +387,7 @@ GameObject:
   - component: {fileID: 6279950404302600621}
   - component: {fileID: 5583954001038746212}
   - component: {fileID: 379375638304052336}
+  - component: {fileID: 6715584647028805046}
   m_Layer: 0
   m_Name: polySurface5739
   m_TagString: Untagged
@@ -427,3 +456,16 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6715584647028805046
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4527837598499475390}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7889563, y: 0.4464743, z: 0.77765644}
+  m_Center: {x: -0.00022017956, y: -0.0000009760261, z: -0.00021113455}
