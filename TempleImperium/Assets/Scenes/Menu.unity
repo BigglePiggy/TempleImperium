@@ -99,7 +99,7 @@ LightmapSettings:
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 112000000, guid: e7628e2a7ec41ce49953a3cbe23fb113,
     type: 2}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6643,6 +6643,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2124437354}
   m_CullTransparentMesh: 0
+--- !u!1 &2125829805
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2125829807}
+  - component: {fileID: 2125829806}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Sound Manager
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2125829806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125829805}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d6e9c0dfd388344bb56d2877e6f1105, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_primaryGunEquip: {fileID: 8300000, guid: afbb2a9c2ea7c814196b53389538f20d, type: 3}
+  m_primaryGunFire: {fileID: 8300000, guid: 27b2ef707b36b20408a15d8b1c149fad, type: 3}
+  m_primaryGunDryFire: {fileID: 8300000, guid: 5861de9bf77f95340bf4bab50eed809e, type: 3}
+  m_primaryGunReload: {fileID: 8300000, guid: e00c6126b3b355e409df8ae4d2888dc7, type: 3}
+  m_secondaryGunEquip: {fileID: 8300000, guid: 168a76109c9411443b56af8c3cc47426, type: 3}
+  m_secondaryGunFire: {fileID: 8300000, guid: cb4b2fe047e09e5498365c94a1375623, type: 3}
+  m_secondaryGunDryFire: {fileID: 8300000, guid: 0af159ae52abd2c4e9e5f7a38919568e,
+    type: 3}
+  m_secondaryGunReload: {fileID: 8300000, guid: aaf7b47a54f6e1b459ecab681152c7c7,
+    type: 3}
+  m_playerJump: {fileID: 8300000, guid: a8b40c64cd30d8045bcab0bdd8059928, type: 3}
+  m_playerLand: {fileID: 8300000, guid: 13eb9bac1b2f75846b4e1179e18daafe, type: 3}
+  m_playerFootstep: {fileID: 8300000, guid: 7d26f9c8db9efcd4790de9b49213d995, type: 3}
+  m_playerDamaged: {fileID: 8300000, guid: e13ef4ff43e55bc43a756abaa34eb98d, type: 3}
+  m_playerDeath: {fileID: 8300000, guid: cf229db555743c44aaddac853ba1e9cc, type: 3}
+  m_playerLaunchPad: {fileID: 8300000, guid: 273487903b18b2b47a258d12948b04d3, type: 3}
+  m_playerAmmoBox: {fileID: 8300000, guid: 1d37891f7ff90d94c9fcaf19dc713a0a, type: 3}
+  m_pressOne: {fileID: 0}
+  m_pressTwo: {fileID: 0}
+  m_pressThree: {fileID: 0}
+  m_lightEnemyAttack: {fileID: 8300000, guid: 6444ef6ae19d09244ae962509ae6bd78, type: 3}
+  m_lightEnemyDamaged: {fileID: 8300000, guid: 2657c93feab919041bd05a4659f705bf, type: 3}
+  m_lightEnemyDeath: {fileID: 8300000, guid: 7be2f214888ab0c46af2af0bb777abd5, type: 3}
+  m_lightEnemyHitGround: {fileID: 8300000, guid: 62685d2e541f1924d8b8d1071e7bd8c7,
+    type: 3}
+  m_mediumEnemyShot: {fileID: 0}
+  m_mediumEnemyReload: {fileID: 0}
+  m_mediumEnemyDamaged: {fileID: 0}
+  m_mediumEnemyDeath: {fileID: 0}
+  m_heavyEnemyShot: {fileID: 0}
+  m_heavyEnemyDamaged: {fileID: 0}
+  m_heavyEnemyDeath: {fileID: 0}
+--- !u!4 &2125829807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2125829805}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 55.6, y: 2.9, z: 85.618614}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2140297471
 GameObject:
   m_ObjectHideFlags: 0
