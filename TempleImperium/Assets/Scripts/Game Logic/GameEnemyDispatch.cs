@@ -31,12 +31,14 @@ public class GameEnemyDispatch : MonoBehaviour
         List<Vector3> obscuredSpawnpoints = new List<Vector3>();
 
         //Finds & assigns spawnpoints that are not visible
-        int maxRayLength = 100;
         for (int i = 0; i < allSpawnpoints.Count; i++)
         {
             RaycastHit hit;
-            if (Physics.Raycast(player.position, allSpawnpoints[i].position - player.position, out hit, maxRayLength)) 
-            { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
+            if (Physics.Linecast(player.position, allSpawnpoints[i].position, out hit) ) 
+            {
+                if (hit.transform != allSpawnpoints[i])
+                { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
+            }
         }
 
         //Errors
@@ -47,7 +49,7 @@ public class GameEnemyDispatch : MonoBehaviour
         { Debug.Log("No spots"); }
 
         //Shuffles list of valid points
-        obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Random.value).ToList();
+        obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Vector3.Distance(x, player.position)).ToList();
 
         //Instantiates enemies at unquie spawnpoints
         for (int i = 0; i < input_numLight; i++)

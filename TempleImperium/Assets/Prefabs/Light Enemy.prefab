@@ -487,7 +487,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6699707245453531330}
   serializedVersion: 2
-  m_Mass: 4
+  m_Mass: 3
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -510,20 +510,20 @@ MonoBehaviour:
   m_startingHealth: 5
   m_viewDistance: 10
   m_gravity: 0
-  m_normalAcceleration: 20
-  m_attackAcceleration: 30
+  m_normalAcceleration: 27
+  m_attackAcceleration: 34
   m_dodgeAcceleration: 50
   m_verticalLimit: 15
-  m_horizontalLimit: 35
-  m_drag: {x: 1, y: 1, z: 1}
+  m_horizontalLimit: 40
+  m_drag: {x: 0.5, y: 0.5, z: 0.5}
   m_rotateSpeed: 2
   m_maximumHeight: 6
-  m_minimumHeight: 0.1
+  m_minimumHeight: 0.5
   m_attackDistance: 7
   m_retreatDistance: 4.25
-  m_attackRate: 4
+  m_attackRate: 5
   m_attackDamage: 2
-  m_powerPushback: 400
+  m_powerPushback: 500
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}
   matArc: {fileID: 2100000, guid: 024eb1d354d086a46bd84276828cfb07, type: 2}
   matHazard: {fileID: 2100000, guid: 83aed5f6bac1fe344bc2bbb2cdd3bd89, type: 2}
