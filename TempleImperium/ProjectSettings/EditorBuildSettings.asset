@@ -6,9 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Ase Expansion.unity
-    guid: 37f936a1aa33b1c44a84e5688a31157e
-  - enabled: 1
     path: Assets/Scenes/Menu.unity
     guid: d4e466657419b394d8551eefa9b58427
+  - enabled: 1
+    path: Assets/Scenes/Temple.unity
+    guid: 507132382130aba4d9b94c924048f82a
   m_configObjects: {}

@@ -107,7 +107,7 @@ public class Menu : MonoBehaviour
     #region Main Menu Actions
     public void StartButton()
     {
-        SceneManager.LoadScene("Ase Expansion");
+        SceneManager.LoadScene("Temple");
     }
 
     public void ExitButton()
