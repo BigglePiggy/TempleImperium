@@ -10,6 +10,8 @@ public class GameEnemyDispatch : MonoBehaviour
     //this script manages instantiating enemies.
 
     public GameObject lightEnemy, mediumEnemy, heavyEnemy;    //Enemy prefab
+    public float m_spawnpointVariation;
+    public float m_lineOfSightCheckRadius;
     private Transform player;   //Player transform 
     private List<Transform> allSpawnpoints;     //All spawnpoints
 
@@ -33,12 +35,17 @@ public class GameEnemyDispatch : MonoBehaviour
         //Finds & assigns spawnpoints that are not visible
         for (int i = 0; i < allSpawnpoints.Count; i++)
         {
-            RaycastHit hit;
-            if (Physics.Linecast(player.position, allSpawnpoints[i].position, out hit) ) 
+            if (Vector3.Distance(player.position, allSpawnpoints[i].position) < m_lineOfSightCheckRadius)
             {
-                if (hit.transform != allSpawnpoints[i])
-                { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
+                RaycastHit hit;
+                if (Physics.Linecast(player.position, allSpawnpoints[i].position, out hit))
+                {
+                    if (hit.transform != allSpawnpoints[i])
+                    { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
+                }
             }
+            else
+            { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
         }
 
         //Errors
@@ -50,6 +57,18 @@ public class GameEnemyDispatch : MonoBehaviour
 
         //Shuffles list of valid points
         obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Vector3.Distance(x, player.position)).ToList();
+
+        int totalEnemies = input_numLight + input_numMedium + input_numHeavy;
+        if (totalEnemies + totalEnemies * Mathf.CeilToInt(m_spawnpointVariation) > obscuredSpawnpoints.Count) 
+        {
+            //if total enemies + 25% extra is more than number of available points then use normal list
+        }
+        else 
+        {
+            //otherwise make the list the length of total + 25% and randomize it           
+            obscuredSpawnpoints.RemoveRange(Mathf.CeilToInt(obscuredSpawnpoints.Count * m_spawnpointVariation), obscuredSpawnpoints.Count - Mathf.CeilToInt(obscuredSpawnpoints.Count * m_spawnpointVariation));
+            obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Random.value).ToList();
+        }
 
         //Instantiates enemies at unquie spawnpoints
         for (int i = 0; i < input_numLight; i++)

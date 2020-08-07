@@ -131,8 +131,8 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.None;
+       // m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
         SceneManager.LoadScene("Menu");
-        m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
     }
     #endregion
 

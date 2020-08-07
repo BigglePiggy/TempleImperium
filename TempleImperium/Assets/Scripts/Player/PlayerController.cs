@@ -557,10 +557,13 @@ public class PlayerController : MonoBehaviour
         {
             m_health -= damage;
             m_audioOrigin.PlayOneShot(m_soundManager.m_playerDamaged);
+            if(m_health < 0) 
+            { m_health = 0; }
         }
 
-        if (m_health <= 0)
+        if(m_health <= 0 && m_health != -1)
         {
+            m_health = -1;
             GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
         }
     }
@@ -568,7 +571,6 @@ public class PlayerController : MonoBehaviour
     public void PlayerDeath()
     {
         m_audioOrigin.PlayOneShot(m_soundManager.m_playerDeath);
-        m_health = 0;
         m_primaryGun.StopHolding();
         m_secondaryGun.StopHolding();
         m_playerRb.constraints = RigidbodyConstraints.None;

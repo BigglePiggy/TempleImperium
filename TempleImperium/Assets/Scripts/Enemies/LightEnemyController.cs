@@ -268,7 +268,7 @@ public class LightEnemyController : MonoBehaviour
         RaycastHit downRay;
         RaycastHit upRay;
 
-        float targetSwitchDistance = 0.6f;
+        float targetSwitchDistance = 0.5f;
         if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))
         {}
 
@@ -281,8 +281,13 @@ public class LightEnemyController : MonoBehaviour
         {
             if (m_heightTarget > upRay.point.y - targetSwitchDistance)
             {
-                m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, upRay.point.y - targetSwitchDistance);
+                m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
             }
+        }
+
+        if (m_heightTarget < downRay.point.y + targetSwitchDistance)
+        {
+            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
         }
 
 
@@ -527,7 +532,6 @@ public class LightEnemyController : MonoBehaviour
                 if (Mathf.Abs(downRay.point.y - transform.position.y) < 2)
                 {
                     m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyHitGround);
-                    Debug.Log("Played");
                     m_deathHitEffectPlayed = true;
                 }
             }
