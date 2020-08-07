@@ -26,6 +26,7 @@ public class Menu : MonoBehaviour
 
     HUDController m_gameHUD;
     SoundManager m_soundManager;
+    AudioSource m_audioOrigin;
 
     //Key change settings
     bool m_keyCaptureMode;
@@ -45,6 +46,7 @@ public class Menu : MonoBehaviour
         m_mainPage = transform.Find("Main Page").gameObject;
         m_pausePage = transform.Find("Pause Page").gameObject;
         m_optionsPage = transform.Find("Options Page").gameObject;
+        m_audioOrigin = GetComponent<AudioSource>();
 
         //Assigns all default values to options text
         m_optionsPage.SetActive(true);
@@ -112,7 +114,7 @@ public class Menu : MonoBehaviour
 
     public void ExitButton()
     {
-
+        Application.Quit();
     }
     #endregion
 
@@ -130,6 +132,7 @@ public class Menu : MonoBehaviour
         Time.timeScale = 1.0f;
         Cursor.lockState = CursorLockMode.None;
         SceneManager.LoadScene("Menu");
+        m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
     }
     #endregion
 
@@ -139,6 +142,7 @@ public class Menu : MonoBehaviour
         m_mainPage.SetActive(false);
         m_pausePage.SetActive(false);      
         m_optionsPage.SetActive(true);
+        m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
     }
 
     public void ChangeYSensitivity(float change)
@@ -159,6 +163,7 @@ public class Menu : MonoBehaviour
             }
 
             m_ySensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityY.ToString();
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
         }
     }
 
@@ -180,6 +185,7 @@ public class Menu : MonoBehaviour
             }
 
             m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
         }
     }
 
@@ -190,6 +196,7 @@ public class Menu : MonoBehaviour
             m_keyCaptureMode = true;
             m_keyCaptureText = text;
         }
+        m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
     }
    
     private void OnGUI()    //On GUI event - Captures keys for settings
@@ -277,6 +284,8 @@ public class Menu : MonoBehaviour
             { m_mainPage.SetActive(true); }
 
             m_optionsPage.SetActive(false);
+
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
         }
     }
     #endregion   

@@ -44,6 +44,7 @@ public class Node : MonoBehaviour
     }
     #endregion
 
+#if UNITY_EDITOR
     #region Visual Display
     private void OnDrawGizmos()
     {
@@ -69,4 +70,5 @@ public class Node : MonoBehaviour
         Gizmos.DrawSphere(transform.position, 0.1f);
     }
     #endregion
+#endif
 }

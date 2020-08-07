@@ -19,7 +19,7 @@ public class SpriteBillboardEditor : MonoBehaviour
             Destroy(transform.gameObject);  //kill sprite
         }
     }
-
+#if UNITY_EDITOR
     void Update()
     {
         //Debug.Log("editor tick");
@@ -34,13 +34,12 @@ public class SpriteBillboardEditor : MonoBehaviour
     //https://forum.unity.com/threads/solved-how-to-force-update-in-edit-mode.561436/
     void OnDrawGizmos()
     {
-
-#if UNITY_EDITOR
         if (!Application.isPlaying)
         {
             UnityEditor.EditorApplication.QueuePlayerLoopUpdate();
             UnityEditor.SceneView.RepaintAll();
         }
-#endif
+
     }
+#endif
 }
