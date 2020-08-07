@@ -61,6 +61,8 @@ public class GamePylon : MonoBehaviour
                 GoDown();
 
                 //tell gamelogic to run pylon down function
+                if (oGameLogic == null)  
+                { oGameLogic = GameObject.Find("Game Logic"); }
                 oGameLogic.GetComponent<GameLogic>().WaveEventPylonLoweredByPlayer();
             }
         }
