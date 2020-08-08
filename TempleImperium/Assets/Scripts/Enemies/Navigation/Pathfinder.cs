@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using System.Linq;
 
 //Created by Eddie
 
@@ -31,32 +32,43 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-    public Node FindClosestCoveredNode(Vector3 target) 
+    public Node FindCoveredNode(Vector3 target, float range) 
     {
-        FindCoveredNodes();
+        List<Node> nodes = new List<Node>();
 
-        Node closestCoveredNode = null;
-        float smallestDistance = Mathf.Infinity;
+        FindCoveredNodes();
 
         for (int i = 0; i < m_coveredNodes.Count; i++)
         {
-            var distance = (m_coveredNodes[i].transform.position - target).magnitude;
-            if (distance < smallestDistance)
+            if ((m_coveredNodes[i].transform.position - m_player.position).magnitude < range)
             {
-                closestCoveredNode = m_coveredNodes[i].GetComponent<Node>();
-                smallestDistance = distance;
+                RaycastHit Ray;
+                if (Physics.Raycast(target, target - m_coveredNodes[i].position.normalized, out Ray, 1000)) 
+                {
+                    if (Ray.collider.CompareTag("Player") == false)
+                    {
+                        nodes.Add(m_coveredNodes[i].GetComponent<Node>());
+                    }
+                }
             }
+            
         }
-
-        return closestCoveredNode;
+        nodes = nodes.OrderBy(x => UnityEngine.Random.value).ToList();
+        return nodes[0];
     }
 
     private void FindCoveredNodes() 
     {
+        m_coveredNodes.Clear();
         for (int i = 0; i < m_nodes.Count; i++)
         {
-            if (Physics.Linecast(m_nodes[i].position, m_player.position) == false)
-            { m_coveredNodes.Add(m_nodes[i]); }
+            RaycastHit hit;
+            if (Physics.Linecast(m_nodes[i].position, m_player.position,out hit))
+            {
+                if (hit.collider.CompareTag("Player") == false)
+                { m_coveredNodes.Add(m_nodes[i]); }
+
+            }
         }
     }
 

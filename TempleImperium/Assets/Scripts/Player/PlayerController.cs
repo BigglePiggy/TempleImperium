@@ -561,7 +561,7 @@ public class PlayerController : MonoBehaviour
             m_audioOrigin.PlayOneShot(m_soundManager.m_playerDamaged);
         }
 
-        else if(m_alive)
+        else
         {
             GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
         }
@@ -569,17 +569,20 @@ public class PlayerController : MonoBehaviour
 
     public void PlayerDeath()
     {
-        m_audioOrigin.PlayOneShot(m_soundManager.m_playerDeath);
-        m_primaryGun.StopHolding();
-        m_secondaryGun.StopHolding();
-        m_playerRb.constraints = RigidbodyConstraints.None;
-        m_xDirection = "None";
-        m_zDirection = "None";
-        m_playerRb.AddForce(Random.Range(-10, 10), 0, Random.Range(-10, 10));
-        m_playerRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
-        m_alive = false;
+        if (m_alive)
+        {
+            m_audioOrigin.PlayOneShot(m_soundManager.m_playerDeath);
+            m_primaryGun.StopHolding();
+            m_secondaryGun.StopHolding();
+            m_playerRb.constraints = RigidbodyConstraints.None;
+            m_xDirection = "None";
+            m_zDirection = "None";
+            m_playerRb.AddForce(Random.Range(-10, 10), 0, Random.Range(-10, 10));
+            m_playerRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+            m_alive = false;
 
-        Invoke("LoadMenuScene", m_deathToMenuDuration);
+            Invoke("LoadMenuScene", m_deathToMenuDuration);
+        }
     }
 
     private void LoadMenuScene()

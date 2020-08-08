@@ -4958,7 +4958,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7995707737010115624}
   serializedVersion: 2
-  m_Mass: 4
+  m_Mass: 2.8
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0
@@ -5079,18 +5079,20 @@ MonoBehaviour:
   m_stopDistance: 4
   m_shootingDistance: 7
   m_maxShotDistance: 100
-  m_fireRate: 1.75
-  m_accuracyOffset: {x: 1.3, y: 0.25, z: 0.5}
-  m_shotDamage: 1
-  m_gravity: 10
-  m_acceleration: {x: 20, y: 0, z: 20}
-  m_verticalLimit: 5
-  m_horizontalLimit: 7
-  m_horizontalDrag: {x: 2, y: 0, z: 1.15}
-  m_airHorizontalDrag: {x: 0.5, y: 0, z: 0.3}
-  m_bodyRotateSpeed: 2
-  m_headRotateSpeed: 2
-  m_powerPushback: 140
+  m_fireRate: 0.8
+  m_magSize: 6
+  m_reloadTime: 7
+  m_accuracyOffset: {x: 1.5, y: 0.35, z: 0.5}
+  m_shotDamage: 0.75
+  m_gravity: 12
+  m_acceleration: {x: 14, y: 0, z: 18}
+  m_verticalLimit: 2
+  m_horizontalLimit: 6.25
+  m_horizontalDrag: {x: 2, y: 0, z: 2}
+  m_airHorizontalDrag: {x: 1, y: 0, z: 1}
+  m_bodyRotateSpeed: 4
+  m_headRotateSpeed: 3
+  m_powerPushback: 95
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}
   matArc: {fileID: 2100000, guid: 024eb1d354d086a46bd84276828cfb07, type: 2}
   matHazard: {fileID: 2100000, guid: 83aed5f6bac1fe344bc2bbb2cdd3bd89, type: 2}
@@ -5195,6 +5197,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267405616626767059, guid: 9c896552801b06b468740c527a69b6b0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c896552801b06b468740c527a69b6b0, type: 3}

@@ -49,7 +49,7 @@ public class Bug : MonoBehaviour
         {
             if (m_chasing && m_attached == false)
             {
-                m_bugRb.AddForce((m_targetEnemy.position - transform.position).normalized * (m_chaseForce * Time.deltaTime * 100));
+                m_bugRb.AddForce((m_targetEnemy.position - transform.position).normalized * (m_chaseForce * Time.deltaTime * 100), ForceMode.Acceleration);
             }
         }
         catch (MissingReferenceException e)
