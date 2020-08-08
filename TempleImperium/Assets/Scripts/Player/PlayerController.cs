@@ -93,6 +93,7 @@ public class PlayerController : MonoBehaviour
     bool m_onSlope;             //True when on a slope
     bool m_isJumping;           //True whilst in the air after a jump
     bool m_applyGravity;        //Changes state depending on the above three (stops slope momentum issues)
+    bool m_alive;
     float m_reducedDragDuration;         //When true drag is reduced
 
     float m_offensiveCurrentCooldown;   //Offensive ability cooldown in seconds
@@ -127,6 +128,7 @@ public class PlayerController : MonoBehaviour
         m_audioOrigin = GetComponent<AudioSource>();    //AudioSource reference
         m_playerCamera = transform.Find("Player Camera");   //Player Camera reference
         m_abilityOrigin = transform.Find("Player Camera").transform.Find("Ability Origin"); //Grenade Origin reference
+        m_alive = true;
 
         m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();     //Primary gun script reference
         m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>(); //Secondary gun script reference
@@ -557,13 +559,10 @@ public class PlayerController : MonoBehaviour
         {
             m_health -= damage;
             m_audioOrigin.PlayOneShot(m_soundManager.m_playerDamaged);
-            if(m_health < 0) 
-            { m_health = 0; }
         }
 
-        if(m_health <= 0 && m_health != -1)
+        else if(m_alive)
         {
-            m_health = -1;
             GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
         }
     }
@@ -578,6 +577,7 @@ public class PlayerController : MonoBehaviour
         m_zDirection = "None";
         m_playerRb.AddForce(Random.Range(-10, 10), 0, Random.Range(-10, 10));
         m_playerRb.AddTorque(Random.Range(-10, 10), Random.Range(-10, 10), Random.Range(-10, 10));
+        m_alive = false;
 
         Invoke("LoadMenuScene", m_deathToMenuDuration);
     }
