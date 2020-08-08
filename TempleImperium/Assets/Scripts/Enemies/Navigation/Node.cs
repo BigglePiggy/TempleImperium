@@ -48,26 +48,25 @@ public class Node : MonoBehaviour
     #region Visual Display
     private void OnDrawGizmos()
     {
-        if (neighbourNodes.Count > 0)
-        {
-            Gizmos.color = Color.white;
-            for (int i = 0; i < neighbourNodes.Count; i++)
-            {
-                try
-                { Gizmos.DrawLine(transform.position, neighbourNodes[i].transform.position); }
-                catch (System.Exception)
-                { }
-            }
-        }
-
         if (Selection.Contains(gameObject) || Selection.Contains(transform.root.gameObject))
-        { 
+        {
+            if (neighbourNodes.Count > 0)
+            {
+                Gizmos.color = Color.white;
+                for (int i = 0; i < neighbourNodes.Count; i++)
+                {
+                    try
+                    { Gizmos.DrawLine(transform.position, neighbourNodes[i].transform.position); }
+                    catch (System.Exception)
+                    { }
+                }
+            }
+
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, maxConnectionDistance);
+            Gizmos.color = Color.black;
+            Gizmos.DrawSphere(transform.position, 0.1f);
         }
-
-        Gizmos.color = Color.black;
-        Gizmos.DrawSphere(transform.position, 0.1f);
     }
     #endregion
 #endif

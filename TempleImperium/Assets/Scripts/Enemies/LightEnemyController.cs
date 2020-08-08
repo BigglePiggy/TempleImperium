@@ -111,21 +111,36 @@ public class LightEnemyController : MonoBehaviour
         //Startstone
         m_starstone = element;
 
+        MeshRenderer renderer = transform.Find("Outline").GetComponent<MeshRenderer>();
+        Material mat;
+
+
         switch (m_starstone)
         {
             case GameLogic.StarstoneElement.Summon:
-                transform.Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                mat = matSummon;
                 break;
             case GameLogic.StarstoneElement.Arc:
-                transform.Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                mat = matArc;
                 break;
             case GameLogic.StarstoneElement.Hazard:
-                transform.Find("Outline").GetComponent<MeshRenderer>().material = matHazard;               
+                mat = matHazard;               
                 break;
             case GameLogic.StarstoneElement.Power:
-                transform.Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                mat = matPower;
+                break;
+
+            default:
+                mat = matPower;
                 break;
         }
+
+        Material[] mats = new Material[renderer.materials.Length];
+        for (int i = 0; i < renderer.materials.Length; i++)
+        {
+            mats[i] = mat;
+        }
+        renderer.materials = mats;
 
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();

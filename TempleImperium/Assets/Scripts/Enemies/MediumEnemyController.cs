@@ -124,16 +124,16 @@ public class MediumEnemyController : MonoBehaviour
         switch (m_starstone)
         {
             case GameLogic.StarstoneElement.Summon:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
                 break;
             case GameLogic.StarstoneElement.Arc:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matArc;
                 break;
             case GameLogic.StarstoneElement.Hazard:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matHazard;
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matHazard;
                 break;
             case GameLogic.StarstoneElement.Power:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                transform.Find("Outline").GetComponent<MeshRenderer>().material = matPower;
                 break;
         }
 
