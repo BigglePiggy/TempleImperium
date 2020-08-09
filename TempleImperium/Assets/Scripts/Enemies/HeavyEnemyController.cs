@@ -104,22 +104,26 @@ public class HeavyEnemyController : MonoBehaviour
         //Startstone
         m_starstone = element;
 
+        Material[] mats = new Material[2];
+        mats[0] = transform.Find("Enemy Body").GetComponent<SkinnedMeshRenderer>().materials[0];
 
         switch (m_starstone)
         {
             case GameLogic.StarstoneElement.Summon:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matSummon;
+                mats[1] = matSummon;
                 break;
             case GameLogic.StarstoneElement.Arc:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matArc;
+                mats[1] = matArc;
                 break;
             case GameLogic.StarstoneElement.Hazard:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matHazard;
+                mats[1] = matHazard;
                 break;
             case GameLogic.StarstoneElement.Power:
-                transform.Find("Enemy Head").Find("Outline").GetComponent<MeshRenderer>().material = matPower;
+                mats[1] = matPower;
                 break;
         }
+
+        transform.Find("Enemy Body").GetComponent<SkinnedMeshRenderer>().materials = mats;
 
         //Component assignment
         m_enemyRb = GetComponent<Rigidbody>();

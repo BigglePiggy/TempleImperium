@@ -48,13 +48,6 @@ public class GameEnemyDispatch : MonoBehaviour
             { obscuredSpawnpoints.Add(allSpawnpoints[i].position); }
         }
 
-        //Errors
-        if(obscuredSpawnpoints.Count - input_numLight -input_numMedium-input_numHeavy <= 0) 
-        { Debug.Log("Not enough spots, only " + obscuredSpawnpoints.Count); }
-
-        if (obscuredSpawnpoints == null || obscuredSpawnpoints.Count == 0)
-        { Debug.Log("No spots"); }
-
         //Shuffles list of valid points
         obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Vector3.Distance(x, player.position)).ToList();
 
@@ -70,23 +63,34 @@ public class GameEnemyDispatch : MonoBehaviour
             obscuredSpawnpoints = obscuredSpawnpoints.OrderBy(x => Random.value).ToList();
         }
 
+        //Errors
+        if (obscuredSpawnpoints.Count - input_numLight - input_numMedium - input_numHeavy <= 0)
+        { Debug.Log("Not enough spots, only " + obscuredSpawnpoints.Count); }
+
+        if (obscuredSpawnpoints == null || obscuredSpawnpoints.Count == 0)
+        { Debug.Log("No spots"); }
+
         //Instantiates enemies at unquie spawnpoints
+
         for (int i = 0; i < input_numLight; i++)
         {
-            Instantiate(lightEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<LightEnemyController>().Initialize(input_element);            
-            obscuredSpawnpoints.RemoveAt(0);
+            Instantiate(lightEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<LightEnemyController>().Initialize(input_element);
+            if (obscuredSpawnpoints.Count > 1)
+            { obscuredSpawnpoints.RemoveAt(0); }
         }
 
         for (int i = 0; i < input_numMedium; i++)
         {
             Instantiate(mediumEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<MediumEnemyController>().Initialize(input_element);
-            obscuredSpawnpoints.RemoveAt(0);
+            if (obscuredSpawnpoints.Count > 1)
+            { obscuredSpawnpoints.RemoveAt(0); }
         }
 
         for (int i = 0; i < input_numHeavy; i++)
         {
             Instantiate(heavyEnemy, obscuredSpawnpoints[0], Quaternion.identity).GetComponent<HeavyEnemyController>().Initialize(input_element);
-            obscuredSpawnpoints.RemoveAt(0);
+            if (obscuredSpawnpoints.Count > 1)
+            { obscuredSpawnpoints.RemoveAt(0); }
         }
     }
 }
