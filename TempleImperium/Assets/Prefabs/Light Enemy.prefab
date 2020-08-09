@@ -515,11 +515,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171df09f43c32f14cadbe4f562668363, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_startingHealth: 5
+  m_startingHealth: 6
   m_viewDistance: 10
   m_gravity: 0
-  m_normalAcceleration: 27
-  m_attackAcceleration: 34
+  m_normalAcceleration: 20
+  m_attackAcceleration: 26
   m_dodgeAcceleration: 50
   m_verticalLimit: 15
   m_horizontalLimit: 38
@@ -530,7 +530,7 @@ MonoBehaviour:
   m_attackDistance: 7
   m_retreatDistance: 4.25
   m_attackRate: 6
-  m_attackDamage: 2
+  m_attackDamage: 1
   m_powerPushback: 500
   matSummon: {fileID: 2100000, guid: aec70d3aa5cb03f47b84bde721500778, type: 2}
   matArc: {fileID: 2100000, guid: 024eb1d354d086a46bd84276828cfb07, type: 2}

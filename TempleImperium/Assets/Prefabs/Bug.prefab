@@ -123,8 +123,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 5
-  m_Center: {x: 0, y: 4, z: 0}
+  m_Radius: 14.989807
+  m_Center: {x: 0, y: 10.397905, z: 0}
 --- !u!114 &215445485646041299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54043628d412d5e42bec6bf59988370f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_initalForce: 350
+  m_initalForce: 600
   m_initalOffset: {x: 225, y: 225}
   m_lifetime: 10
   m_stunTime: 3

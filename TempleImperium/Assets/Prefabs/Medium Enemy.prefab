@@ -5076,14 +5076,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_startingHealth: 7
   m_viewDistance: 10
-  m_stopDistance: 4
-  m_shootingDistance: 7
+  m_stopDistance: 8
+  m_shootingDistance: 10
   m_maxShotDistance: 100
   m_fireRate: 0.8
   m_magSize: 6
-  m_reloadTime: 7
+  m_reloadTime: 8
   m_accuracyOffset: {x: 1.5, y: 0.35, z: 0.5}
-  m_shotDamage: 0.75
+  m_shotDamage: 2
   m_gravity: 12
   m_acceleration: {x: 14, y: 0, z: 18}
   m_verticalLimit: 2
