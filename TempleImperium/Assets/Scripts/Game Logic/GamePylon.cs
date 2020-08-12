@@ -1,69 +1,72 @@
 ﻿using UnityEngine;
 
-//written by Eddie and Ase
+//Created by Eddie and Ase
 
 public class GamePylon : MonoBehaviour
 {
-    ////Declarations
-    //Private
-    private GameObject oGameLogic;
-    private Animator anim;
+    //Game Pylon script
+    //What this script does:
+    /*
+        - Handles collision detection
+        - Manages animation controller
+        - Manages shader visability
+    */
 
-    GameObject oGlow;
+    #region Declarations
+    Animator m_anim;            //Pylon animator
+    GameLogic m_GameLogic;     //
+    GameObject m_Glow;
+    #endregion
 
     //Initalization
     void Start()
     {
-        oGameLogic = GameObject.Find("Game Logic");
-        anim = GetComponent<Animator>();
-        oGlow = gameObject.transform.Find("Core").Find("Outline").gameObject;
+        m_anim = GetComponent<Animator>();
+        m_GameLogic = GameObject.Find("Game Logic").GetComponent<GameLogic>();
+        m_Glow = gameObject.transform.Find("Core").Find("Outline").gameObject;
     }
 
+    #region Public methods
     //Raise the pylon
     public void GoUp()
     {
-        anim.SetBool("Raise", true);
-        anim.SetBool("Lower", false);
+        m_anim.SetBool("Raise", true);
+        m_anim.SetBool("Lower", false);
 
-        oGlow.SetActive(true);
+        m_Glow.SetActive(true); //Enables through-wall outline shader
     }
 
     //Lower the pylon
     public void GoDown()
     {
-        anim.SetBool("Raise", false);
-        anim.SetBool("Lower", true);
+        m_anim.SetBool("Raise", false);
+        m_anim.SetBool("Lower", true);
 
-        oGlow.SetActive(false);
+        m_Glow.SetActive(false); //Disables through-wall outline shader
     }
 
     //Pylon state
     public bool GetState() 
     {
-        if (anim.GetBool("Raise")) 
-        {
-            return true;
-        }
-        else 
-        { 
-            return false; 
-        }
+        return m_anim.GetBool("Raise"); //Raised == True    Lowered == False
     }
+    #endregion
 
     //Collision detection
     private void OnTriggerEnter(Collider ForeignCollider)
     {
-        if (anim.GetBool("Raise"))
+        if (m_anim.GetBool("Raise"))
         {
-            //if foreign collider is the player, this pylon goes down
+            //If foreign collider is the player, this pylon goes down
             if (ForeignCollider.tag == "Player")
             {
                 GoDown();
 
                 //tell gamelogic to run pylon down function
-                if (oGameLogic == null)  
-                { oGameLogic = GameObject.Find("Game Logic"); }
-                oGameLogic.GetComponent<GameLogic>().WaveEventPylonLoweredByPlayer();
+                if (m_GameLogic == null)  
+                { m_GameLogic = GameObject.Find("Game Logic").GetComponent<GameLogic>(); }
+
+                m_GameLogic.WaveEventPylonLoweredByPlayer();
             }
         }
     }

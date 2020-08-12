@@ -50,7 +50,7 @@ public class Bug : MonoBehaviour
                 m_bugRb.AddForce((m_targetEnemy.position - transform.position).normalized * (m_chaseForce * Time.deltaTime * 100), ForceMode.Acceleration);
             }
         }
-        catch (MissingReferenceException e)
+        catch (MissingReferenceException)
         { Destroy(gameObject); }
 
 

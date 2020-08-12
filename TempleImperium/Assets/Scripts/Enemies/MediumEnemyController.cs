@@ -404,14 +404,14 @@ public class MediumEnemyController : MonoBehaviour
                 { 
                     if (hit.collider.CompareTag("Player") && hit.collider.CompareTag("Enemy") == false) 
                     {
-                        m_coverDestinationNode = m_pathfinder.FindCoveredNode(transform.position, 15f).transform.position;
+                        m_coverDestinationNode = m_pathfinder.FindClosestCoveredNode(transform.position, 15f).transform.position;
                         m_coverPath = m_pathfinder.FindPathBetween(transform.position, m_coverDestinationNode);
                     } 
                 }
 
                 if (Physics.Linecast(transform.position, m_nextNode, out hit))
                 {
-                    m_coverDestinationNode = m_pathfinder.FindCoveredNode(transform.position, 15f).transform.position;
+                    m_coverDestinationNode = m_pathfinder.FindClosestCoveredNode(transform.position, 15f).transform.position;
                     m_coverPath = m_pathfinder.FindPathBetween(transform.position, m_coverDestinationNode);
                 }
 

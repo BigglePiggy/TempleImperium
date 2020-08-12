@@ -32,8 +32,8 @@ public class NodeConnector : MonoBehaviour
                 {
                     if (Physics.Linecast(nodes[i].position, nodes[e].position) == false)
                     {
-                        nodes[i].GetComponent<Node>().neighbourNodes.Add(nodes[e].GetComponent<Node>());
-                        nodes[e].GetComponent<Node>().neighbourNodes.Add(nodes[i].GetComponent<Node>());
+                        nodes[i].GetComponent<Node>().m_neighbourNodes.Add(nodes[e].GetComponent<Node>());
+                        nodes[e].GetComponent<Node>().m_neighbourNodes.Add(nodes[i].GetComponent<Node>());
                     }
                 }
             }

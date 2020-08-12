@@ -22,22 +22,22 @@ public class Node : MonoBehaviour
     [Space]
 
     [Tooltip("List of all nodes that have a reloations with this node")]
-    public List<Node> neighbourNodes;
+    public List<Node> m_neighbourNodes;
 
     //Properties
-    public Node previousNode    //Node previously visited by Pathfinder's a* algorithm
+    public Node m_previousNode    //Node previously visited by Pathfinder's a* algorithm
     {
         get;
         set;
     }
 
-    public float distanceFromPrevious   //Distance from previousNode
+    public float m_distanceFromPrevious   //Distance from previousNode
     {
         get;
         set;
     }
 
-    public float distanceFromEnd    //Distance from end of path that Pathfinder is calculating
+    public float m_distanceFromEnd    //Distance from end of path that Pathfinder is calculating
     {
         get;
         set;
@@ -50,13 +50,13 @@ public class Node : MonoBehaviour
     {
         //if (Selection.Contains(gameObject) || Selection.Contains(transform.root.gameObject))
         //{
-            if (neighbourNodes.Count > 0)
+            if (m_neighbourNodes.Count > 0)
             {
                 Gizmos.color = Color.white;
-                for (int i = 0; i < neighbourNodes.Count; i++)
+                for (int i = 0; i < m_neighbourNodes.Count; i++)
                 {
                     try
-                    { Gizmos.DrawLine(transform.position, neighbourNodes[i].transform.position); }
+                    { Gizmos.DrawLine(transform.position, m_neighbourNodes[i].transform.position); }
                     catch (System.Exception)
                     { }
                 }

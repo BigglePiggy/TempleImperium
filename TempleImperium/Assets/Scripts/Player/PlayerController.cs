@@ -3,7 +3,6 @@ using UnityEngine;
 
 //Created by Eddie
 
-
 public class PlayerController : MonoBehaviour
 {
     //Player controller script - there should be only one player object with an instance of me!
@@ -14,10 +13,6 @@ public class PlayerController : MonoBehaviour
         - Manages weapon switching
         - Manages abilities
     */
-
-    ////TODO
-    //Make health a property for EnemyController to interact with
-    ////
 
     #region Declarations
     [Header("Player Configuration")]
@@ -624,7 +619,7 @@ public class PlayerController : MonoBehaviour
         {
             return (m_primaryGun.m_maxMagCapacity, m_secondaryGun.m_maxMagCapacity);
         }
-        catch (System.NullReferenceException  e)
+        catch (System.NullReferenceException)
         {
             m_primaryGun = transform.Find("Player Camera").transform.Find("Primary Gun").GetComponent<PlayerGun>();
             m_secondaryGun = transform.Find("Player Camera").transform.Find("Secondary Gun").GetComponent<PlayerGun>();
