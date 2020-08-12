@@ -35,8 +35,6 @@ public class Bug : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         if(m_chasing == false && m_attached == false) 
         {
             m_lifetimeTimer -= Time.deltaTime;
@@ -104,6 +102,8 @@ public class Bug : MonoBehaviour
                 transform.parent = collision.transform;
                 collision.transform.SendMessage("Stun", m_stunTime);
                 Destroy(m_bugRb);
+                Destroy(GetComponent<SphereCollider>());
+                Destroy(GetComponent<SphereCollider>());
             }
         }
     }

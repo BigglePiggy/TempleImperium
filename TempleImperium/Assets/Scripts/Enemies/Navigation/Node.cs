@@ -48,8 +48,8 @@ public class Node : MonoBehaviour
     #region Visual Display
     private void OnDrawGizmos()
     {
-        if (Selection.Contains(gameObject) || Selection.Contains(transform.root.gameObject))
-        {
+        //if (Selection.Contains(gameObject) || Selection.Contains(transform.root.gameObject))
+        //{
             if (neighbourNodes.Count > 0)
             {
                 Gizmos.color = Color.white;
@@ -64,7 +64,7 @@ public class Node : MonoBehaviour
           
             Gizmos.color = Color.black;
             Gizmos.DrawSphere(transform.position, 0.1f);
-        }
+        //}
 
         if (Selection.Contains(gameObject)) 
         {
