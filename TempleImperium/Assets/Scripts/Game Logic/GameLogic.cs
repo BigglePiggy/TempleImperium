@@ -308,6 +308,7 @@ public class GameLogic : MonoBehaviour
 
                 //tell HUD
                 oHudController.GetComponent<HUDController>().FadeToWin();
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().PlayerDeath();
 
                 Debug.LogWarning("gamelogic enactphase() in PostGame! do we get put back to the menu yet?");
                 break;
