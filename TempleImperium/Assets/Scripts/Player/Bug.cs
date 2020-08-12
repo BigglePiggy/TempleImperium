@@ -102,9 +102,13 @@ public class Bug : MonoBehaviour
                 transform.parent = collision.transform;
                 collision.transform.SendMessage("Stun", m_stunTime);
                 Destroy(m_bugRb);
-                Destroy(GetComponent<SphereCollider>());
-                Destroy(GetComponent<SphereCollider>());
+
+                SphereCollider[] sphereColliders = GetComponents<SphereCollider>();
+                for (int i = 0; i < sphereColliders.Length; i++)
+                { Destroy(sphereColliders[i]); }
             }
+            else 
+            { m_chasing = false; }
         }
     }
 }
