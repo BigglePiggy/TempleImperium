@@ -2,9 +2,55 @@ Contribution document
 
 
 In-Editor
+Cinematic camera movement and associated work - Josh
+Menu script linking & layout - Eddie
+Hud script linking & layout - Ase
+Build managment - Eddie
 
 
 Assets
+Enviroment - Josh
+Enemies - Josh
+Weapons - Josh
 
 
 Scripts
+	Ase
+AmmoBox.cs
+SpriteBillboardEditor.cs
+GenericFunctions.cs
+SettingsObject.cs
+PlayerMovement.cs
+ActorBase.cs
+HudController.cs
+HudFader.cs
+HudFlyingText.cs
+AmmoDropController.cs
+GameGenerator.cs
+GameLogic.cs
+GamePowerWepSwitcher.cs
+WaveData.cs
+WaveDataObject.cs
+
+	 Ase & Eddie
+GamePylon.cs
+
+	Eddie
+GameEnemyDispatch .cs
+GlobalValues.cs
+IntroController.cs
+JumpPad.cs
+SoundManager.cs
+Bug.cs
+Grenade.cs
+MeeleeWeapon.cs
+PlayerController.cs
+PlayerGun.cs
+PrototypeWeapon.cs
+Menu.cs
+HeavyEnemyController.cs
+MediumEnemyController.cs
+LightEnemyController.cs
+Node.cs
+Node Connector.cs
+Pathfinder.cs
