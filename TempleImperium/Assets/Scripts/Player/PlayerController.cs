@@ -107,7 +107,7 @@ public class PlayerController : MonoBehaviour
 
     Transform m_playerCamera;   //Player's POV camera
     Transform m_abilityOrigin;  //Defensive ability grenade origin
-    SoundManager m_soundManager;
+    SoundManager m_soundManager;    //Per scene sound clip storage
     #endregion
 
 
@@ -167,6 +167,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region Mouse & Weapons
+    //Handles mosue input and recoil application
     private void MouseInputRecoil()
     {
         float rotateVertical = Input.GetAxis("Mouse Y") * GlobalValues.g_settings.m_fMouseSensitivityY; //Frame rate indenpentdent Y rotation value
@@ -187,21 +188,22 @@ public class PlayerController : MonoBehaviour
         //Normal control
         else
         {
-            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))
+            if (m_playerCamera.localRotation.x >= 0.7 * (m_downAngleLimit / 90))        //Limits the angle of the players veiw above 90 degrees
             {
                 if (rotateVertical > 0)
-                { m_playerCamera.transform.Rotate(-rotateVertical, 0, 0); }
+                { m_playerCamera.transform.Rotate(-rotateVertical, 0, 0); } //Ensures player can move mouse back if angle is out of bounds
             }
-            else if (m_playerCamera.localRotation.x <= -0.7 * (m_upAngleLimit / 90))
+            else if (m_playerCamera.localRotation.x <= -0.7 * (m_upAngleLimit / 90))    //Limits the angle of the players veiw bellow 90 degrees
             {
                 if (rotateVertical < 0)
-                { m_playerCamera.Rotate(-rotateVertical, 0, 0); }
+                { m_playerCamera.Rotate(-rotateVertical, 0, 0); } //Ensures player can move mouse back if angle is out of bounds
             }
             else
-            { m_playerCamera.Rotate(-rotateVertical, 0, 0); }
+            { m_playerCamera.Rotate(-rotateVertical, 0, 0); }   //Applies the rotation as normal
         }
     }
 
+    //Manages the states of the guns
     private void WeaponSwitching()
     {
         //Switch to primary
@@ -210,7 +212,7 @@ public class PlayerController : MonoBehaviour
             m_primaryGun.StartHolding();
             m_secondaryGun.StopHolding();
             m_prototypeWeapon.StopHolding();
-            m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunEquip);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunEquip, GlobalValues.g_settings.m_fVolumeGuns);
         }
 
         //Switch to secondary
@@ -219,7 +221,7 @@ public class PlayerController : MonoBehaviour
             m_primaryGun.StopHolding();
             m_secondaryGun.StartHolding();
             m_prototypeWeapon.StopHolding();
-            m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunEquip);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunEquip, GlobalValues.g_settings.m_fVolumeGuns);
         }
 
         //Switch to prototype
@@ -231,6 +233,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Gathers the recoil values for the current gun
     public void NewRecoilValues(float newRecoil, float newRecoilDampening, float newRecoilControl)
     {
         m_gunRecoil = newRecoil;
@@ -238,6 +241,7 @@ public class PlayerController : MonoBehaviour
         m_gunRecoilControl = newRecoilControl;
     }
 
+    //Used by PlayerGun to iniate recoil application
     public void ShotFired()
     {
         m_currentRecoil = m_gunRecoil;
@@ -246,6 +250,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region Keyboard & Abilities
+    //Movement input managment
     private void KeyboardInput()
     {
         ////Left & Right
@@ -346,11 +351,13 @@ public class PlayerController : MonoBehaviour
         { m_playerCapsule.height += m_crouchSpeed * (Time.deltaTime * 100); }
     }
 
+    //Defensive ability  
     private void DefensiveAbility()
     {
         Instantiate(m_grenade, m_abilityOrigin.position, m_abilityOrigin.rotation);
     }
 
+    //Offensive ability
     private void OffensiveAbility()
     {
         float delay = 0.2f;
@@ -360,6 +367,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Instantiates a bug for offensive ability
     private void CreateBug() 
     {
         Instantiate(m_bug, m_abilityOrigin.position, m_abilityOrigin.rotation);
@@ -368,6 +376,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region Physics & Movement
+    //Determines if grounded and/or on a slope thorugh raycasts
     private void ExtremityCheck()
     {
         float startHeight = -0.88f;
@@ -390,7 +399,7 @@ public class PlayerController : MonoBehaviour
         allHits.AddRange(TLDown);
         allHits.AddRange(TRDown);
         allHits.AddRange(BLDown);
-        allHits.AddRange(BLDown);
+        allHits.AddRange(BRDown);
 
         //Slope check
         for (int i = 0; i < allHits.Count; i++)
@@ -414,6 +423,7 @@ public class PlayerController : MonoBehaviour
         { m_isGrounded = false; }
     }
 
+    //Applies movement to the player
     private void Movement()
     {
         Vector3 direction = new Vector3();
@@ -449,6 +459,7 @@ public class PlayerController : MonoBehaviour
         m_playerRb.AddRelativeForce(new Vector3(direction.normalized.x * speeds.x, 0, direction.normalized.z * speeds.z) * (Time.deltaTime * 100), ForceMode.Acceleration);
     }
 
+    //Limits the maximum veloicty relative to orientation
     private void VelocityLimits()
     {
         //Velocity relative to view
@@ -482,11 +493,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void ReduceDrag(float input_duration = 1f)
-    {
-        m_reducedDragDuration = input_duration;
-    }
-
+    //Constantly applies drag forces against the player relative to orientation
     private void LinearDrag()
     {
         //Velocity relative to view
@@ -526,6 +533,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Reduces the drag on the player for a time
+    public void ReduceDrag(float input_duration = 1f)
+    {
+        m_reducedDragDuration = input_duration;
+    }
+
+    //Applies gravity when needed
     private void Gravity()
     {
         //Gravity
@@ -533,6 +547,7 @@ public class PlayerController : MonoBehaviour
         { m_playerRb.AddForce(Vector3.down * m_gravity * (Time.deltaTime * 100), ForceMode.Acceleration); }
     }
 
+    //Edge cases related to slope veloicty issues
     private void Exceptions()
     {
         //Slope stop Y velocity Avoidance
@@ -548,6 +563,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region Health & Player state
+    //Removes health form the player
     public void TakeDamage(float damage)
     {
         if (m_health > 0)
@@ -556,12 +572,14 @@ public class PlayerController : MonoBehaviour
             m_audioOrigin.PlayOneShot(m_soundManager.m_playerDamaged);
         }
 
-        else
+        //Kills the player when needed
+        if (m_health <= 0) 
         {
             GameObject.FindGameObjectWithTag("GameController").transform.Find("Game Logic").GetComponent<GameLogic>().GameOver(false);
         }
     }
 
+    //Initaites death sequence for player
     public void PlayerDeath()
     {
         if (m_alive)
@@ -580,6 +598,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Loads the menu - is invoked
     private void LoadMenuScene()
     {
         GameObject.FindGameObjectWithTag("Menu").GetComponent<Menu>().MainMenuButton();
@@ -588,6 +607,7 @@ public class PlayerController : MonoBehaviour
 
 
     #region HUD 
+    //Updates values withtin the HUD
     private void UpdateHUD()
     {
         m_hudController.PlayerHealth = m_health;
@@ -603,16 +623,19 @@ public class PlayerController : MonoBehaviour
 
 
     #region Ammo
+    //Returns current and maximum ammo for the primary gun
     public (int, int) GetPrimaryGunAmmo()
     {
         return (m_primaryGun.m_maxAmmoCount, m_primaryGun.GetAmmoCount());
     }
 
+    //Returns current and maximum ammo for the secondary gun
     public (int, int) GetSecondaryGunAmmo()
     {
         return (m_secondaryGun.m_maxAmmoCount, m_secondaryGun.GetAmmoCount());
     }
 
+    //returns the mag sizes for both guns
     public (int, int) GetMagSizes()
     {
         try
@@ -627,11 +650,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //Interaction with ammo pickups
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.CompareTag("AmmoBox"))
         {
-            m_audioOrigin.PlayOneShot(m_soundManager.m_playerAmmoBox);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_playerAmmoBox, GlobalValues.g_settings.m_fVolumeSFX);
             (int, int) ammo = collision.transform.GetComponent<AmmoBox>().GetAmmo();
             m_primaryGun.AddAmmo(ammo.Item1);
             m_secondaryGun.AddAmmo(ammo.Item2);

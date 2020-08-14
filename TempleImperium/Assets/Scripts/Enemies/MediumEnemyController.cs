@@ -96,7 +96,7 @@ public class MediumEnemyController : MonoBehaviour
     float m_stunnedTimer;
     public float GetStunnedTimer() { return m_stunnedTimer; }
 
-    bool m_pointedAt;
+    bool m_pointedAt;   //True when gun aimed at enemy
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
     public void PointedAt(Transform bulletOrigin)
     { m_pointedAtBulletOrigin = bulletOrigin; }
@@ -111,7 +111,7 @@ public class MediumEnemyController : MonoBehaviour
     AmmoDropController m_AmmoDropController;    //ammo drop controller reference
     Transform m_bulletOrigin;               //Reference to editor positioned bullet origin
     ParticleSystem m_bulletParticleSystem;  //Used to emit when gun is shot
-    SoundManager m_soundManager;
+    SoundManager m_soundManager; //Per scene sound clip storage
     #endregion
 
 
@@ -191,6 +191,8 @@ public class MediumEnemyController : MonoBehaviour
 
 
     #region Weapon
+    //Determines if the enemy is in sight of the player
+
     private bool PlayerInSight()
     {
         float rayGap = 1.5f;
@@ -222,6 +224,7 @@ public class MediumEnemyController : MonoBehaviour
         else { return false; }
     }
 
+    //Handles shooting, the accuracy of shots and reloading 
     private void Shooting()
     {
         if (m_timeSinceLastShot < m_fireRate)
@@ -252,7 +255,7 @@ public class MediumEnemyController : MonoBehaviour
 
             m_bulletOrigin.LookAt(target);
             m_bulletParticleSystem.Emit(1);
-            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyAttack);
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyAttack, GlobalValues.g_settings.m_fVolumeEnemies);
 
             m_currentMag--;
         }
@@ -272,8 +275,10 @@ public class MediumEnemyController : MonoBehaviour
 
 
     #region Pathfinding
-    public void PathUpdate()
+    //Generates a new path for the enemy
+    private void PathUpdate()
     {
+        //Path update buffer limits the comutaional strain of pathfinding updates
         if (m_pathUpdateBuffer <= 0)
         {
             m_path = new Stack<Vector3>();
@@ -286,12 +291,14 @@ public class MediumEnemyController : MonoBehaviour
         }
     }
 
-    public void PathRead()
+    //Switches the target node if withtin range of the current one
+    private void PathRead()
     {
         float m_nodeSwitchDistance = 2f;
 
         if (m_path != null && m_path.Count > 0)
         {
+            //Calculates the distance disregarding the Y axis
             if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > m_nodeSwitchDistance && m_path.Count > 1)
             {
                 m_nextNode = m_path.Peek();
@@ -310,6 +317,7 @@ public class MediumEnemyController : MonoBehaviour
 
 
     #region Physics & Movement
+    //Determines if grounded and/or on a slope thorugh raycasts
     private void ExtremityCheck()
     {
         float startHeight = -0.88f;
@@ -355,7 +363,8 @@ public class MediumEnemyController : MonoBehaviour
         else
         { m_isGrounded = false; }
     }
-    
+
+    //Turns the enemy towards appropriate point
     private void Turning()
     {
         Vector3 headPoint;
@@ -384,6 +393,7 @@ public class MediumEnemyController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
     }
 
+    //Creates movement by applying forces 
     private void Movement()
     {
         //Stopping distance
@@ -443,6 +453,7 @@ public class MediumEnemyController : MonoBehaviour
         { m_enemyRb.AddForce((m_nextNode - transform.position).normalized * m_acceleration.z * (Time.deltaTime * 100), ForceMode.Force); }
     }
 
+    //Limits the maximum veloicty relative to orientation
     private void VelocityLimits()
     {
         //Velocity relative to view
@@ -469,6 +480,7 @@ public class MediumEnemyController : MonoBehaviour
         }
     }
 
+    //Constantly applies drag forces against the enemy relative to orientation
     private void LinearDrag()
     {
         //Velocity relative to view
@@ -502,12 +514,14 @@ public class MediumEnemyController : MonoBehaviour
         }
     }
 
+    //Applies gravity to the enemy when needed
     private void Gravity()
     {
         if (m_applyGravity)
         { m_enemyRb.AddForce(Vector3.down * m_gravity, ForceMode.Acceleration); }
     }
 
+    //Edge cases related to slope veloicty issues
     private void Exceptions()
     {
         //Slope stop Y velocity Avoidance
@@ -525,6 +539,7 @@ public class MediumEnemyController : MonoBehaviour
         else { m_applyGravity = true; }
     }
 
+    //Stops movement and attacks for a period of time - Activated by bugs on contact
     public void Stun(float input_stunTime)
     {
         m_stunnedTimer = input_stunTime;
@@ -533,6 +548,7 @@ public class MediumEnemyController : MonoBehaviour
 
 
     #region Health & Enemy State
+    //Removes health form the enemy
     public void TakeDamage(float change)
     {
         if (m_currentHealth - change <= 0)

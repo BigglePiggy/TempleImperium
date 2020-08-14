@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//written by Ase and Eddie
+//Created by Ase and Eddie
 
 public class SettingsObject
 {
@@ -42,9 +42,11 @@ public class SettingsObject
 
     //game config
     public float m_fVolumeOverall = 0.5f;       //unity uses 0-1 for vol control. careful with float rounding errors if doing +-0.1.
-    public float m_fVolumeSFX = 0.5f;           //(briefly multiplying by 10 to work in integer space instead works around this)
+    public float m_fVolumeGuns = 0.055f;           //(briefly multiplying by 10 to work in integer space instead works around this)
+    public float m_fVolumeEnemies = 0.065f;           //(briefly multiplying by 10 to work in integer space instead works around this)
+    public float m_fVolumeSFX = 0.045f;           //(briefly multiplying by 10 to work in integer space instead works around this)
     public float m_fVolumeMusic = 0.5f;
-    public float m_fVolumeUI = 0.5f;
+    public float m_fVolumeUI = 0.15f;
 
     //Crosshair
     public Color m_CrosshairColor = Color.white;

@@ -89,19 +89,19 @@ public class LightEnemyController : MonoBehaviour
     float m_stunnedTimer;
     public float GetStunnedTimer() { return m_stunnedTimer; }
 
-    bool m_pointedAt;
+    bool m_pointedAt;   //True when gun aimed at enemy
     Transform m_pointedAtBulletOrigin; //Transform of bulletorigin of ray that last hit
     public void PointedAt(Transform bulletOrigin)
     { m_pointedAtBulletOrigin = bulletOrigin; }
 
     GameLogic.StarstoneElement m_starstone;  //Enemy Starstone element
 
-    float m_currentHealth;      //Current Health
-    Transform m_player;         //Player position reference
-    Rigidbody m_enemyRb;        //Rigidbody component
-    AudioSource m_audioSource;  //Audio source component       
+    float m_currentHealth;          //Current Health
+    Transform m_player;             //Player position reference
+    Rigidbody m_enemyRb;            //Rigidbody component
+    AudioSource m_audioSource;      //Audio source component       
     AmmoDropController m_AmmoDropController;    //ammo drop controller reference
-    SoundManager m_soundManager;
+    SoundManager m_soundManager;    //Per scene sound clip storage
     #endregion
 
 
@@ -198,8 +198,10 @@ public class LightEnemyController : MonoBehaviour
 
 
     #region Pathfinding
-    public void PathUpdate()
+    //Generates a new path for the enemy
+    private void PathUpdate()
     {
+        //Path update buffer limits the comutaional strain of pathfinding updates
         if (m_pathUpdateBuffer <= 0) 
         {
             m_path = new Stack<Vector3>();
@@ -212,12 +214,14 @@ public class LightEnemyController : MonoBehaviour
         }
     }
 
-    public void PathRead()
+    //Switches the target node if withtin range of the current one
+    private void PathRead()
     {
         float m_nodeSwitchDistance = 2f;
 
         if (m_path != null && m_path.Count > 0)
         {
+            //Calculates the distance disregarding the Y axis
             if (Vector3.Distance(m_path.Peek(), new Vector3(transform.position.x, m_path.Peek().y, transform.position.z)) > m_nodeSwitchDistance && m_path.Count > 1)
             {
                 m_nextNode = m_path.Peek();
@@ -236,6 +240,7 @@ public class LightEnemyController : MonoBehaviour
 
 
     #region Physics & Movement
+    //Determines if the enemy is in sight of the player
     private void PlayerInSight()
     {
         RaycastHit hit;
@@ -244,88 +249,81 @@ public class LightEnemyController : MonoBehaviour
         if (Physics.Linecast(transform.position, m_player.position, out hit))
         {
             if (hit.transform.CompareTag("Player"))
-            {
-                m_playerInSight = true;
-            }
+            { m_playerInSight = true; }
+            
             else
-            {
-                m_playerInSight = false;
-            }
+            { m_playerInSight = false; }
         }
+
         else
-        {
-            m_playerInSight = false;
-        }
+        { m_playerInSight = false; }
     }
 
+    //Turns the enemy towards appropriate point
     private void Turning()
     {
         Vector3 focusPoint;
 
+        //When player is insight
         if (m_playerInSight)
-        {
-            focusPoint = new Vector3(m_player.position.x, m_player.position.y, m_player.position.z);
-        }
+        { focusPoint = new Vector3(m_player.position.x, m_player.position.y, m_player.position.z); }    //Look directly at the player
+       
+        //Look at the next navigation node 
         else
-        {
-            focusPoint = new Vector3(m_nextNode.x, transform.position.y, m_nextNode.z);
-        }
+        { focusPoint = new Vector3(m_nextNode.x, transform.position.y, m_nextNode.z); }
 
+        //Turns the enemy towards caluclated direction
         Vector3 targetDirection = focusPoint - transform.position;
         float step = m_rotateSpeed * Time.deltaTime;
         Vector3 headNewDirection = Vector3.RotateTowards(transform.forward, targetDirection, step, 0.0f);
         transform.rotation = Quaternion.LookRotation(headNewDirection);
     }
 
+    //Creates movement by applying forces 
     private void Movement()
     {
         //Variable Y height ground detector
         RaycastHit downRay;
         RaycastHit upRay;
 
-        float targetSwitchDistance = 0.5f;
+        float targetSwitchDistance = 0.5f;  //The distance from the height target at which a new target will be calculated
         if (Physics.Raycast(transform.position, Vector3.down, out downRay, 100))
-        {}
+        {}  //Calcuates downray 
 
-        if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)
+        if (Mathf.Abs(m_heightTarget - transform.position.y) < targetSwitchDistance)    //If close enough to the height target
         {
-            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
+            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);    //Generates a new target
         }
 
         if (Physics.Raycast(transform.position, Vector3.up, out upRay, 100))
         {
-            if (m_heightTarget > upRay.point.y - targetSwitchDistance)
+            if (m_heightTarget > upRay.point.y - targetSwitchDistance)  //If the height target is unreachable (above the ceiling)
             {
-                m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
+                m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);    //Generates a new target
             }
         }
 
-        if (m_heightTarget < downRay.point.y + targetSwitchDistance)
+        if (m_heightTarget < downRay.point.y + targetSwitchDistance)    //If the height target is unreachable (bellow the floor)
         {
-            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);
+            m_heightTarget = Random.Range(downRay.point.y + m_minimumHeight, downRay.point.y + m_maximumHeight);    //Generates a new target
         }
-
 
         //Is being pointed at by the player's gun
         RaycastHit hit = new RaycastHit();
-        if (m_pointedAtBulletOrigin != null)
+        if (m_pointedAtBulletOrigin != null) //The player's gun's bullet origin at pointed at the enemy
         {
+            //Recreates the ray and sets m_pointedAt as true if it is in the firing line
             if (Physics.Raycast(m_pointedAtBulletOrigin.position, m_pointedAtBulletOrigin.forward, out hit, 100))
             {
                 if (hit.transform == transform)
-                {
-                    m_pointedAt = true;
-                }
+                { m_pointedAt = true;  }
 
                 else
-                {
-                    m_pointedAt = false;
-                }
+                { m_pointedAt = false; }
             }
+
             else
-            {
-                m_pointedAt = false;
-            }
+            { m_pointedAt = false; }
         }
 
         //Attack rate tracker
@@ -355,15 +353,11 @@ public class LightEnemyController : MonoBehaviour
                     {
                         //Dodge player's gun 
                         if (m_pointedAt)
-                        {
-                            m_enemyRb.AddForce((transform.position - hit.point).normalized * m_dodgeAcceleration);
-                        }
+                        { m_enemyRb.AddForce((transform.position - hit.point).normalized * m_dodgeAcceleration); } //Moves away from the point hit by the player's gun
 
                         //Float about the Y Axis
                         else
-                        {
-                            m_enemyRb.AddForce((new Vector3(transform.position.x, m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force);
-                        }
+                        { m_enemyRb.AddForce((new Vector3(transform.position.x, m_heightTarget, transform.position.z) - transform.position).normalized * m_normalAcceleration * (Time.deltaTime * 100), ForceMode.Force); }
                     }
                 }
 
@@ -421,6 +415,7 @@ public class LightEnemyController : MonoBehaviour
         }
     }
 
+    //Limits the maximum veloicty relative to orientation
     private void VelocityLimits()
     {
         //Velocity relative to view
@@ -446,6 +441,7 @@ public class LightEnemyController : MonoBehaviour
         }
     }
 
+    //Constantly applies drag forces against the enemy relative to orientation
     private void LinearDrag()
     {
         //Velocity relative to view
@@ -485,11 +481,13 @@ public class LightEnemyController : MonoBehaviour
         }
     }
 
+    //Applies gravity to the enemy when needed
     private void Gravity()
     {
         m_enemyRb.AddForce(Vector3.down * m_gravity, ForceMode.Acceleration);
     }
 
+    //Stops movement and attacks for a period of time - Activated by bugs on contact
     public void Stun(float input_stunTime)
     {
         m_stunnedTimer = input_stunTime;
@@ -497,12 +495,13 @@ public class LightEnemyController : MonoBehaviour
     #endregion
 
 
-    #region Health & Enemy State
+    #region Health & Enemy State & Attacking
+    //Removes health form the enemy
     public void TakeDamage(float change)
     {
         if (m_currentHealth - change <= 0 && m_alive)
         {
-            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDeath, 0.3f);
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDeath, GlobalValues.g_settings.m_fVolumeEnemies);
             GameObject.Find("Game Logic").GetComponent<GameLogic>().WaveEventEnemyDeath(0);
             m_AmmoDropController.RollDropChanceAtPosition(transform.position);
             m_alive = false;
@@ -514,29 +513,33 @@ public class LightEnemyController : MonoBehaviour
         else
         { 
             m_currentHealth -= change;
-            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDamaged);
+            m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyDamaged, GlobalValues.g_settings.m_fVolumeEnemies);
         }
     }
 
+    //Collision detection for registering attacks
     private void OnCollisionEnter(Collision collision)
     {
-        if (m_isAttacking && m_playerHasBeenHit == false)
+        if (m_isAttacking && m_playerHasBeenHit == false)   //If in an attacking state
         {
-            if (collision.transform.CompareTag("Player"))
+            if (collision.transform.CompareTag("Player"))   //And the collision is the player
             {
+                //Apply damage and play a sound
                 m_playerHasBeenHit = true;
                 collision.transform.GetComponent<PlayerController>().TakeDamage(m_attackDamage);
-                m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyAttack);
+                m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyAttack, GlobalValues.g_settings.m_fVolumeEnemies);
 
+                //If under the Arc startsone apply addional forces to push the player back
                 if (m_starstone == GameLogic.StarstoneElement.Arc)
                 {
-                    collision.transform.GetComponent<PlayerController>().ReduceDrag();
+                    collision.transform.GetComponent<PlayerController>().ReduceDrag();  //the player's drag is reduced to make the addional force more noticeable
                     collision.transform.GetComponent<Rigidbody>().AddForce(new Vector3(m_enemyRb.velocity.x, 0, m_enemyRb.velocity.z).normalized * m_powerPushback, ForceMode.Acceleration);
                 }
             }
         }
     }
 
+    //After death collision sound effect
     private void OnCollisionStay(Collision collision)
     {
         if (m_alive == false && m_deathHitEffectPlayed == false && Mathf.Abs(m_enemyRb.velocity.y) < 0.5f)
@@ -546,7 +549,7 @@ public class LightEnemyController : MonoBehaviour
             {
                 if (Mathf.Abs(downRay.point.y - transform.position.y) < 2)
                 {
-                    m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyHitGround);
+                    m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyHitGround, GlobalValues.g_settings.m_fVolumeEnemies);
                     m_deathHitEffectPlayed = true;
                 }
             }

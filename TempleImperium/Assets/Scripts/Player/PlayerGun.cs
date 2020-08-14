@@ -73,7 +73,7 @@ public class PlayerGun : MonoBehaviour
 
     PlayerController m_playerController;    //Reference to Player Controller script - Recoil values are passed 
     HUDController m_hudController;          //Reference to Hud Controller script - Display values are passed
-    SoundManager m_soundManager;
+    SoundManager m_soundManager;            //Per scene sound clip storage
 
     AudioSource m_audioOrigin;              //Audio origin component
     GameObject m_gunModel;                  //Mesh renderer component - used to make gun invisible when not in use
@@ -120,6 +120,7 @@ public class PlayerGun : MonoBehaviour
 
 
     #region Whilst held
+    //Gun input logic
     private void Inputs()
     {
         ////Shooting
@@ -136,17 +137,21 @@ public class PlayerGun : MonoBehaviour
         {
             bool shoot = false;
 
+            //Automatic firing detection
             if (m_automatic && Input.GetKey(GlobalValues.g_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
+            //Semi-Automatic firing detection
             if (m_automatic == false && Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyFire) && m_timeSinceLastShot >= m_fireRate) 
             { shoot = true; }
 
+            //If a shot is fired
             if (shoot) 
             {
                 m_currentMagCapacity--;
                 m_timeSinceLastShot = 0;
 
+                //Raycasts and applies damage to any enemy hit
                 RaycastHit hit;
                 if (Physics.Raycast(m_bulletOrigin.position, m_bulletOrigin.forward, out hit, m_bulletRange))
                 {
@@ -160,13 +165,14 @@ public class PlayerGun : MonoBehaviour
                     }
                 }
 
-                m_bulletParticleSystem.Emit(1);
-                m_playerController.ShotFired();
+                m_bulletParticleSystem.Emit(1); //Bullet particle representation
+                m_playerController.ShotFired(); //Applies recoil to the player camera for from this shot
 
+                //Detemines which effect is needed and plays it
                 if (m_isPrimaryWeapon)
-                { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunFire); }
+                { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunFire, GlobalValues.g_settings.m_fVolumeGuns); }
                 else
-                { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunFire); }
+                { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunFire, GlobalValues.g_settings.m_fVolumeGuns); }
             }
         }
 
@@ -174,9 +180,9 @@ public class PlayerGun : MonoBehaviour
         else if (Input.GetKeyDown(GlobalValues.g_settings.m_kcKeyFire))
         {
             if (m_isPrimaryWeapon)
-            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunDryFire); }
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunDryFire, GlobalValues.g_settings.m_fVolumeGuns); }
             else
-            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunDryFire); }
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunDryFire, GlobalValues.g_settings.m_fVolumeGuns); }
         }
 
         //Reload
@@ -191,10 +197,11 @@ public class PlayerGun : MonoBehaviour
 
             m_currentMagCapacity = m_maxMagCapacity;
 
+            //Relod audcio clip
             if (m_isPrimaryWeapon)
-            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunReload); }
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_primaryGunReload, GlobalValues.g_settings.m_fVolumeGuns); }
             else
-            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunReload); }
+            { m_audioOrigin.PlayOneShot(m_soundManager.m_secondaryGunReload, GlobalValues.g_settings.m_fVolumeGuns); }
         }
 
         //Aim Down Sight
@@ -231,14 +238,7 @@ public class PlayerGun : MonoBehaviour
         }
     }
 
-    private void HudValues()
-    {
-        m_hudController.CurrentWeaponAmmoMagazine = m_currentMagCapacity;
-        m_hudController.CurrentWeaponAmmoReserve = m_ammoCount;
-        m_hudController.CurrentWeaponAmmoMagazineMax = m_maxMagCapacity;
-        m_hudController.CurrentWeaponAmmoReserveMax = m_maxAmmoCount;
-    }
-
+    //Sends messages to enemeis when pointed at them
     private void WeaponPointingAt()
     {
         RaycastHit hit;
@@ -254,10 +254,20 @@ public class PlayerGun : MonoBehaviour
             }
         }
     }
+
+    //Updates the HUD values when being held
+    private void HudValues()
+    {
+        m_hudController.CurrentWeaponAmmoMagazine = m_currentMagCapacity;
+        m_hudController.CurrentWeaponAmmoReserve = m_ammoCount;
+        m_hudController.CurrentWeaponAmmoMagazineMax = m_maxMagCapacity;
+        m_hudController.CurrentWeaponAmmoReserveMax = m_maxAmmoCount;
+    }
     #endregion
 
 
     #region Is Held State Management
+    //Sets this gun as held
     public void StartHolding()
     {
         m_isHeld = true;
@@ -274,6 +284,7 @@ public class PlayerGun : MonoBehaviour
         m_playerController.NewRecoilValues(m_recoil, m_recoilDampening, m_recoilControl);
     }
 
+    //Sets this gun as not-held
     public void StopHolding()
     {
         m_isHeld = false;
@@ -284,6 +295,7 @@ public class PlayerGun : MonoBehaviour
         { m_reloadProgress = 0; }
     }
 
+    //Returns the held state of the gun
     public bool GetIsHeld()
     {
         return m_isHeld;

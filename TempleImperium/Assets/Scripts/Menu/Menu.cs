@@ -109,7 +109,7 @@ public class Menu : MonoBehaviour
     #region Main Menu Actions
     public void StartButton()
     {
-        SceneManager.LoadScene("Temple");
+        SceneManager.LoadScene("Intro Temple");
     }
 
     public void ExitButton()
@@ -142,7 +142,7 @@ public class Menu : MonoBehaviour
         m_mainPage.SetActive(false);
         m_pausePage.SetActive(false);      
         m_optionsPage.SetActive(true);
-        m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
+        m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne, GlobalValues.g_settings.m_fVolumeUI);
     }
 
     public void ChangeYSensitivity(float change)
@@ -163,7 +163,7 @@ public class Menu : MonoBehaviour
             }
 
             m_ySensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityY.ToString();
-            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo, GlobalValues.g_settings.m_fVolumeUI);
         }
     }
 
@@ -185,7 +185,7 @@ public class Menu : MonoBehaviour
             }
 
             m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
-            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo, GlobalValues.g_settings.m_fVolumeUI);
         }
     }
 
@@ -196,7 +196,7 @@ public class Menu : MonoBehaviour
             m_keyCaptureMode = true;
             m_keyCaptureText = text;
         }
-        m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo);
+        m_audioOrigin.PlayOneShot(m_soundManager.m_pressTwo, GlobalValues.g_settings.m_fVolumeUI);
     }
    
     private void OnGUI()    //On GUI event - Captures keys for settings
@@ -285,7 +285,7 @@ public class Menu : MonoBehaviour
 
             m_optionsPage.SetActive(false);
 
-            m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne);
+            m_audioOrigin.PlayOneShot(m_soundManager.m_pressOne, GlobalValues.g_settings.m_fVolumeUI);
         }
     }
     #endregion   

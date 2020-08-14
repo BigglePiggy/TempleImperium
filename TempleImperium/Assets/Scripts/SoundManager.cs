@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Created by Eddie
+
 public class SoundManager : MonoBehaviour
 {
     [Header("Guns")]

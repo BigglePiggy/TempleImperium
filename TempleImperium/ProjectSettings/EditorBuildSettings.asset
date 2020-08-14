@@ -9,9 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: d4e466657419b394d8551eefa9b58427
   - enabled: 1
+    path: Assets/Scenes/Intro Temple.unity
+    guid: 1d0b0d0a83e6c474b93fa4d04bd46785
+  - enabled: 1
     path: Assets/Scenes/Temple.unity
     guid: 507132382130aba4d9b94c924048f82a
-  - enabled: 0
-    path: Assets/Scenes/Intro_Real.unity
-    guid: 1d0b0d0a83e6c474b93fa4d04bd46785
   m_configObjects: {}

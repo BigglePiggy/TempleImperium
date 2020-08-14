@@ -6,15 +6,19 @@ using UnityEngine;
 
 public class HeavyProjectile : MonoBehaviour
 {
+    [Header("Projectile Configuration")]
+    [Tooltip("Amount of time the projectile exists for")]
     public float m_startLifetime;
+    [Tooltip("Damage applied to the player when hit by this projectile")]
     public float m_damage;
+    [Tooltip("Amount of force applied to pushback the player when under the Arc starstone")]
     public float m_powerPushback;
 
-    float m_lifetime;
-    bool m_isLethal;
-    Rigidbody m_projectileRb;
+    float m_lifetime;           //Lifetime tracker
+    bool m_isLethal;            //Determines if damage should be applied on collison
+    Rigidbody m_projectileRb;   //Rigidbody reference
 
-    GameLogic.StarstoneElement m_starstone;
+    GameLogic.StarstoneElement m_starstone;     //The startsone of the enemy that created this projectile
 
     //Initalization
     public void Initalization(GameLogic.StarstoneElement input_starstone)
@@ -39,9 +43,11 @@ public class HeavyProjectile : MonoBehaviour
     {
         if (collision.transform.CompareTag("Player") && m_isLethal)
         {
+            //Applied damage to player and revoes lethality
             m_isLethal = false;
             collision.transform.GetComponent<PlayerController>().TakeDamage(m_damage);
 
+            //Applies extra force to the player if created by an enemy under the arc startsone
             if (m_starstone == GameLogic.StarstoneElement.Arc)
             {
                 collision.transform.GetComponent<PlayerController>().ReduceDrag();

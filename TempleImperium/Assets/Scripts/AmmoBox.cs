@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
-//written by Ase
+//Created by Ase
 
 public class AmmoBox : MonoBehaviour
 {
