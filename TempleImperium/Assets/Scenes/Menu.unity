@@ -6961,12 +6961,15 @@ MonoBehaviour:
   m_pressOne: {fileID: 8300000, guid: 6afb190e226069b4f8e0fefa6409c471, type: 3}
   m_pressTwo: {fileID: 8300000, guid: 3277a629c8b02ae47ab6ec9dbbc04f67, type: 3}
   m_pressThree: {fileID: 8300000, guid: 3a23c4d8375e5c44abadb1124023b88b, type: 3}
-  m_menuMusic: {fileID: 8300000, guid: dbe2af791c486694d89f7b731444ab40, type: 3}
+  m_menuMusic: {fileID: 8300000, guid: c4639c27691f6d54aaa38e8947ef1aeb, type: 3}
+  m_introCinematic: {fileID: 0}
+  m_outroCinematic: {fileID: 0}
   m_lightEnemyAttack: {fileID: 8300000, guid: 6444ef6ae19d09244ae962509ae6bd78, type: 3}
   m_lightEnemyDamaged: {fileID: 8300000, guid: 2657c93feab919041bd05a4659f705bf, type: 3}
   m_lightEnemyDeath: {fileID: 8300000, guid: 7be2f214888ab0c46af2af0bb777abd5, type: 3}
   m_lightEnemyHitGround: {fileID: 8300000, guid: 62685d2e541f1924d8b8d1071e7bd8c7,
     type: 3}
+  m_lightEnemyMovement: {fileID: 0}
   m_mediumEnemyShot: {fileID: 0}
   m_mediumEnemyReload: {fileID: 0}
   m_mediumEnemyDamaged: {fileID: 0}
@@ -6974,7 +6977,16 @@ MonoBehaviour:
   m_heavyEnemyShot: {fileID: 0}
   m_heavyEnemyDamaged: {fileID: 0}
   m_heavyEnemyDeath: {fileID: 0}
-  m_waveOneToThree: {fileID: 0}
+  m_waveOneToThreeMain: {fileID: 0}
+  m_waveOneToThreeAlarm: {fileID: 0}
+  m_waveOneToThreeDanger: {fileID: 0}
+  m_waveFourToSixMain: {fileID: 0}
+  m_waveFourToSixAlarm: {fileID: 0}
+  m_waveFourToSixDanger: {fileID: 0}
+  m_waveSevenMain: {fileID: 0}
+  m_waveSevenAlarm: {fileID: 0}
+  m_waveSevenDanger: {fileID: 0}
+  m_waveRest: {fileID: 0}
 --- !u!4 &2125829807
 Transform:
   m_ObjectHideFlags: 0
