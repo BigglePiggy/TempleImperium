@@ -164,7 +164,7 @@ public class LightEnemyController : MonoBehaviour
         m_deadTimer = 0;
         m_deathHitEffectPlayed = false;
 
-        //Movement Audio
+        //Movement Audio need to work out how to loop the sound
         m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyMovement, GlobalValues.g_settings.m_fVolumeEnemies);
         //m_audioSource.loop = true;
     }

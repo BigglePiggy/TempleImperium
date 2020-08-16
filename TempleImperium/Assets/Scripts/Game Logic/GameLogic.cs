@@ -106,6 +106,7 @@ public class GameLogic : MonoBehaviour
 
     void Update()
     {
+       
     }
 
     void FixedUpdate()
@@ -122,6 +123,8 @@ public class GameLogic : MonoBehaviour
             //game over!
             GameOver();
         }
+
+      
 
         //check phase ticker
         if (m_iTickerCurrentPhase > 0)    //if phase ticker nonzero,
@@ -156,6 +159,9 @@ public class GameLogic : MonoBehaviour
                 default:
                     //layer 8 error catcher
                     Debug.LogError("GameLogic FixedUpdate timer=0 switch reading unaccounted for GameplayPhase \"" + m_eGameplayPhase + "\"!!");
+
+                   
+
                     break;
             }
         }
@@ -178,6 +184,10 @@ public class GameLogic : MonoBehaviour
         oHudControllerScript.GameplayPhase = m_eGameplayPhase;
 
         #endregion send to HUD
+
+        //Audio Selection based on time during wave
+        //setWaveMusicSection();
+
     }
 
     #region wave expected event handling
@@ -264,10 +274,10 @@ public class GameLogic : MonoBehaviour
 
                 //Play wave based music based on current wave 1-3, 3-6, 7 **josh
                 //Checks what wave is currently active against m_iCurrentWave and plays relevant music
-
                 //set wave music
                 SetWaveMusic();
-                
+
+
 
                 break;
 
@@ -490,7 +500,7 @@ public class GameLogic : MonoBehaviour
     }
     #endregion
 
-    //Set wave music 
+    //Set wave music **Josh
     void SetWaveMusic()
     {
         //waves 1-3
@@ -498,12 +508,14 @@ public class GameLogic : MonoBehaviour
         {
             Debug.Log("Playing Easy Music");
             m_audioOrigin.PlayOneShot(m_soundManager.m_waveOneToThreeMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 1-3 Music TEMP **Josh
+            setWaveMusicSection();
         }
         //waves 4-6
         else if (m_iCurrentWave >= 3 && m_iCurrentWave <= 5)
         {
             Debug.Log("Playing Difficult Music");
             m_audioOrigin.PlayOneShot(m_soundManager.m_waveFourToSixMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 4-5 Music TEMP **Josh
+            setWaveMusicSection();
         }
         //wave 7
         else if (m_iCurrentWave == 6)
@@ -511,9 +523,33 @@ public class GameLogic : MonoBehaviour
             Debug.Log("Playing Chalenging Music");
             m_audioOrigin.PlayOneShot(m_soundManager.m_waveSevenMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 4-5 Music TEMP **Josh
         }
+        
     }
 
-    //Set rest wave audio 
+    //Preperation for changing music section based on time remaining in wave **Josh
+    void setWaveMusicSection()
+    {
+        if (m_iCurrentWave <= 2)
+        {
+            Debug.Log("Section One");
+            if (m_iTickerCurrentWave <= 60)
+            {
+                Debug.Log("Alarm Music");
+            }
+        }
+
+        else if (m_iCurrentWave >= 3 && m_iCurrentWave <= 5)
+        {
+            Debug.Log("Section Two");
+        }
+
+        else if (m_iCurrentWave == 6)
+        {
+            Debug.Log("Section Three");
+        }
+    }
+
+    //Set rest wave audio **Josh
     void SetRestWaveAudio()
     {
         m_audioOrigin.Stop();
