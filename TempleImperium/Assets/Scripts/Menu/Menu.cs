@@ -80,6 +80,8 @@ public class Menu : MonoBehaviour
         m_xSensitivityText.text = GlobalValues.g_settings.m_fMouseSensitivityX.ToString();
 
         m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>();
+
+       
     }
 
     //Called per frame

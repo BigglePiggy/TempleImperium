@@ -30,12 +30,18 @@ public class SoundManager : MonoBehaviour
     public AudioClip m_pressOne;
     public AudioClip m_pressTwo;
     public AudioClip m_pressThree;
+    public AudioClip m_menuMusic;
+
+    [Header("Cinematic Music")]
+    public AudioClip m_introCinematic;
+    public AudioClip m_outroCinematic;
 
     [Header("Enemies")]
     public AudioClip m_lightEnemyAttack;
     public AudioClip m_lightEnemyDamaged;
     public AudioClip m_lightEnemyDeath;
     public AudioClip m_lightEnemyHitGround;
+    public AudioClip m_lightEnemyMovement;
     [Space]
     public AudioClip m_mediumEnemyShot;
     public AudioClip m_mediumEnemyReload;
@@ -45,4 +51,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip m_heavyEnemyShot;
     public AudioClip m_heavyEnemyDamaged;
     public AudioClip m_heavyEnemyDeath;
+
+    [Header("Wave Music")]
+    public AudioClip m_waveOneToThree;
+    
 }

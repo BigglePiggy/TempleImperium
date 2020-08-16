@@ -163,6 +163,10 @@ public class LightEnemyController : MonoBehaviour
         m_stunnedTimer = 0;
         m_deadTimer = 0;
         m_deathHitEffectPlayed = false;
+
+        //Movement Audio
+        m_audioSource.PlayOneShot(m_soundManager.m_lightEnemyMovement, GlobalValues.g_settings.m_fVolumeEnemies);
+        //m_audioSource.loop = true;
     }
 
     //Called per frame

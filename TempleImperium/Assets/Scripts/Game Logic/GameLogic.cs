@@ -49,6 +49,9 @@ public class GameLogic : MonoBehaviour
     [Tooltip("reference to a GameObject that has a GameGenerator script attached")]
     public GameObject oGenerator;   //entity that has the GameGenerator script
 
+    AudioSource m_audioOrigin;     //Audio Source Component **Josh
+    SoundManager m_soundManager;                    //Per scene sound clip storage **Josh
+
 
     WaveDataObject[] m_WaveDataArray;       //wave data retrieved from objects
 
@@ -81,6 +84,10 @@ public class GameLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        m_audioOrigin = GetComponent<AudioSource>();    //AudioSource reference **Josh
+        m_soundManager = GameObject.FindGameObjectWithTag("Sound Manager").GetComponent<SoundManager>(); // Get Sound Manager Ref **Josh
+
         //wavedata integrity checks should be in WaveData.Start(), not here!
 
         //redeclare array with proper size
@@ -247,6 +254,7 @@ public class GameLogic : MonoBehaviour
                 //if this is the first subwave, set the WAVE timer and raise pylons
                 if (m_iCurrentWaveSub == 0)
                 {
+                    m_audioOrigin.PlayOneShot(m_soundManager.m_waveOneToThree, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 1-3 Music TEMP **Josh
                     m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration); //set time
 
                     RaisePylons(m_WaveDataArray[m_iCurrentWave].m_iPylonCount); //raise pylons
