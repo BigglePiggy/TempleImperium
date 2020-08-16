@@ -579,6 +579,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void ResetHealth()
+    {
+        m_health = m_maximumHealth;
+    }
+
     //Initaites death sequence for player
     public void PlayerDeath()
     {

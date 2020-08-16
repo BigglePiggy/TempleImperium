@@ -276,6 +276,9 @@ public class GameLogic : MonoBehaviour
                 //turn off WAVE timer
                 m_bWaveTimerActive = false;
 
+                //Reset Player Health between waves
+                GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ResetHealth();
+
                 //gameover if any pylons are up
                 //iterate through every pylon
                 bool m_bGameOver = false;
