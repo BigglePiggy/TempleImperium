@@ -52,7 +52,22 @@ public class SoundManager : MonoBehaviour
     public AudioClip m_heavyEnemyDamaged;
     public AudioClip m_heavyEnemyDeath;
 
-    [Header("Wave Music")]
-    public AudioClip m_waveOneToThree;
-    
+    [Header("Wave 1 - 3")]
+    public AudioClip m_waveOneToThreeMain;
+    public AudioClip m_waveOneToThreeAlarm;
+    public AudioClip m_waveOneToThreeDanger;
+
+    [Header("Wave 4 - 5")]
+    public AudioClip m_waveFourToSixMain;
+    public AudioClip m_waveFourToSixAlarm;
+    public AudioClip m_waveFourToSixDanger;
+
+    [Header("Wave 7")]
+    public AudioClip m_waveSevenMain;
+    public AudioClip m_waveSevenAlarm;
+    public AudioClip m_waveSevenDanger;
+
+    [Header("Wave Rest")]
+    public AudioClip m_waveRest;
+
 }

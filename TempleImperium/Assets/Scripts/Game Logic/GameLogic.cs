@@ -254,20 +254,34 @@ public class GameLogic : MonoBehaviour
                 //if this is the first subwave, set the WAVE timer and raise pylons
                 if (m_iCurrentWaveSub == 0)
                 {
-                    m_audioOrigin.PlayOneShot(m_soundManager.m_waveOneToThree, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 1-3 Music TEMP **Josh
                     m_iTickerCurrentWave = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iWaveDuration); //set time
 
                     RaisePylons(m_WaveDataArray[m_iCurrentWave].m_iPylonCount); //raise pylons
                 }
                 //...and make sure wave timer's ticking down
                 m_bWaveTimerActive = true;
+
+
+                //Play wave based music based on current wave 1-3, 3-6, 7 **josh
+                //Checks what wave is currently active against m_iCurrentWave and plays relevant music
+
+                //set wave music
+                SetWaveMusic();
+                
+
                 break;
+
+
 
             case GameplayPhase.InbetweenSubwave:
                 //Debug.Log("enactphase() switch firing InbetweenSubwave");
                 //this one's called when the player's just beaten a SUBwave - game's waiting to spawn next batch, wave counter's still going
 
+            
                 m_iTickerCurrentPhase = cGenericFunctions.ConvertSecondsToTicks(m_WaveDataArray[m_iCurrentWave].m_iSubWaveRestDuration);
+
+               
+
                 break;
 
             case GameplayPhase.InbetweenWave:
@@ -276,7 +290,7 @@ public class GameLogic : MonoBehaviour
                 //turn off WAVE timer
                 m_bWaveTimerActive = false;
 
-                //Reset Player Health between waves
+                //Reset Player Health between waves **Josh
                 GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>().ResetHealth();
 
                 //gameover if any pylons are up
@@ -294,6 +308,7 @@ public class GameLogic : MonoBehaviour
                     }
                 }
 
+              
                 //do gameover
                 if (m_bGameOver)
                 {
@@ -311,6 +326,9 @@ public class GameLogic : MonoBehaviour
 
                 //lower pylons
                 LowerPylons();
+
+                //Set rest wave Audio
+                SetRestWaveAudio();
                 break;
 
             case GameplayPhase.PostGame:
@@ -471,5 +489,36 @@ public class GameLogic : MonoBehaviour
         }
     }
     #endregion
+
+    //Set wave music 
+    void SetWaveMusic()
+    {
+        //waves 1-3
+        if (m_iCurrentWave <= 2)
+        {
+            Debug.Log("Playing Easy Music");
+            m_audioOrigin.PlayOneShot(m_soundManager.m_waveOneToThreeMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 1-3 Music TEMP **Josh
+        }
+        //waves 4-6
+        else if (m_iCurrentWave >= 3 && m_iCurrentWave <= 5)
+        {
+            Debug.Log("Playing Difficult Music");
+            m_audioOrigin.PlayOneShot(m_soundManager.m_waveFourToSixMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 4-5 Music TEMP **Josh
+        }
+        //wave 7
+        else if (m_iCurrentWave == 6)
+        {
+            Debug.Log("Playing Chalenging Music");
+            m_audioOrigin.PlayOneShot(m_soundManager.m_waveSevenMain, GlobalValues.g_settings.m_fVolumeMusic); // Play Wave 4-5 Music TEMP **Josh
+        }
+    }
+
+    //Set rest wave audio 
+    void SetRestWaveAudio()
+    {
+        m_audioOrigin.Stop();
+        
+        m_audioOrigin.PlayOneShot(m_soundManager.m_waveRest, GlobalValues.g_settings.m_fVolumeMusic); // Play Rest Wave Track
+    }
 
 }

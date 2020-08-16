@@ -579,6 +579,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    //reset player health between waves **Josh
     public void ResetHealth()
     {
         m_health = m_maximumHealth;
