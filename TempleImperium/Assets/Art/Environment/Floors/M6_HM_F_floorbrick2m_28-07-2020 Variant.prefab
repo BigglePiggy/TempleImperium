@@ -79,13 +79,18 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: a93499da674d3e544bc6bf93916a30c1,
         type: 3}
       propertyPath: m_Name
-      value: M6_HM_F_floorbrick2m_28-07-2020
+      value: M6_HM_F_floorbrick2m_28-07-2020 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4897897788284265085, guid: a93499da674d3e544bc6bf93916a30c1,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: bb1e7b87b21bf73478a4cb11fce608bb, type: 2}
+    - target: {fileID: 4897897788284265085, guid: a93499da674d3e544bc6bf93916a30c1,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1298684d8fcfbaf4ab4fbe841cb0fa97, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a93499da674d3e544bc6bf93916a30c1, type: 3}
 --- !u!1 &3629377153401470216 stripped
